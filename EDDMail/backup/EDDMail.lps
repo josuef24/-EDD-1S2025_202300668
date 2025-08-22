@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <Version Value="12"/>
+    <BuildModes Active="Default"/>
+    <Units>
+      <Unit>
+        <Filename Value="EDDMail.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="10"/>
+        <CursorPos X="9" Y="4"/>
+        <UsageCount Value="39"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fmaiin.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmRoot"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fMaiin"/>
+        <TopLine Value="25"/>
+        <CursorPos X="13" Y="32"/>
+        <UsageCount Value="39"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="flogin.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmLogin"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fLogin"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="65"/>
+        <CursorPos X="3" Y="70"/>
+        <UsageCount Value="39"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fcreateuser.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmCreateUser"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fCreateUser"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="63"/>
+        <CursorPos X="17" Y="96"/>
+        <UsageCount Value="39"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="frmuser.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmUserN"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frmUser"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="30"/>
+        <CursorPos X="17" Y="65"/>
+        <UsageCount Value="38"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="uusers.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uUsers"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="195"/>
+        <CursorPos X="16" Y="232"/>
+        <UsageCount Value="30"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="flogin.lfm"/>
+        <EditorIndex Value="9"/>
+        <TopLine Value="38"/>
+        <CursorPos X="18" Y="78"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fmaiin.lfm"/>
+        <EditorIndex Value="5"/>
+        <CursorPos X="25"/>
+        <UsageCount Value="19"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit>
+      <Unit>
+        <Filename Value="frmuser.lfm"/>
+        <EditorIndex Value="3"/>
+        <UsageCount Value="15"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fcreateuser.lfm"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="68"/>
+        <CursorPos X="48" Y="109"/>
+        <UsageCount Value="15"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit>
+      <Unit>
+        <Filename Value="/usr/share/fpcsrc/3.2.2/rtl/objpas/objpas.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="25"/>
+        <CursorPos X="69" Y="31"/>
+        <UsageCount Value="9"/>
+      </Unit>
+      <Unit>
+        <Filename Value="/usr/share/lazarus/4.2.0/lcl/include/customform.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="2342"/>
+        <CursorPos X="28" Y="2396"/>
+        <UsageCount Value="9"/>
+      </Unit>
+      <Unit>
+        <Filename Value="uinbox.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uInbox"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="149"/>
+        <CursorPos Y="190"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="finbox.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmInbox"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fInbox"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="11"/>
+        <TopLine Value="19"/>
+        <CursorPos X="18" Y="40"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="finbox.lfm"/>
+        <EditorIndex Value="12"/>
+        <CursorPos X="34" Y="8"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit>
+    </Units>
+    <JumpHistory HistoryIndex="29">
+      <Position>
+        <Filename Value="fmaiin.pas"/>
+        <Caret Line="9" Column="9"/>
+      </Position>
+      <Position>
+        <Filename Value="flogin.pas"/>
+        <Caret Line="91" Column="7"/>
+      </Position>
+      <Position>
+        <Filename Value="frmuser.pas"/>
+        <Caret Line="44" Column="6"/>
+      </Position>
+      <Position>
+        <Filename Value="frmuser.pas"/>
+        <Caret Line="45" Column="6" TopLine="4"/>
+      </Position>
+      <Position>
+        <Filename Value="frmuser.pas"/>
+        <Caret Line="46" Column="6" TopLine="5"/>
+      </Position>
+      <Position>
+        <Filename Value="frmuser.pas"/>
+        <Caret Line="47" Column="6" TopLine="6"/>
+      </Position>
+      <Position>
+        <Filename Value="frmuser.pas"/>
+        <Caret Line="48" Column="6" TopLine="7"/>
+      </Position>
+      <Position>
+        <Filename Value="frmuser.pas"/>
+        <Caret Line="49" Column="6" TopLine="8"/>
+      </Position>
+      <Position>
+        <Filename Value="frmuser.pas"/>
+        <Caret Line="50" Column="6" TopLine="9"/>
+      </Position>
+      <Position>
+        <Filename Value="frmuser.pas"/>
+        <Caret Line="51" Column="6" TopLine="10"/>
+      </Position>
+      <Position>
+        <Filename Value="frmuser.pas"/>
+        <Caret Line="52" Column="6" TopLine="11"/>
+      </Position>
+      <Position>
+        <Filename Value="uinbox.pas"/>
+        <Caret Line="190" TopLine="149"/>
+      </Position>
+      <Position>
+        <Filename Value="finbox.pas"/>
+        <Caret Line="128" Column="24" TopLine="109"/>
+      </Position>
+      <Position>
+        <Filename Value="finbox.pas"/>
+        <Caret Line="52" Column="3" TopLine="50"/>
+      </Position>
+      <Position>
+        <Filename Value="finbox.pas"/>
+        <Caret Line="53" Column="3" TopLine="69"/>
+      </Position>
+      <Position>
+        <Filename Value="finbox.pas"/>
+        <Caret Line="52" Column="3" TopLine="52"/>
+      </Position>
+      <Position>
+        <Filename Value="finbox.pas"/>
+        <Caret Line="53" Column="3" TopLine="40"/>
+      </Position>
+      <Position>
+        <Filename Value="finbox.pas"/>
+        <Caret Line="54" Column="3" TopLine="41"/>
+      </Position>
+      <Position>
+        <Filename Value="finbox.pas"/>
+        <Caret Line="55" Column="3" TopLine="42"/>
+      </Position>
+      <Position>
+        <Filename Value="finbox.pas"/>
+        <Caret Line="56" Column="3" TopLine="43"/>
+      </Position>
+      <Position>
+        <Filename Value="finbox.pas"/>
+        <Caret Line="57" Column="3" TopLine="44"/>
+      </Position>
+      <Position>
+        <Filename Value="frmuser.pas"/>
+        <Caret Line="54" Column="6" TopLine="13"/>
+      </Position>
+      <Position>
+        <Filename Value="frmuser.pas"/>
+        <Caret Line="9" Column="3" TopLine="30"/>
+      </Position>
+      <Position>
+        <Filename Value="frmuser.pas"/>
+        <Caret Line="65" Column="17" TopLine="30"/>
+      </Position>
+      <Position>
+        <Filename Value="finbox.pas"/>
+        <Caret Line="18" Column="23"/>
+      </Position>
+      <Position>
+        <Filename Value="finbox.pas"/>
+        <Caret Line="17" Column="26"/>
+      </Position>
+      <Position>
+        <Filename Value="finbox.pas"/>
+        <Caret Line="15" Column="26"/>
+      </Position>
+      <Position>
+        <Filename Value="finbox.pas"/>
+        <Caret Line="14" Column="27"/>
+      </Position>
+      <Position>
+        <Filename Value="finbox.pas"/>
+        <Caret Line="20" Column="59"/>
+      </Position>
+      <Position>
+        <Filename Value="finbox.lfm"/>
+        <Caret Line="8" Column="34"/>
+      </Position>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>

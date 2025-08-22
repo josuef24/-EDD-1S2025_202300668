@@ -1,0 +1,124 @@
+object frmCreateUser: TfrmCreateUser
+  Left = 1265
+  Height = 437
+  Top = 194
+  Width = 314
+  Caption = 'frmCreateUser'
+  ClientHeight = 437
+  ClientWidth = 314
+  LCLVersion = '4.2.0.0'
+  OnCreate = FormCreate
+  object lblTitulo: TLabel
+    Left = 136
+    Height = 36
+    Top = 24
+    Width = 207
+    Caption = 'Crear Cuenta'
+    Font.Height = -35
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object lblNombre: TLabel
+    Left = 48
+    Height = 22
+    Top = 96
+    Width = 81
+    Caption = 'Nombre:'#10
+    Font.Height = -21
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object lblUsuario: TLabel
+    Left = 48
+    Height = 22
+    Top = 132
+    Width = 79
+    Caption = 'Usuario:'
+    Font.Height = -21
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object lblEmail: TLabel
+    Left = 50
+    Height = 22
+    Top = 172
+    Width = 59
+    Caption = 'Email:'
+    Font.Height = -21
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object lblTelefono: TLabel
+    Left = 48
+    Height = 22
+    Top = 212
+    Width = 93
+    Caption = 'Teléfono: '
+    Font.Height = -21
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object btnCrear: TButton
+    Left = 183
+    Height = 41
+    Top = 312
+    Width = 160
+    Caption = 'Crear'
+    TabOrder = 0
+    OnClick = btnCrearClick
+  end
+  object edtNombre: TEdit
+    Left = 183
+    Height = 22
+    Top = 96
+    Width = 167
+    TabOrder = 1
+  end
+  object edtUsuario: TEdit
+    Left = 183
+    Height = 22
+    Top = 132
+    Width = 167
+    TabOrder = 2
+  end
+  object edtEmail: TEdit
+    Left = 183
+    Height = 22
+    Top = 172
+    Width = 167
+    TabOrder = 3
+  end
+  object edtTelefono: TEdit
+    Left = 183
+    Height = 22
+    Top = 212
+    Width = 167
+    TabOrder = 4
+  end
+  object btnCancelar: TButton
+    Left = 183
+    Height = 41
+    Top = 376
+    Width = 160
+    Caption = 'Cancelar'
+    TabOrder = 5
+    OnClick = btnCancelarClick
+  end
+  object lblPass: TLabel
+    Left = 48
+    Height = 22
+    Top = 256
+    Width = 117
+    Caption = 'Contraseña:'
+    Font.Height = -21
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object edtPass: TEdit
+    Left = 183
+    Height = 22
+    Top = 256
+    Width = 167
+    TabOrder = 6
+  end
+end

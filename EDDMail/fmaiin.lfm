@@ -1,0 +1,40 @@
+object frmRoot: TfrmRoot
+  Left = 1264
+  Height = 240
+  Top = 233
+  Width = 328
+  AutoSize = True
+  Caption = 'frmRoot'
+  ClientHeight = 240
+  ClientWidth = 328
+  LCLVersion = '4.2.0.0'
+  OnCreate = FormCreate
+  object btnSalir: TButton
+    Left = 112
+    Height = 25
+    Top = 208
+    Width = 96
+    Caption = 'Salir'
+    TabOrder = 0
+    OnClick = btnSalirClick
+  end
+  object Label1: TLabel
+    Left = 120
+    Height = 36
+    Top = 16
+    Width = 73
+    Caption = 'Root'
+    Font.Height = -35
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object btnCargaMasiva: TButton
+    Left = 96
+    Height = 40
+    Top = 80
+    Width = 144
+    Caption = 'Carga masiva'
+    TabOrder = 1
+    OnClick = btnCargaMasivaClick
+  end
+end
