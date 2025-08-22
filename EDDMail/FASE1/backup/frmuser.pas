@@ -5,7 +5,8 @@ unit frmUser;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
+  fInbox;
 
 
 
@@ -14,8 +15,18 @@ type
   { TfrmUserN }
 
   TfrmUserN = class(TForm)
+    btnBandeja: TButton;
+    btnCargaMasiva1: TButton;
+    btnCargaMasiva2: TButton;
+    btnCargaMasiva3: TButton;
+    btnCargaMasiva4: TButton;
+    btnCargaMasiva5: TButton;
+    btnCargaMasiva6: TButton;
+    btnCargaMasiva7: TButton;
+    btnCargaMasiva8: TButton;
     btnCerrarSesion: TButton;
     lblWelcome: TLabel;
+    procedure btnBandejaClick(Sender: TObject);
     procedure btnCerrarSesionClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
@@ -29,7 +40,7 @@ var
 
 implementation
 
-uses fLogin;
+uses fLogin, fSendMail;
 
 {$R *.lfm}
 
@@ -43,6 +54,15 @@ begin
      Application.CreateForm(TfrmLogin, frmLogin);
   frmLogin.Show;
   Self.Hide;
+end;
+
+
+procedure TfrmUserN.btnBandejaClick(Sender: TObject);
+begin
+  if not Assigned(frmInbox) then
+    Application.CreateForm(TfrmInbox, frmInbox);
+  frmUserN.Hide;
+  frmInbox.Show;
 end;
 
 procedure TfrmUserN.FormCreate(Sender: TObject);

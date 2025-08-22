@@ -2,10 +2,10 @@ object frmCreateUser: TfrmCreateUser
   Left = 1265
   Height = 437
   Top = 194
-  Width = 314
+  Width = 454
   Caption = 'frmCreateUser'
   ClientHeight = 437
-  ClientWidth = 314
+  ClientWidth = 454
   LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
   object lblTitulo: TLabel

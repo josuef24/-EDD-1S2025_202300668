@@ -1,7 +1,7 @@
 uses
   {$IFDEF UNIX}{$IFDEF UseCThreads} cthreads, {$ENDIF}{$ENDIF}
   Interfaces, Forms, fLogin, fMaiin, fCreateUser, frmUser, uUsers, uInbox,
-  fInbox;
+  fInbox, fSendMail, fViewMail;
 
 begin
   Application.Initialize;
@@ -10,6 +10,8 @@ begin
   Application.CreateForm(TfrmCreateUser, frmCreateUser);
   Application.CreateForm(TfrmUserN, frmUserN);
   Application.CreateForm(TfrmInbox, frmInbox);
+  Application.CreateForm(TfrmSendMail, frmSendMail);
+  Application.CreateForm(TfrmViewMail, frmViewMail);
   Application.Run;
 end.
 

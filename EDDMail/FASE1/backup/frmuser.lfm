@@ -43,6 +43,7 @@ object frmUserN: TfrmUserN
     Width = 200
     Caption = 'Enviar correo'
     TabOrder = 2
+    OnClick = btnCargaMasiva1Click
   end
   object btnCargaMasiva2: TButton
     Left = 200

@@ -5,7 +5,7 @@ unit fInbox;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Math;
 
 type
 
@@ -13,7 +13,6 @@ type
 
   TfrmInbox = class(TForm)
     lstMails: TListBox;      // lista (Estado | Asunto | Remitente)
-    memBody: TMemo;          // mensaje seleccionado
     lblUnread: TLabel;       // “No leídos: N”
     btnOrdenarAZ: TButton;   // ordena por Asunto A–Z
     btnEliminar: TButton;    // elimina de la bandeja
@@ -25,9 +24,9 @@ type
     procedure btnOrdenarAZClick(Sender: TObject);
     procedure btnEliminarClick(Sender: TObject);
     procedure btnRegresarClick(Sender: TObject);
+    procedure lstMailsDblClick(Sender: TObject);
   private
     procedure RefrescarLista;
-    procedure MostrarSeleccion;
     function  IndexValido: Boolean;
   end;
 
@@ -37,14 +36,13 @@ var
 implementation
 
 uses
-  uInbox, frmUser;  // Inbox global y regreso a menú de usuario
+  uInbox, frmUser, Uusers, fViewmail;  // Inbox global y regreso a menú de usuario
 
 {$R *.lfm}
 
 procedure TfrmInbox.FormShow(Sender: TObject);
 begin
   RefrescarLista;
-  memBody.Clear;
 end;
 
 procedure TfrmInbox.FormCreate(Sender: TObject);
@@ -61,7 +59,7 @@ begin
   lstMails.Clear;
 
   // recorrer lista doblemente enlazada
-  N := Inbox.Head;
+  N := CurrentUser^.Inbox.Head;
   while N <> nil do
   begin
     // Estado como ‘NL’/‘L’ + Asunto + Remitente
@@ -71,47 +69,23 @@ begin
   end;
 
   // actualizar contador de no leídos
-  lblUnread.Caption := 'No leídos: ' + IntToStr(CountUnread(Inbox));
+  lblUnread.Caption := 'No leídos: ' + IntToStr(CountUnread(CurrentUser^.Inbox));
 
   // selección por defecto (opcional)
   if lstMails.Count > 0 then
     lstMails.ItemIndex := 0;
 end;
 
-procedure TfrmInbox.MostrarSeleccion;
-var
-  node: PMail;
-begin
-  if not IndexValido then Exit;
-
-  node := GetMailByIndex(Inbox, lstMails.ItemIndex);
-  if node = nil then Exit;
-
-  // mostrar cuerpo
-  memBody.Lines.Text :=
-    'Asunto: ' + node^.Asunto + LineEnding +
-    'De: '     + node^.Remitente + LineEnding +
-    'Fecha: '  + node^.Fecha + LineEnding + LineEnding +
-    node^.Mensaje;
-
-  // marcar leído y refrescar estado/contador
-  MarkRead(node);
-  RefrescarLista;
-  // mantener resaltado el seleccionado
-  if lstMails.Count > 0 then
-    lstMails.ItemIndex := Min(lstMails.Count-1, lstMails.ItemIndex);
-end;
-
 procedure TfrmInbox.lstMailsClick(Sender: TObject);
+
 begin
   MostrarSeleccion;
 end;
 
 procedure TfrmInbox.btnOrdenarAZClick(Sender: TObject);
 begin
-  SortBySubject(Inbox);
+  SortBySubject(CurrentUser^.Inbox);
   RefrescarLista;
-  memBody.Clear;
 end;
 
 procedure TfrmInbox.btnEliminarClick(Sender: TObject);
@@ -124,14 +98,13 @@ begin
     Exit;
   end;
 
-  node := GetMailByIndex(Inbox, lstMails.ItemIndex);
+  node := GetMailByIndex(CurrentUser^.Inbox, lstMails.ItemIndex);
   if node = nil then Exit;
 
   // sacar de la lista (luego lo enviaremos a la Pila/Papelera)
-  DetachMail(Inbox, node);
+  DetachMail(CurrentUser^.Inbox, node);
   Dispose(node); // de momento lo liberamos; en “Papelera” lo apilaremos
 
-  memBody.Clear;
   RefrescarLista;
 end;
 
@@ -139,6 +112,22 @@ procedure TfrmInbox.btnRegresarClick(Sender: TObject);
 begin
   frmInbox.Hide;
   frmUserN.Show;
+end;
+
+procedure TfrmInbox.lstMailsDblClick(Sender: TObject);
+var
+  node: PMail;
+begin
+  if (lstMails.ItemIndex < 0) then Exit;
+  node := GetMailByIndex(CurrentUser^.Inbox, lstMails.ItemIndex);
+  if node = nil then Exit;
+
+  if not Assigned(frmViewMail) then
+    Application.CreateForm(TfrmViewMail, frmViewMail);
+
+  frmViewMail.ShowMail(node);
+  // refrescamos lista para que el estado pase a L
+  RefrescarLista;
 end;
 
 function TfrmInbox.IndexValido: Boolean;

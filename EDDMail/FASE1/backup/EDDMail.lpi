@@ -89,6 +89,20 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="fInbox"/>
       </Unit>
+      <Unit>
+        <Filename Value="fsendmail.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmSendMail"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fSendMail"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fviewmail.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmViewMail"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fViewMail"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

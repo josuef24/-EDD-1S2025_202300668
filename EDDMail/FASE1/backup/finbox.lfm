@@ -24,7 +24,7 @@ object frmInbox: TfrmInbox
     Top = 56
     Width = 112
     Caption = 'Ordenar (A-Z)'
-    TabOrder = 2
+    TabOrder = 1
     OnClick = btnOrdenarAZClick
   end
   object btnEliminar: TButton
@@ -33,7 +33,7 @@ object frmInbox: TfrmInbox
     Top = 552
     Width = 112
     Caption = 'Eliminar'
-    TabOrder = 3
+    TabOrder = 2
     OnClick = btnEliminarClick
   end
   object btnRegresar: TButton
@@ -42,7 +42,7 @@ object frmInbox: TfrmInbox
     Top = 8
     Width = 112
     Caption = 'Regresar'
-    TabOrder = 4
+    TabOrder = 3
     OnClick = btnRegresarClick
   end
   object lstMails: TListBox
@@ -54,17 +54,6 @@ object frmInbox: TfrmInbox
     TabOrder = 0
     TopIndex = -1
     OnClick = lstMailsClick
-  end
-  object memBody: TMemo
-    Left = 304
-    Height = 90
-    Top = 496
-    Width = 150
-    Lines.Strings = (
-      'memBody'
-    )
-    ReadOnly = True
-    ScrollBars = ssAutoBoth
-    TabOrder = 1
+    OnDblClick = lstMailsDblClick
   end
 end

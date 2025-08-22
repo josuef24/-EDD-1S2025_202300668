@@ -3,6 +3,7 @@ unit uUsers;
 {$mode objfpc}{$H+}
 
 interface
+uses uInbox;
 
 function LoadUsersFromJSON(const FileName: string;
                            out Imported, Duplicated, Errors: Integer): Boolean;
@@ -21,12 +22,14 @@ type
     Phone:    AnsiString;   // Teléfono
     Password: AnsiString;   // Contraseña
     IsRoot:   Boolean;      // Root?
+    Inbox:    TInbox;       // Bandeja del user
     Next:     PUser;        // Siguiente
   end;
 
 var
   UsersHead: PUser = nil;
   NextId: Integer = 0;
+  CurrentUser: PUser = nil;
 
 procedure InitUsers;
 
@@ -73,6 +76,8 @@ begin
 
   NewNode^.Next := UsersHead;
   UsersHead := NewNode;
+
+  InitInbox(NewNode^.Inbox);
 
   // Mantén NextId preparado para el siguiente alta automática
   if AId >= NextId then
@@ -181,6 +186,8 @@ begin
   NewNode^.Password := APass;
   NewNode^.IsRoot   := ARoot;
 
+  InitInbox(NewNode^.Inbox);
+
   // Inserción al inicio (O(1))
   NewNode^.Next := UsersHead;
   UsersHead := NewNode;
@@ -216,6 +223,7 @@ begin
   U := FindUserByEmailOrUsername(Key);
   if (U <> nil) and (U^.Password = APass) then
   begin
+    CurrentUser := U;
     OutIsRoot := U^.IsRoot;
     Exit(True);
   end;

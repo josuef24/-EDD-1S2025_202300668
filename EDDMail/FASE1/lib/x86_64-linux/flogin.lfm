@@ -2,10 +2,10 @@ object frmLogin: TfrmLogin
   Left = 1266
   Height = 424
   Top = 153
-  Width = 310
+  Width = 446
   Caption = 'frmLogin'
   ClientHeight = 424
-  ClientWidth = 310
+  ClientWidth = 446
   LCLVersion = '4.2.0.0'
   object Label1: TLabel
     Left = 136

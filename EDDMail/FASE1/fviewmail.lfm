@@ -1,0 +1,71 @@
+object frmViewMail: TfrmViewMail
+  Left = 1267
+  Height = 544
+  Top = 403
+  Width = 624
+  Caption = 'frmViewMail'
+  ClientHeight = 544
+  ClientWidth = 624
+  LCLVersion = '4.2.0.0'
+  object lblAsunto: TLabel
+    Left = 24
+    Height = 28
+    Top = 24
+    Width = 100
+    Caption = 'Asunto: '
+    Font.Height = -27
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object lblDe: TLabel
+    Left = 24
+    Height = 28
+    Top = 64
+    Width = 50
+    Caption = 'De: '
+    Font.Height = -27
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object lblFecha: TLabel
+    Left = 24
+    Height = 28
+    Top = 104
+    Width = 91
+    Caption = 'Fecha: '
+    Font.Height = -27
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object lblEstado: TLabel
+    Left = 24
+    Height = 28
+    Top = 144
+    Width = 99
+    Caption = 'Estado: '
+    Font.Height = -27
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object memCuerpo: TMemo
+    Left = 32
+    Height = 290
+    Top = 192
+    Width = 560
+    Lines.Strings = (
+      'memCuerpo'
+    )
+    ReadOnly = True
+    ScrollBars = ssAutoBoth
+    TabOrder = 0
+  end
+  object btnCerar: TButton
+    Left = 264
+    Height = 40
+    Top = 496
+    Width = 144
+    Caption = 'Cerar'
+    TabOrder = 1
+    OnClick = btnCerrarClick
+  end
+end
