@@ -45,14 +45,13 @@ object frmUserN: TfrmUserN
     TabOrder = 2
     OnClick = btnCargaMasiva1Click
   end
-  object btnPapelera: TButton
+  object btnCargaMasiva2: TButton
     Left = 200
     Height = 40
     Top = 224
     Width = 200
     Caption = 'Papelera'
     TabOrder = 3
-    OnClick = btnPapeleraClick
   end
   object btnCargaMasiva3: TButton
     Left = 200

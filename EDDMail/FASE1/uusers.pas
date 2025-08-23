@@ -3,7 +3,7 @@ unit uUsers;
 {$mode objfpc}{$H+}
 
 interface
-uses uInbox, uTrash;
+uses uInbox;
 
 function LoadUsersFromJSON(const FileName: string;
                            out Imported, Duplicated, Errors: Integer): Boolean;
@@ -23,7 +23,6 @@ type
     Password: AnsiString;   // Contraseña
     IsRoot:   Boolean;      // Root?
     Inbox:    TInbox;       // Bandeja del user
-    Trash:    TTrash;       // Papelera (pila)
     Next:     PUser;        // Siguiente
   end;
 
@@ -79,7 +78,6 @@ begin
   UsersHead := NewNode;
 
   InitInbox(NewNode^.Inbox);
-  InitTrash(NewNode^.Trash);
 
   // Mantén NextId preparado para el siguiente alta automática
   if AId >= NextId then
@@ -189,7 +187,6 @@ begin
   NewNode^.IsRoot   := ARoot;
 
   InitInbox(NewNode^.Inbox);
-  InitTrash(NewNode^.Trash);
 
   // Inserción al inicio (O(1))
   NewNode^.Next := UsersHead;

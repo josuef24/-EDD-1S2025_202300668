@@ -36,7 +36,7 @@ var
 implementation
 
 uses
-  uInbox, frmUser, Uusers, fViewmail, uTrash;  // Inbox global y regreso a menú de usuario
+  uInbox, frmUser, Uusers, fViewmail;  // Inbox global y regreso a menú de usuario
 
 {$R *.lfm}
 
@@ -115,15 +115,11 @@ begin
   node := GetMailByIndex(CurrentUser^.Inbox, lstMails.ItemIndex);
   if node = nil then Exit;
 
-  //quitar de la bandeja
+  // sacar de la lista (luego lo enviaremos a la Pila/Papelera)
   DetachMail(CurrentUser^.Inbox, node);
+  Dispose(node); // de momento lo liberamos; en “Papelera” lo apilaremos
 
-  //enviar a pila
-  PushTrash(CurrentUser^.Trash, node);
-
-  ShowMessage('Correo movido a la papelera');
   RefrescarLista;
-
 end;
 
 procedure TfrmInbox.btnRegresarClick(Sender: TObject);

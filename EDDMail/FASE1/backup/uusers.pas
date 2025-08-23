@@ -3,7 +3,7 @@ unit uUsers;
 {$mode objfpc}{$H+}
 
 interface
-uses uInbox, uTrash;
+uses uInbox;
 
 function LoadUsersFromJSON(const FileName: string;
                            out Imported, Duplicated, Errors: Integer): Boolean;
@@ -23,7 +23,6 @@ type
     Password: AnsiString;   // Contraseña
     IsRoot:   Boolean;      // Root?
     Inbox:    TInbox;       // Bandeja del user
-    Trash:    TTrash;       // Papelera (pila)
     Next:     PUser;        // Siguiente
   end;
 
@@ -46,7 +45,7 @@ function  ValidateUser(const Key, APass: AnsiString; out OutIsRoot: Boolean): Bo
 
 implementation
 
-uses SysUtils, fpjson, jsonparser, Classes;
+uses SysUtils, fpjson, jsonparser, Classes, uInbox;
 
 function ExistsId(const AId: Integer): Boolean;
 var
@@ -79,7 +78,6 @@ begin
   UsersHead := NewNode;
 
   InitInbox(NewNode^.Inbox);
-  InitTrash(NewNode^.Trash);
 
   // Mantén NextId preparado para el siguiente alta automática
   if AId >= NextId then

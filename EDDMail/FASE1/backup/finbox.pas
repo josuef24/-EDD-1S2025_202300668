@@ -36,7 +36,7 @@ var
 implementation
 
 uses
-  uInbox, frmUser, Uusers, fViewmail, uTrash;  // Inbox global y regreso a menú de usuario
+  uInbox, frmUser, Uusers, fViewmail;  // Inbox global y regreso a menú de usuario
 
 {$R *.lfm}
 
@@ -77,23 +77,9 @@ begin
 end;
 
 procedure TfrmInbox.lstMailsClick(Sender: TObject);
-var
-  idx: Integer;
-  mail: PMail;
 
 begin
-  idx := lstMails.ItemIndex;
-  if idx < 0 then Exit;
-
-  mail := GetMailByIndex(CurrentUser^.Inbox, idx);
-  if mail <> nil then
-  begin
-    if not Assigned(frmViewMail) then
-      Application.CreateForm(TfrmViewMail, frmViewMail);
-    frmViewMail.ShowMail(mail);
-    frmViewMail.Show;
-  end;
-
+  MostrarSeleccion;
 end;
 
 procedure TfrmInbox.btnOrdenarAZClick(Sender: TObject);
@@ -115,15 +101,11 @@ begin
   node := GetMailByIndex(CurrentUser^.Inbox, lstMails.ItemIndex);
   if node = nil then Exit;
 
-  //quitar de la bandeja
-  DetachMail(CurrenUser^.Inbox, node);
+  // sacar de la lista (luego lo enviaremos a la Pila/Papelera)
+  DetachMail(CurrentUser^.Inbox, node);
+  Dispose(node); // de momento lo liberamos; en “Papelera” lo apilaremos
 
-  //enviar a pila
-  PushTrash(CurrenUser^.Trash, node);
-
-  ShowMessage('Correo movido a la papelera');
   RefrescarLista;
-
 end;
 
 procedure TfrmInbox.btnRegresarClick(Sender: TObject);

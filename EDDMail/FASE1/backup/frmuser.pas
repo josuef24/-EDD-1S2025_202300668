@@ -27,7 +27,6 @@ type
     btnCerrarSesion: TButton;
     lblWelcome: TLabel;
     procedure btnBandejaClick(Sender: TObject);
-    procedure btnCargaMasiva1Click(Sender: TObject);
     procedure btnCerrarSesionClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
@@ -64,14 +63,6 @@ begin
     Application.CreateForm(TfrmInbox, frmInbox);
   frmUserN.Hide;
   frmInbox.Show;
-end;
-
-procedure TfrmUserN.btnCargaMasiva1Click(Sender: TObject);
-begin
-  if not Assigned(frmSendMail) then
-    Application.CreateForm(TfrmSendMail, frmSendMail);
-  frmUserN.Hide;
-  frmSendMail.Show;
 end;
 
 procedure TfrmUserN.FormCreate(Sender: TObject);
