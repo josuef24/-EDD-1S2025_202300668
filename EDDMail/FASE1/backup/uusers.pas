@@ -45,7 +45,7 @@ function  ValidateUser(const Key, APass: AnsiString; out OutIsRoot: Boolean): Bo
 
 implementation
 
-uses SysUtils, fpjson, jsonparser, Classes, uInbox;
+uses SysUtils, fpjson, jsonparser, Classes;
 
 function ExistsId(const AId: Integer): Boolean;
 var

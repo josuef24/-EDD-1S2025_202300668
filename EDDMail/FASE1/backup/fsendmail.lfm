@@ -1,7 +1,7 @@
 object frmSendMail: TfrmSendMail
-  Left = 1265
+  Left = 1264
   Height = 615
-  Top = 363
+  Top = 333
   Width = 558
   Caption = 'frmSendMail'
   ClientHeight = 615
@@ -87,5 +87,6 @@ object frmSendMail: TfrmSendMail
     Width = 144
     Caption = 'Cancelar'
     TabOrder = 4
+    OnClick = btnCancelarClick
   end
 end

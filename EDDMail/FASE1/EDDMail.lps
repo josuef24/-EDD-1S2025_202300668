@@ -7,9 +7,9 @@
       <Unit>
         <Filename Value="EDDMail.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="11"/>
-        <CursorPos X="31" Y="4"/>
-        <UsageCount Value="42"/>
+        <EditorIndex Value="12"/>
+        <CursorPos X="3" Y="4"/>
+        <UsageCount Value="58"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -21,7 +21,7 @@
         <UnitName Value="fMaiin"/>
         <TopLine Value="25"/>
         <CursorPos X="13" Y="32"/>
-        <UsageCount Value="42"/>
+        <UsageCount Value="58"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -32,10 +32,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="fLogin"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="6"/>
         <TopLine Value="64"/>
         <CursorPos X="3" Y="70"/>
-        <UsageCount Value="42"/>
+        <UsageCount Value="58"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -46,10 +46,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="fCreateUser"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="8"/>
         <TopLine Value="63"/>
         <CursorPos X="17" Y="96"/>
-        <UsageCount Value="42"/>
+        <UsageCount Value="58"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -60,10 +60,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="frmUser"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="39"/>
-        <CursorPos Y="75"/>
-        <UsageCount Value="41"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="43"/>
+        <CursorPos X="39" Y="45"/>
+        <UsageCount Value="57"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -71,20 +71,20 @@
         <Filename Value="uusers.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uUsers"/>
-        <EditorIndex Value="9"/>
-        <TopLine Value="65"/>
-        <CursorPos X="37" Y="109"/>
-        <UsageCount Value="33"/>
+        <EditorIndex Value="10"/>
+        <TopLine Value="169"/>
+        <CursorPos X="29" Y="192"/>
+        <UsageCount Value="49"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="uinbox.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uInbox"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="149"/>
-        <CursorPos Y="190"/>
-        <UsageCount Value="26"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="152"/>
+        <CursorPos Y="193"/>
+        <UsageCount Value="42"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -94,44 +94,70 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="fInbox"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="12"/>
-        <TopLine Value="61"/>
-        <CursorPos X="3" Y="83"/>
-        <UsageCount Value="26"/>
+        <EditorIndex Value="13"/>
+        <TopLine Value="116"/>
+        <CursorPos X="3" Y="131"/>
+        <UsageCount Value="42"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fsendmail.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmSendMail"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fSendMail"/>
+        <EditorIndex Value="14"/>
+        <TopLine Value="57"/>
+        <CursorPos X="3" Y="96"/>
+        <UsageCount Value="39"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fviewmail.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmViewMail"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fViewMail"/>
+        <EditorIndex Value="3"/>
+        <CursorPos X="24" Y="21"/>
+        <UsageCount Value="37"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="flogin.lfm"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="11"/>
         <TopLine Value="38"/>
         <CursorPos X="18" Y="78"/>
-        <UsageCount Value="21"/>
+        <UsageCount Value="29"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit>
       <Unit>
         <Filename Value="fmaiin.lfm"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="7"/>
         <CursorPos X="25"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="28"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit>
       <Unit>
         <Filename Value="frmuser.lfm"/>
-        <EditorIndex Value="4"/>
-        <UsageCount Value="16"/>
+        <EditorIndex Value="5"/>
+        <UsageCount Value="24"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit>
       <Unit>
         <Filename Value="fcreateuser.lfm"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="9"/>
         <TopLine Value="68"/>
-        <CursorPos X="48" Y="109"/>
-        <UsageCount Value="16"/>
+        <CursorPos X="16" Y="109"/>
+        <UsageCount Value="24"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit>
@@ -140,150 +166,49 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="25"/>
         <CursorPos X="69" Y="31"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="7"/>
       </Unit>
       <Unit>
         <Filename Value="/usr/share/lazarus/4.2.0/lcl/include/customform.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="2342"/>
         <CursorPos X="28" Y="2396"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="7"/>
       </Unit>
       <Unit>
         <Filename Value="finbox.lfm"/>
-        <EditorIndex Value="14"/>
-        <CursorPos X="34" Y="8"/>
-        <UsageCount Value="12"/>
+        <EditorIndex Value="16"/>
+        <CursorPos X="20" Y="8"/>
+        <UsageCount Value="20"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit>
       <Unit>
-        <Filename Value="fsendmail.pas"/>
+        <Filename Value="utrash.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="frmSendMail"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="fSendMail"/>
-        <EditorIndex Value="13"/>
-        <TopLine Value="5"/>
-        <CursorPos X="29" Y="29"/>
-        <UsageCount Value="23"/>
+        <UnitName Value="uTrash"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="30"/>
+        <CursorPos Y="71"/>
+        <UsageCount Value="36"/>
         <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="fviewmail.pas"/>
+        <Filename Value="ftrash.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="frmViewMail"/>
+        <ComponentName Value="frmTrash"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="fViewMail"/>
-        <EditorIndex Value="2"/>
-        <CursorPos X="24" Y="21"/>
-        <UsageCount Value="21"/>
+        <UnitName Value="fTrash"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="15"/>
+        <TopLine Value="104"/>
+        <CursorPos X="3" Y="115"/>
+        <UsageCount Value="22"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="27">
-      <Position>
-        <Filename Value="fsendmail.pas"/>
-        <Caret Line="29" Column="23" TopLine="9"/>
-      </Position>
-      <Position>
-        <Filename Value="uusers.pas"/>
-        <Caret Line="109" Column="37" TopLine="93"/>
-      </Position>
-      <Position>
-        <Filename Value="frmuser.pas"/>
-        <Caret Line="43" Column="23"/>
-      </Position>
-      <Position>
-        <Filename Value="frmuser.pas"/>
-        <Caret Line="44" Column="23" TopLine="3"/>
-      </Position>
-      <Position>
-        <Filename Value="fviewmail.pas"/>
-        <Caret Line="64" TopLine="23"/>
-      </Position>
-      <Position>
-        <Filename Value="fviewmail.pas"/>
-        <Caret Line="28" Column="12" TopLine="7"/>
-      </Position>
-      <Position>
-        <Filename Value="fviewmail.pas"/>
-        <Caret Line="32" Column="12" TopLine="7"/>
-      </Position>
-      <Position>
-        <Filename Value="fviewmail.pas"/>
-        <Caret Line="33" Column="12" TopLine="7"/>
-      </Position>
-      <Position>
-        <Filename Value="fviewmail.pas"/>
-        <Caret Line="34" Column="12" TopLine="7"/>
-      </Position>
-      <Position>
-        <Filename Value="fviewmail.pas"/>
-        <Caret Line="35" Column="12" TopLine="7"/>
-      </Position>
-      <Position>
-        <Filename Value="finbox.pas"/>
-        <Caret Line="131" Column="27" TopLine="103"/>
-      </Position>
-      <Position>
-        <Filename Value="finbox.pas"/>
-        <Caret Line="40" Column="37" TopLine="29"/>
-      </Position>
-      <Position>
-        <Filename Value="finbox.pas"/>
-        <Caret Line="108" Column="51" TopLine="96"/>
-      </Position>
-      <Position>
-        <Filename Value="finbox.pas"/>
-        <Caret Line="120" Column="18" TopLine="97"/>
-      </Position>
-      <Position>
-        <Filename Value="finbox.pas"/>
-        <Caret Line="119" Column="18" TopLine="119"/>
-      </Position>
-      <Position>
-        <Filename Value="uusers.pas"/>
-        <Caret Line="109" Column="37" TopLine="93"/>
-      </Position>
-      <Position>
-        <Filename Value="finbox.pas"/>
-        <Caret Line="119" Column="18" TopLine="119"/>
-      </Position>
-      <Position>
-        <Filename Value="finbox.pas"/>
-        <Caret Line="108" Column="20" TopLine="101"/>
-      </Position>
-      <Position>
-        <Filename Value="finbox.pas"/>
-        <Caret Line="8" Column="27"/>
-      </Position>
-      <Position>
-        <Filename Value="finbox.pas"/>
-        <Caret Line="160" Column="5" TopLine="127"/>
-      </Position>
-      <Position>
-        <Filename Value="fviewmail.pas"/>
-        <Caret Line="19" Column="19"/>
-      </Position>
-      <Position>
-        <Filename Value="fviewmail.pas"/>
-        <Caret Line="23" Column="11"/>
-      </Position>
-      <Position>
-        <Filename Value="fviewmail.pas"/>
-        <Caret Line="27" TopLine="6"/>
-      </Position>
-      <Position>
-        <Filename Value="finbox.pas"/>
-        <Caret Line="160" Column="5" TopLine="127"/>
-      </Position>
-      <Position>
-        <Filename Value="finbox.pas"/>
-        <Caret Line="159" Column="5" TopLine="126"/>
-      </Position>
+    <JumpHistory HistoryIndex="29">
       <Position>
         <Filename Value="finbox.pas"/>
         <Caret Line="39" Column="37" TopLine="18"/>
@@ -295,6 +220,111 @@
       <Position>
         <Filename Value="finbox.pas"/>
         <Caret Line="107" TopLine="68"/>
+      </Position>
+      <Position>
+        <Filename Value="finbox.pas"/>
+        <Caret Line="83" Column="3" TopLine="61"/>
+      </Position>
+      <Position>
+        <Filename Value="finbox.pas"/>
+        <Caret Line="39" Column="45" TopLine="27"/>
+      </Position>
+      <Position>
+        <Filename Value="uinbox.pas"/>
+        <Caret Line="247" TopLine="206"/>
+      </Position>
+      <Position>
+        <Filename Value="uinbox.pas"/>
+        <Caret Line="23" Column="15" TopLine="2"/>
+      </Position>
+      <Position>
+        <Filename Value="uinbox.pas"/>
+        <Caret Line="231" TopLine="194"/>
+      </Position>
+      <Position>
+        <Filename Value="uinbox.pas"/>
+        <Caret Line="253" TopLine="213"/>
+      </Position>
+      <Position>
+        <Filename Value="uinbox.pas"/>
+        <Caret Line="218" TopLine="177"/>
+      </Position>
+      <Position>
+        <Filename Value="finbox.pas"/>
+        <Caret Line="193" TopLine="152"/>
+      </Position>
+      <Position>
+        <Filename Value="finbox.pas"/>
+      </Position>
+      <Position>
+        <Filename Value="uinbox.pas"/>
+        <Caret Line="193" TopLine="152"/>
+      </Position>
+      <Position>
+        <Filename Value="finbox.pas"/>
+        <Caret Line="126" Column="3" TopLine="105"/>
+      </Position>
+      <Position>
+        <Filename Value="finbox.pas"/>
+        <Caret Line="85" Column="3" TopLine="79"/>
+      </Position>
+      <Position>
+        <Filename Value="finbox.pas"/>
+        <Caret Line="29" Column="30"/>
+      </Position>
+      <Position>
+        <Filename Value="finbox.pas"/>
+        <Caret Line="126" Column="17" TopLine="105"/>
+      </Position>
+      <Position>
+        <Filename Value="fsendmail.pas"/>
+        <Caret Line="29" Column="29" TopLine="5"/>
+      </Position>
+      <Position>
+        <Filename Value="finbox.pas"/>
+        <Caret Line="53" TopLine="48"/>
+      </Position>
+      <Position>
+        <Filename Value="fsendmail.pas"/>
+        <Caret Line="94" Column="17" TopLine="57"/>
+      </Position>
+      <Position>
+        <Filename Value="ftrash.pas"/>
+      </Position>
+      <Position>
+        <Filename Value="frmuser.pas"/>
+        <Caret Line="76" TopLine="35"/>
+      </Position>
+      <Position>
+        <Filename Value="frmuser.pas"/>
+        <Caret Line="45" Column="26" TopLine="48"/>
+      </Position>
+      <Position>
+        <Filename Value="ftrash.pas"/>
+      </Position>
+      <Position>
+        <Filename Value="ftrash.pas"/>
+        <Caret Line="141" TopLine="100"/>
+      </Position>
+      <Position>
+        <Filename Value="EDDMail.lpr"/>
+        <Caret Line="4" Column="3"/>
+      </Position>
+      <Position>
+        <Filename Value="ftrash.pas"/>
+        <Caret Line="33" Column="37" TopLine="22"/>
+      </Position>
+      <Position>
+        <Filename Value="ftrash.pas"/>
+        <Caret Line="36" Column="37" TopLine="25"/>
+      </Position>
+      <Position>
+        <Filename Value="ftrash.pas"/>
+        <Caret Line="139" Column="12" TopLine="104"/>
+      </Position>
+      <Position>
+        <Filename Value="ftrash.pas"/>
+        <Caret Line="83" Column="3" TopLine="81"/>
       </Position>
     </JumpHistory>
     <RunParams>

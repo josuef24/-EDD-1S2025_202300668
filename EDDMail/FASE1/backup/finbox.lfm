@@ -1,7 +1,7 @@
 object frmInbox: TfrmInbox
-  Left = 1265
+  Left = 1263
   Height = 613
-  Top = 316
+  Top = 297
   Width = 636
   Caption = 'frmInbox'
   ClientHeight = 613

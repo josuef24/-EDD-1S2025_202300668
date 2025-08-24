@@ -3,7 +3,7 @@ unit uUsers;
 {$mode objfpc}{$H+}
 
 interface
-uses uInbox;
+uses uInbox, uTrash;
 
 function LoadUsersFromJSON(const FileName: string;
                            out Imported, Duplicated, Errors: Integer): Boolean;
@@ -24,6 +24,7 @@ type
     IsRoot:   Boolean;      // Root?
     Inbox:    TInbox;       // Bandeja del user
     Next:     PUser;        // Siguiente
+    Trash: TTrash;
   end;
 
 var
@@ -78,6 +79,7 @@ begin
   UsersHead := NewNode;
 
   InitInbox(NewNode^.Inbox);
+  InitTrash(NewNode^.Trash);
 
   // Mantén NextId preparado para el siguiente alta automática
   if AId >= NextId then
@@ -187,6 +189,7 @@ begin
   NewNode^.IsRoot   := ARoot;
 
   InitInbox(NewNode^.Inbox);
+  InitTrash(NewNode^.Trash);
 
   // Inserción al inicio (O(1))
   NewNode^.Next := UsersHead;

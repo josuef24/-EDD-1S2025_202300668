@@ -26,7 +26,7 @@ var
 
 implementation
 
-uses uUsers, uInbox, fUserN;   // CurrentUser, AddMail, y volver al menú
+uses uUsers, uInbox, frmUser;   // CurrentUser, AddMail, y volver al menú
 
 {$R *.lfm}
 
@@ -90,7 +90,7 @@ end;
 
 procedure TfrmSendMail.btnCancelarClick(Sender: TObject);
 begin
-  Close;
+  frmSendMail.Hide;
   frmUserN.Show;
 end;
 

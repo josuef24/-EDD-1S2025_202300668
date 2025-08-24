@@ -93,6 +93,7 @@
         <Filename Value="fsendmail.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmSendMail"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="fSendMail"/>
       </Unit>
@@ -100,8 +101,21 @@
         <Filename Value="fviewmail.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmViewMail"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="fViewMail"/>
+      </Unit>
+      <Unit>
+        <Filename Value="utrash.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uTrash"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ftrash.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmTrash"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fTrash"/>
       </Unit>
     </Units>
   </ProjectOptions>

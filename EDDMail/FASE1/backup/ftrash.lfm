@@ -1,0 +1,60 @@
+object frmTrash: TfrmTrash
+  Left = 1263
+  Height = 480
+  Top = 407
+  Width = 629
+  Caption = 'frmTrash'
+  ClientHeight = 480
+  ClientWidth = 629
+  LCLVersion = '4.2.0.0'
+  object lblTitulo: TLabel
+    Left = 224
+    Height = 36
+    Top = 8
+    Width = 137
+    Caption = 'Papelera'
+    Font.Height = -35
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object edtBuscar: TEdit
+    Left = 176
+    Height = 22
+    Top = 88
+    Width = 272
+    TabOrder = 0
+  end
+  object btnBuscar: TButton
+    Left = 472
+    Height = 38
+    Top = 80
+    Width = 131
+    Caption = 'Buscar'
+    TabOrder = 1
+  end
+  object btnEliminar: TButton
+    Left = 16
+    Height = 38
+    Top = 424
+    Width = 131
+    Caption = 'Eliminar'
+    TabOrder = 2
+  end
+  object btnRegresar: TButton
+    Left = 488
+    Height = 38
+    Top = 432
+    Width = 131
+    Caption = 'Regresar'
+    TabOrder = 3
+  end
+  object lstTrash: TListBox
+    Left = 160
+    Height = 240
+    Top = 152
+    Width = 348
+    ItemHeight = 0
+    TabOrder = 4
+    TopIndex = -1
+  end
+end

@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  fInbox;
+  uInbox;
 
 
 
@@ -17,7 +17,7 @@ type
   TfrmUserN = class(TForm)
     btnBandeja: TButton;
     btnCargaMasiva1: TButton;
-    btnCargaMasiva2: TButton;
+    btnPapelera: TButton;
     btnCargaMasiva3: TButton;
     btnCargaMasiva4: TButton;
     btnCargaMasiva5: TButton;
@@ -28,6 +28,7 @@ type
     lblWelcome: TLabel;
     procedure btnBandejaClick(Sender: TObject);
     procedure btnCargaMasiva1Click(Sender: TObject);
+    procedure btnPapeleraClick(Sender: TObject);
     procedure btnCerrarSesionClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
@@ -41,7 +42,7 @@ var
 
 implementation
 
-uses fLogin, fSendMail;
+uses fLogin, fSendMail, fTrash, fInbox;
 
 {$R *.lfm}
 
@@ -72,6 +73,14 @@ begin
     Application.CreateForm(TfrmSendMail, frmSendMail);
   frmUserN.Hide;
   frmSendMail.Show;
+end;
+
+procedure TfrmUserN.btnPapeleraClick(Sender: TObject);
+begin
+  if not Assigned(frmTrash) then
+    Application.CreateForm(TfrmTrash, frmTrash);
+  Hide;
+  frmTrash.Show;
 end;
 
 procedure TfrmUserN.FormCreate(Sender: TObject);

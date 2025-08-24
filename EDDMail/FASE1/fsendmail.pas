@@ -90,7 +90,11 @@ end;
 
 procedure TfrmSendMail.btnCancelarClick(Sender: TObject);
 begin
-  Close;
+  edtPara.Clear;
+  edtAsunto.Clear;
+  memMensaje.Clear;
+
+  frmSendMail.Hide;
   frmUserN.Show;
 end;
 

@@ -36,7 +36,7 @@ var
 implementation
 
 uses
-  uInbox, frmUser, Uusers, fViewmail;  // Inbox global y regreso a menú de usuario
+  uInbox, frmUser, Uusers, fViewmail, uTrash;  // Inbox global y regreso a menú de usuario
 
 {$R *.lfm}
 
@@ -104,22 +104,26 @@ end;
 
 procedure TfrmInbox.btnEliminarClick(Sender: TObject);
 var
-  node: PMail;
+  idx: Integer;
+  M: PMail;
 begin
-  if not IndexValido then
+  idx := lstMails.ItemIndex; // o como obtienes el seleccionado
+  if idx < 0 then
   begin
     ShowMessage('Selecciona un correo.');
     Exit;
   end;
 
-  node := GetMailByIndex(CurrentUser^.Inbox, lstMails.ItemIndex);
-  if node = nil then Exit;
+  // Opción A: usando la función Extract + Push
+  M := ExtractMailAt(CurrentUser^.Inbox, idx);
+  if M <> nil then
+    PushTrash(CurrentUser^.Trash, M);
 
-  // sacar de la lista (luego lo enviaremos a la Pila/Papelera)
-  DetachMail(CurrentUser^.Inbox, node);
-  Dispose(node); // de momento lo liberamos; en “Papelera” lo apilaremos
+  // Opción B (si agregaste MoveMailToTrash):
+  // MoveMailToTrash(CurrentUser^.Inbox, idx, CurrentUser^.Trash);
 
-  RefrescarLista;
+  // refresca la lista de la bandeja
+  RefrescarLista(); // <- tu rutina que repuebla el ListBox
 end;
 
 procedure TfrmInbox.btnRegresarClick(Sender: TObject);

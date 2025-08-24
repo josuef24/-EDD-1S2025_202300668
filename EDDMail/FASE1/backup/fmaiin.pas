@@ -29,6 +29,8 @@ var
 
 implementation
 
+uses fLogin;
+
 {$R *.lfm}
 
 procedure TfrmRoot.FormCreate(Sender: TObject);

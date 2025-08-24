@@ -19,7 +19,6 @@ type
     lblDe: TLabel;
     memCuerpo: TMemo;
     btnCerrar: TButton;
-    memCuerpo: TMemo;
     procedure btnCerrarClick(Sender: TObject);
   public
     procedure ShowMail(AMail: Pointer); // recibe PMail

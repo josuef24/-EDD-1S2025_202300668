@@ -1,7 +1,7 @@
 object frmUserN: TfrmUserN
-  Left = 1266
+  Left = 1264
   Height = 708
-  Top = 276
+  Top = 261
   Width = 612
   Caption = 'frmUserN'
   ClientHeight = 708
@@ -45,13 +45,14 @@ object frmUserN: TfrmUserN
     TabOrder = 2
     OnClick = btnCargaMasiva1Click
   end
-  object btnCargaMasiva2: TButton
+  object btnPapelera: TButton
     Left = 200
     Height = 40
     Top = 224
     Width = 200
     Caption = 'Papelera'
     TabOrder = 3
+    OnClick = btnPapeleraClick
   end
   object btnCargaMasiva3: TButton
     Left = 200

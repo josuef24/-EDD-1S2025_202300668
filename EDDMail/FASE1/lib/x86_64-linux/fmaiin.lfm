@@ -1,7 +1,7 @@
 object frmRoot: TfrmRoot
   Left = 1264
   Height = 240
-  Top = 233
+  Top = 223
   Width = 328
   AutoSize = True
   Caption = 'frmRoot'
