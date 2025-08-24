@@ -1,0 +1,108 @@
+object frmProgramarMail: TfrmProgramarMail
+  Left = 1262
+  Height = 458
+  Top = 448
+  Width = 445
+  Caption = 'frmProgramarMail'
+  ClientHeight = 458
+  ClientWidth = 445
+  LCLVersion = '4.2.0.0'
+  object lblPara: TLabel
+    Left = 24
+    Height = 28
+    Top = 64
+    Width = 150
+    Caption = 'Destinatario:'
+    Font.Height = -27
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object lblAsunto: TLabel
+    Left = 24
+    Height = 28
+    Top = 104
+    Width = 100
+    Caption = 'Asunto: '
+    Font.Height = -27
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object edtPara: TEdit
+    Left = 200
+    Height = 22
+    Top = 65
+    Width = 202
+    TabOrder = 0
+  end
+  object edtAsunto: TEdit
+    Left = 200
+    Height = 22
+    Top = 105
+    Width = 202
+    TabOrder = 1
+  end
+  object lblAsunto1: TLabel
+    Left = 24
+    Height = 28
+    Top = 144
+    Width = 83
+    Caption = 'Fecha:'
+    Font.Height = -27
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object lblAsunto2: TLabel
+    Left = 24
+    Height = 28
+    Top = 184
+    Width = 74
+    Caption = 'Hora: '
+    Font.Height = -27
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object memMensaje: TMemo
+    Left = 24
+    Height = 226
+    Top = 224
+    Width = 256
+    Lines.Strings = (
+      'memMensaje'
+    )
+    TabOrder = 2
+  end
+  object edtFecha: TEdit
+    Left = 200
+    Height = 22
+    Top = 150
+    Width = 202
+    TabOrder = 3
+    Text = 'ej: 2025-08-24'
+  end
+  object edtHora: TEdit
+    Left = 200
+    Height = 22
+    Top = 190
+    Width = 202
+    TabOrder = 4
+    Text = 'ej: 14:30'
+  end
+  object btnProgramar: TButton
+    Left = 296
+    Height = 38
+    Top = 352
+    Width = 131
+    Caption = 'Programar'
+    TabOrder = 5
+    OnClick = btnProgramarClick
+  end
+  object btnCancelar: TButton
+    Left = 296
+    Height = 38
+    Top = 408
+    Width = 131
+    Caption = 'Cancelar'
+    TabOrder = 6
+    OnClick = btnCancelarClick
+  end
+end

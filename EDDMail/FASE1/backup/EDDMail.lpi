@@ -117,6 +117,25 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="fTrash"/>
       </Unit>
+      <Unit>
+        <Filename Value="uqueue.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uQueue"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fprogramarmail.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmProgramarMail"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fProgramarMail"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fprogramados.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmProgramados"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fProgramados"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

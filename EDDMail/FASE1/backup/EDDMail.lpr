@@ -1,7 +1,7 @@
 uses
   {$IFDEF UNIX}{$IFDEF UseCThreads} cthreads, {$ENDIF}{$ENDIF}
   Interfaces, Forms, fLogin, fMaiin, fCreateUser, frmUser, uUsers, uInbox,
-  uInbox, fSendMail, fViewMail, uTrash, fTrash;
+  fSendMail, fViewMail, uTrash, fTrash, uQueue, fProgramMail, fProgramados;
 
 begin
   Application.Scaled:=True;
