@@ -1,0 +1,128 @@
+object frmContacts: TfrmContacts
+  Left = 1265
+  Height = 443
+  Top = 514
+  Width = 621
+  Caption = 'frmContacts'
+  ClientHeight = 443
+  ClientWidth = 621
+  LCLVersion = '4.2.0.0'
+  OnShow = FormShow
+  object lblTitulo: TLabel
+    Left = 208
+    Height = 36
+    Top = 8
+    Width = 156
+    Caption = 'Contactos'
+    Font.Height = -35
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object brnPrev: TButton
+    Left = 40
+    Height = 49
+    Top = 192
+    Width = 50
+    Caption = '<'
+    TabOrder = 0
+    OnClick = btnPrevClick
+  end
+  object btnNext: TButton
+    Left = 528
+    Height = 49
+    Top = 192
+    Width = 50
+    Caption = '>'
+    TabOrder = 1
+    OnClick = btnNextClick
+  end
+  object lblPara: TLabel
+    Left = 120
+    Height = 28
+    Top = 152
+    Width = 104
+    Caption = 'Nombre:'
+    Font.Height = -27
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object lblAsunto: TLabel
+    Left = 120
+    Height = 28
+    Top = 192
+    Width = 109
+    Caption = 'Usuario: '
+    Font.Height = -27
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object lblAsunto1: TLabel
+    Left = 120
+    Height = 28
+    Top = 232
+    Width = 90
+    Caption = 'Correo:'
+    Font.Height = -27
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object lblAsunto2: TLabel
+    Left = 120
+    Height = 28
+    Top = 272
+    Width = 118
+    Caption = 'Teléfono: '
+    Font.Height = -27
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object valNombre: TLabel
+    Left = 240
+    Height = 28
+    Top = 152
+    Width = 130
+    Caption = 'valNombre'
+    Font.Height = -27
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object valUsuario: TLabel
+    Left = 240
+    Height = 28
+    Top = 192
+    Width = 127
+    Caption = 'valUsuario'
+    Font.Height = -27
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object valCorreo: TLabel
+    Left = 240
+    Height = 28
+    Top = 232
+    Width = 116
+    Caption = 'valCorreo'
+    Font.Height = -27
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object valTelefono: TLabel
+    Left = 240
+    Height = 28
+    Top = 272
+    Width = 136
+    Caption = 'valTelefono'
+    Font.Height = -27
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object btnRergresar: TButton
+    Left = 464
+    Height = 38
+    Top = 384
+    Width = 131
+    Caption = 'Regresar'
+    TabOrder = 2
+    OnClick = btnRergresarClick
+  end
+end

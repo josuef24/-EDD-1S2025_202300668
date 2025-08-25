@@ -1,12 +1,13 @@
 object frmProgramados: TfrmProgramados
-  Left = 1259
+  Left = 1264
   Height = 389
-  Top = 488
+  Top = 479
   Width = 615
   Caption = 'frmProgramados'
   ClientHeight = 389
   ClientWidth = 615
   LCLVersion = '4.2.0.0'
+  OnShow = FormShow
   object lblTitulo: TLabel
     Left = 128
     Height = 36
@@ -17,7 +18,7 @@ object frmProgramados: TfrmProgramados
     Font.Name = 'Sans'
     ParentFont = False
   end
-  object ListBox1: TListBox
+  object lstQueue: TListBox
     Left = 16
     Height = 312
     Top = 56
@@ -25,6 +26,7 @@ object frmProgramados: TfrmProgramados
     ItemHeight = 0
     TabOrder = 0
     TopIndex = -1
+    OnClick = lstQueueClick
   end
   object btnProcesar: TButton
     Left = 456
@@ -33,6 +35,7 @@ object frmProgramados: TfrmProgramados
     Width = 131
     Caption = 'Procesar'
     TabOrder = 1
+    OnClick = btnProcesarClick
   end
   object btnProcesar1: TButton
     Left = 456
@@ -41,5 +44,6 @@ object frmProgramados: TfrmProgramados
     Width = 131
     Caption = 'Regresar'
     TabOrder = 2
+    OnClick = btnRegresarClick
   end
 end

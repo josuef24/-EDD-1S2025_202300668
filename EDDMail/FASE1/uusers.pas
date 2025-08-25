@@ -3,7 +3,7 @@ unit uUsers;
 {$mode objfpc}{$H+}
 
 interface
-uses uInbox, uTrash, uQueue;
+uses uInbox, uTrash, uQueue, uContacts;
 
 function LoadUsersFromJSON(const FileName: string;
                            out Imported, Duplicated, Errors: Integer): Boolean;
@@ -25,7 +25,8 @@ type
     Inbox:    TInbox;       // Bandeja del user
     Next:     PUser;        // Siguiente
     Trash: TTrash;
-    Sched: TSchedQueue      //Cola de correos programados
+    Contacts: TContactList;
+    Sched: TSchedQueue;      //Cola de correos programados
   end;
 
 var
@@ -82,6 +83,7 @@ begin
   InitInbox(NewNode^.Inbox);
   InitTrash(NewNode^.Trash);
   InitQueue(NewNode^.Sched);
+  InitContacts(NewNode^.Contacts);
 
   // Mantén NextId preparado para el siguiente alta automática
   if AId >= NextId then
@@ -193,6 +195,7 @@ begin
   InitInbox(NewNode^.Inbox);
   InitTrash(NewNode^.Trash);
   InitQueue(NewNode^.Sched);
+  InitContacts(NewNode^.Contacts);
 
   // Inserción al inicio (O(1))
   NewNode^.Next := UsersHead;

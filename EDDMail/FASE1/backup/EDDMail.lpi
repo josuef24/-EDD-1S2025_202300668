@@ -114,6 +114,7 @@
         <Filename Value="ftrash.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmTrash"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="fTrash"/>
       </Unit>
@@ -126,6 +127,7 @@
         <Filename Value="fprogramarmail.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmProgramarMail"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="fProgramarMail"/>
       </Unit>
@@ -133,8 +135,35 @@
         <Filename Value="fprogramados.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmProgramados"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="fProgramados"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ucontacts.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uContacts"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fcontacts.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmContacts"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fContacts"/>
+      </Unit>
+      <Unit>
+        <Filename Value="faddcontact.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmAddContact"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fAddContact"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fperfil.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmPerfil"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fPerfil"/>
       </Unit>
     </Units>
   </ProjectOptions>

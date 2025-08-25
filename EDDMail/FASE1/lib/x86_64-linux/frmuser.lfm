@@ -70,31 +70,33 @@ object frmUserN: TfrmUserN
     Width = 200
     Caption = 'Correos programados'
     TabOrder = 5
-    OnClick = btnVerProgramadosClick
   end
-  object btnCargaMasiva5: TButton
+  object btnAgregarContacto: TButton
     Left = 200
     Height = 40
     Top = 416
     Width = 200
     Caption = 'Agregar contacto'
     TabOrder = 6
+    OnClick = btnAgregarContactoClick
   end
-  object btnCargaMasiva6: TButton
+  object btnContactos: TButton
     Left = 200
     Height = 40
     Top = 480
     Width = 200
     Caption = 'Contactos'
     TabOrder = 7
+    OnClick = btnContactosClick
   end
-  object btnCargaMasiva7: TButton
+  object btnPerfil: TButton
     Left = 200
     Height = 40
     Top = 544
     Width = 200
     Caption = 'Actualizar perfil'
     TabOrder = 8
+    OnClick = btnPerfilClick
   end
   object btnCargaMasiva8: TButton
     Left = 200
@@ -103,23 +105,5 @@ object frmUserN: TfrmUserN
     Width = 200
     Caption = 'Generar reportes'
     TabOrder = 9
-  end
-  object btnPruebaProgramar: TButton
-    Left = 512
-    Height = 25
-    Top = 590
-    Width = 75
-    Caption = 'Prueba'
-    TabOrder = 10
-    OnClick = btnPruebaProgramarClick
-  end
-  object btnProcesarProgramados: TButton
-    Left = 512
-    Height = 25
-    Top = 624
-    Width = 75
-    Caption = 'Procesar'
-    TabOrder = 11
-    OnClick = btnProcesarProgramadosClick
   end
 end

@@ -12,7 +12,7 @@ type
   { TfrmSendMail }
 
   TfrmSendMail = class(TForm)
-    lblPara: TLabel; lblAsunto: TLabel; lblMensaje: TLabel;
+    lblParaa: TLabel; lblAsunto: TLabel; lblMensaje: TLabel;
     edtPara: TEdit; edtAsunto: TEdit;
     memMensaje: TMemo;
     btnEnviar: TButton; btnCancelar: TButton;
@@ -26,14 +26,14 @@ var
 
 implementation
 
-uses uUsers, uInbox, frmUser;   // CurrentUser, AddMail, y volver al menú
+uses uUsers, uInbox, frmUser, uContacts;   // CurrentUser, AddMail, y volver al menú
 
 {$R *.lfm}
 
 procedure TfrmSendMail.FormCreate(Sender: TObject);
 begin
   Caption := 'Enviar Correo';
-  lblPara.Caption    := 'Para (usuario o email):';
+  lblParaa.Caption    := 'Para (usuario o email):';
   lblAsunto.Caption  := 'Asunto:';
   lblMensaje.Caption := 'Mensaje:';
   btnEnviar.Caption  := 'Enviar';
@@ -45,8 +45,6 @@ var
   key, asunto, cuerpo, fecha: AnsiString;
   dest: PUser;
 begin
-
-
 
   key    := Trim(edtPara.Text);
   asunto := Trim(edtAsunto.Text);
@@ -62,6 +60,14 @@ begin
   if dest = nil then
   begin
     ShowMessage('Destinatario no encontrado.');
+    Exit;
+  end;
+
+    // Solo permitido si está en contactos del usuario actual
+  if not ExistsInContacts(CurrentUser^.Contacts, dest^.Email)
+     and not ExistsInContacts(CurrentUser^.Contacts, dest^.Username) then
+  begin
+    ShowMessage('Solo puedes enviar a tus contactos.');
     Exit;
   end;
 

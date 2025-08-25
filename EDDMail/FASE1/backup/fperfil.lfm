@@ -1,0 +1,71 @@
+object frmPerfil: TfrmPerfil
+  Left = 1265
+  Height = 260
+  Top = 583
+  Width = 514
+  Caption = 'frmPerfil'
+  ClientHeight = 260
+  ClientWidth = 514
+  LCLVersion = '4.2.0.0'
+  object lblTitulo: TLabel
+    Left = 104
+    Height = 36
+    Top = 16
+    Width = 238
+    Caption = 'Actualizar perfil'
+    Font.Height = -35
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object edtUsuario: TEdit
+    Left = 168
+    Height = 22
+    Top = 96
+    Width = 274
+    TabOrder = 0
+  end
+  object edtUsuarioE: TLabel
+    Left = 48
+    Height = 28
+    Top = 96
+    Width = 101
+    Caption = 'Usuario:'
+    Font.Height = -27
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object edtTelefono: TEdit
+    Left = 168
+    Height = 22
+    Top = 136
+    Width = 274
+    TabOrder = 1
+  end
+  object lblPara1: TLabel
+    Left = 48
+    Height = 28
+    Top = 136
+    Width = 118
+    Caption = 'Telefono: '
+    Font.Height = -27
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object btnCancelar: TButton
+    Left = 280
+    Height = 38
+    Top = 200
+    Width = 131
+    Caption = 'Cancelar'
+    TabOrder = 2
+    OnClick = btnCancelarClick
+  end
+  object btnActualizar: TButton
+    Left = 112
+    Height = 38
+    Top = 200
+    Width = 131
+    Caption = 'Actualizar'
+    TabOrder = 3
+  end
+end

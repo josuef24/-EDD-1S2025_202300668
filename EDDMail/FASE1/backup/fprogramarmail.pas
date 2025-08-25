@@ -124,7 +124,7 @@ end;
 
 procedure TfrmProgramarMail.btnCancelarClick(Sender: TObject);
 begin
-  frmProgramarMailHide;
+  frmProgramarMail.Hide;
   frmUserN.Show;
 end;
 

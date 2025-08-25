@@ -12,7 +12,7 @@ type
   { TfrmSendMail }
 
   TfrmSendMail = class(TForm)
-    lblPara: TLabel; lblAsunto: TLabel; lblMensaje: TLabel;
+    lblParaa: TLabel; lblAsunto: TLabel; lblMensaje: TLabel;
     edtPara: TEdit; edtAsunto: TEdit;
     memMensaje: TMemo;
     btnEnviar: TButton; btnCancelar: TButton;
@@ -26,14 +26,14 @@ var
 
 implementation
 
-uses uUsers, uInbox, frmUser;   // CurrentUser, AddMail, y volver al menú
+uses uUsers, uInbox, frmUser, uContacts;   // CurrentUser, AddMail, y volver al menú
 
 {$R *.lfm}
 
 procedure TfrmSendMail.FormCreate(Sender: TObject);
 begin
   Caption := 'Enviar Correo';
-  lblPara.Caption    := 'Para (usuario o email):';
+  lblParaa.Caption    := 'Para (usuario o email):';
   lblAsunto.Caption  := 'Asunto:';
   lblMensaje.Caption := 'Mensaje:';
   btnEnviar.Caption  := 'Enviar';
@@ -65,6 +65,14 @@ begin
     Exit;
   end;
 
+    // Solo permitido si está en contactos del usuario actual
+  if not ExistsInContacts(CurrentUser^.Contacts, dest^.Email)
+     and not ExistsInContacts(CurrentUser^.Contacts, dest^.Username) then
+  begin
+    ShowMessage('Solo puedes enviar a tus contactos.');
+    Exit;
+  end;
+
   if SameText(dest^.Email, CurrentUser^.Email) then
   begin
     ShowMessage('No puedes enviarte correos a ti mismo.');
@@ -90,6 +98,10 @@ end;
 
 procedure TfrmSendMail.btnCancelarClick(Sender: TObject);
 begin
+  edtPara.Clear;
+  edtAsunto.Clear;
+  memMensaje.Clear;
+
   frmSendMail.Hide;
   frmUserN.Show;
 end;

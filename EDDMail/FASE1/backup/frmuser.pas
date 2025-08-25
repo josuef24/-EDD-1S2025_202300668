@@ -20,22 +20,21 @@ type
     btnPapelera: TButton;
     btnProgramarCorreo: TButton;
     btnVerProgramados: TButton;
-    btnCargaMasiva5: TButton;
-    btnCargaMasiva6: TButton;
-    btnCargaMasiva7: TButton;
+    btnAgregarContacto: TButton;
+    btnContactos: TButton;
+    btnPerfil: TButton;
     btnCargaMasiva8: TButton;
     btnCerrarSesion: TButton;
-    btnPruebaProgramar: TButton;
-    btnProcesarProgramados: TButton;
     lblWelcome: TLabel;
+    procedure btnAgregarContactoClick(Sender: TObject);
     procedure btnBandejaClick(Sender: TObject);
     procedure btnCargaMasiva1Click(Sender: TObject);
+    procedure btnContactosClick(Sender: TObject);
     procedure btnPapeleraClick(Sender: TObject);
     procedure btnCerrarSesionClick(Sender: TObject);
+    procedure btnPerfilClick(Sender: TObject);
     procedure btnProcesarProgramadosClick(Sender: TObject);
     procedure btnProgramarCorreoClick(Sender: TObject);
-    procedure btnPruebaProgramarClick(Sender: TObject);
-    procedure btnVerProgramadosClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
 
@@ -48,7 +47,8 @@ var
 
 implementation
 
-uses fLogin, fSendMail, fTrash, fInbox, uQueue, uUsers, fProgramarMail, fProgramados;
+uses fLogin, fSendMail, fTrash, fInbox, uQueue, uUsers, fProgramarMail,
+     fProgramados, fContacts, fAddContact;
 
 {$R *.lfm}
 
@@ -64,6 +64,14 @@ begin
   Self.Hide;
 end;
 
+procedure TfrmUserN.btnPerfilClick(Sender: TObject);
+begin
+  if not Assigned(frmPerfil) then
+    Application.CreateForm(TfrmPerfil, frmPerfil);
+  frmPerfil.Show;
+  frmUserN.Hide;
+end;
+
 procedure TfrmUserN.btnProcesarProgramadosClick(Sender: TObject);
   var
   n: Integer;
@@ -76,33 +84,9 @@ procedure TfrmUserN.btnProgramarCorreoClick(Sender: TObject);
 begin
   if not Assigned(frmProgramarMail) then
     Application.CreateForm(TfrmProgramarMail, frmProgramarMail);
-  Hide;
+  frmUserN.Hide;
   frmProgramarMail.Show;
 
-end;
-
-procedure TfrmUserN.btnPruebaProgramarClick(Sender: TObject);
-var
-  sendTime: TDateTime;
-begin
-  // 30 segundos en el futuro
-  sendTime := Now + EncodeTime(0,0,30,0);
-
-  EnqueueMail(CurrentUser^.Sched,
-              CurrentUser^.Email,      // remitente
-              'user@edd.com',          // destinatario (email o usuario existente)
-              'Asunto programado',
-              'Este mensaje saldrá en 30s',
-              sendTime);
-  ShowMessage('Programado para: ' + DateTimeToStr(sendTime));
-end;
-
-procedure TfrmUserN.btnVerProgramadosClick(Sender: TObject);
-begin
-  if not Assigned(frmProgramados) then
-    Application.CreateForm(TfrmProgramados, frmProgramados);
-  frmUserN.Hide;
-  frmProgramados.Show;
 end;
 
 procedure TfrmUserN.btnBandejaClick(Sender: TObject);
@@ -113,6 +97,12 @@ begin
   frmInbox.Show;
 end;
 
+procedure TfrmUserN.btnAgregarContactoClick(Sender: TObject);
+begin
+  frmUserN.Hide;
+  frmAddContact.Show;
+end;
+
 procedure TfrmUserN.btnCargaMasiva1Click(Sender: TObject);
 begin
   if not Assigned(frmSendMail) then
@@ -121,11 +111,19 @@ begin
   frmSendMail.Show;
 end;
 
+procedure TfrmUserN.btnContactosClick(Sender: TObject);
+begin
+  if not Assigned(frmContacts) then
+    Application.CreateForm(TfrmContacts, frmContacts);
+  frmUserN.Hide;
+  frmContacts.Show;
+end;
+
 procedure TfrmUserN.btnPapeleraClick(Sender: TObject);
 begin
   if not Assigned(frmTrash) then
     Application.CreateForm(TfrmTrash, frmTrash);
-  Hide;
+  frmUserN.Hide;
   frmTrash.Show;
 end;
 
