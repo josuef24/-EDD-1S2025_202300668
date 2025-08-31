@@ -20,6 +20,7 @@ type
 
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure lblUnreadClick(Sender: TObject);
     procedure lstMailsClick(Sender: TObject);
     procedure btnOrdenarAZClick(Sender: TObject);
     procedure btnEliminarClick(Sender: TObject);
@@ -43,6 +44,11 @@ uses
 procedure TfrmInbox.FormShow(Sender: TObject);
 begin
   RefrescarLista;
+end;
+
+procedure TfrmInbox.lblUnreadClick(Sender: TObject);
+begin
+
 end;
 
 procedure TfrmInbox.FormCreate(Sender: TObject);

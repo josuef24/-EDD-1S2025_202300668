@@ -1,0 +1,33 @@
+digraph "Reporte de Usuarios" {
+  rankdir=LR;
+  graph [fontsize=12, labelloc="t"];
+  node  [shape=box, style="rounded,filled", color="#2c3e50", fillcolor="#cfe9f3", fontname="Helvetica", fontsize=10];
+  edge  [color="#2c3e50", arrowsize=0.6];
+  label="Reporte de Usuarios";
+  subgraph cluster_usuarios {
+    label="Lista Enlazada";
+    style="rounded";
+    color="#7f8c8d";
+    u0 [label=<<b>ID: 0</b><br/>Nombre: root<br/>Usuario: root<br/>Email: root@edd.com<br/>Teléfono: >];
+    u0 -> u1;
+    u1 [label=<<b>ID: 1</b><br/>Nombre: Luis Garcia<br/>Usuario: lgarcia<br/>Email: lgarcia@edd.com<br/>Teléfono: 12345678>];
+    u1 -> u2;
+    u2 [label=<<b>ID: 2</b><br/>Nombre: Marcos Itzep<br/>Usuario: mitzep<br/>Email: mitzep@edd.com<br/>Teléfono: 87654321>];
+    u2 -> u3;
+    u3 [label=<<b>ID: 3</b><br/>Nombre: Greg Kroah-Hartman<br/>Usuario: gkroah-hartman<br/>Email: gkroah-hartman@edd.com<br/>Teléfono: 31628954>];
+    u3 -> u4;
+    u4 [label=<<b>ID: 4</b><br/>Nombre: Mark Shuttleworth<br/>Usuario: mshuttleworth<br/>Email: mshuttleworth@edd.com<br/>Teléfono: 76018423>];
+    u4 -> u5;
+    u5 [label=<<b>ID: 5</b><br/>Nombre: Steven Mejia<br/>Usuario: smejia<br/>Email: smejia@edd.com<br/>Teléfono: 23419875>];
+    u5 -> u6;
+    u6 [label=<<b>ID: 6</b><br/>Nombre: Brian Fox<br/>Usuario: bfox<br/>Email: bfox@edd.com<br/>Teléfono: 64578231>];
+    u6 -> u7;
+    u7 [label=<<b>ID: 7</b><br/>Nombre: Jon Corbet<br/>Usuario: jcorbet<br/>Email: jcorbet@edd.com<br/>Teléfono: 75849231>];
+    u7 -> u8;
+    u8 [label=<<b>ID: 8</b><br/>Nombre: Karen Sandler<br/>Usuario: ksandler<br/>Email: ksandler@edd.com<br/>Teléfono: 89514362>];
+    u8 -> u9;
+    u9 [label=<<b>ID: 9</b><br/>Nombre: Mitchell Baker<br/>Usuario: mbaker<br/>Email: mbaker@edd.com<br/>Teléfono: 19384756>];
+    u9 -> u10;
+    u10 [label=<<b>ID: 10</b><br/>Nombre: Ian Murdock<br/>Usuario: imurdock<br/>Email: imurdock@edd.com<br/>Teléfono: 41235678>];
+  }
+}

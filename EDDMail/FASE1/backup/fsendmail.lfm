@@ -1,7 +1,7 @@
 object frmSendMail: TfrmSendMail
-  Left = 1264
+  Left = 1261
   Height = 615
-  Top = 333
+  Top = 288
   Width = 558
   Caption = 'frmSendMail'
   ClientHeight = 615

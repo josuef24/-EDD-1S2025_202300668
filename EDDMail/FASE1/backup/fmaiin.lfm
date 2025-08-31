@@ -1,18 +1,18 @@
 object frmRoot: TfrmRoot
-  Left = 1264
-  Height = 240
-  Top = 223
+  Left = 1260
+  Height = 330
+  Top = 252
   Width = 328
   AutoSize = True
   Caption = 'frmRoot'
-  ClientHeight = 240
+  ClientHeight = 330
   ClientWidth = 328
   LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
   object btnSalir: TButton
     Left = 112
     Height = 25
-    Top = 208
+    Top = 248
     Width = 96
     Caption = 'Salir'
     TabOrder = 0
@@ -36,5 +36,23 @@ object frmRoot: TfrmRoot
     Caption = 'Carga masiva'
     TabOrder = 1
     OnClick = btnCargaMasivaClick
+  end
+  object btnExportRel: TButton
+    Left = 96
+    Height = 41
+    Top = 128
+    Width = 144
+    Caption = 'Exportar Relaciones'
+    TabOrder = 2
+    OnClick = btnExportRelClick
+  end
+  object btnExportUsers: TButton
+    Left = 96
+    Height = 41
+    Top = 176
+    Width = 144
+    Caption = 'Exportar usuarios'
+    TabOrder = 3
+    OnClick = btnExportUsersClick
   end
 end

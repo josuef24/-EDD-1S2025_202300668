@@ -35,6 +35,7 @@ type
     procedure btnPerfilClick(Sender: TObject);
     procedure btnProcesarProgramadosClick(Sender: TObject);
     procedure btnProgramarCorreoClick(Sender: TObject);
+    procedure btnVerProgramadosClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
 
@@ -87,6 +88,14 @@ begin
   frmUserN.Hide;
   frmProgramarMail.Show;
 
+end;
+
+procedure TfrmUserN.btnVerProgramadosClick(Sender: TObject);
+begin
+  if not Assigned(frmProgramados) then
+    Application.CreateForm(TfrmProgramados, frmProgramados);
+  frmUserN.Hide;
+  frmProgramados.Show;
 end;
 
 procedure TfrmUserN.btnBandejaClick(Sender: TObject);

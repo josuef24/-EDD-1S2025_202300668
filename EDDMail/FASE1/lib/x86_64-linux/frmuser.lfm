@@ -1,7 +1,7 @@
 object frmUserN: TfrmUserN
-  Left = 1264
+  Left = 1261
   Height = 708
-  Top = 261
+  Top = 218
   Width = 612
   Caption = 'frmUserN'
   ClientHeight = 708
@@ -70,6 +70,7 @@ object frmUserN: TfrmUserN
     Width = 200
     Caption = 'Correos programados'
     TabOrder = 5
+    OnClick = btnVerProgramadosClick
   end
   object btnAgregarContacto: TButton
     Left = 200

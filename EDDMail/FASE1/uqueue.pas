@@ -38,7 +38,7 @@ function  ProcessDue(var Q: TSchedQueue): Integer;
 implementation
 
 uses
-  uUsers, uInbox;  // para FindUserByEmailOrUsername y AddMail
+  uUsers, uInbox, uMatrix;  // para FindUserByEmailOrUsername y AddMail
 
 procedure InitQueue(var Q: TSchedQueue);
 begin
@@ -112,6 +112,7 @@ begin
       begin
         fechaTxt := FormatDateTime('yyyy-mm-dd hh:nn', Now);
         AddMail(Dest^.Inbox, N^.Remitente, N^.Asunto, fechaTxt, N^.Mensaje, False);
+        IncrementEdge(RelMatrix, FindUserByEmailOrUsername(N^.Remitente), Dest);
         Inc(sent);
       end;
       Dispose(N);

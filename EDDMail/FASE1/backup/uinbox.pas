@@ -7,20 +7,18 @@ interface
 type
   PMail = ^TMail;
   TMail = record
-    // Enlaces (lista doble)
+    // enlaces
     Prev, Next : PMail;
-
-    // Datos del correo
-    Id        : Integer;      // autoincremental
+    // datos del correo
+    Id        : Integer;
     Remitente : AnsiString;
-    Estado    : ShortString;  // 'NL' (No leído) / 'L' (Leído)
+    Estado    : ShortString;   // 'NL' / 'L'
     Programado: Boolean;
     Asunto    : AnsiString;
-    Fecha     : AnsiString;   // yyyy-mm-dd hh:nn
+    Fecha     : AnsiString;
     Mensaje   : AnsiString;
   end;
 
-  // Bandeja del usuario (punteros a cabeza/cola y cantidad)
   TInbox = record
     Head, Tail : PMail;
     Count      : Integer;
@@ -30,30 +28,25 @@ var
   NextMailId: Integer = 1;
 
 procedure InitInbox(var B: TInbox);
-
-// Inserta al final y devuelve el puntero al correo creado
 function AddMail(var B: TInbox; const ARem, AAsunto, AFecha, AMensaje: AnsiString;
                  const AProg: Boolean): PMail;
-
-// Utilidades
-function  CountUnread(const B: TInbox): Integer;
-function  GetMailByIndex(const B: TInbox; Index: Integer): PMail;
+function CountUnread(const B: TInbox): Integer;
+function GetMailByIndex(const B: TInbox; Index: Integer): PMail;
 procedure MarkRead(M: PMail);
-procedure DetachMail(var B: TInbox; M: PMail);            // saca M de la lista (no libera)
-procedure SortBySubject(var B: TInbox);                    // ordena A–Z por Asunto
-function  ExtractMailAt(var I: TInbox; Index: Integer): PMail; // elimina en Index y devuelve M (sin liberar)
+procedure DetachMail(var B: TInbox; M: PMail);
+procedure SortBySubject(var B: TInbox);
+// NUEVO
+function ExtractMailAt(var I: TInbox; Index: Integer): PMail;
 
 implementation
 
-uses
-  SysUtils;
+uses SysUtils;
 
 procedure InitInbox(var B: TInbox);
 begin
-  B.Head  := nil;
-  B.Tail  := nil;
+  B.Head := nil;
+  B.Tail := nil;
   B.Count := 0;
-  // No toco NextMailId aquí para que sea global al proceso
 end;
 
 function AddMail(var B: TInbox; const ARem, AAsunto, AFecha, AMensaje: AnsiString;
@@ -62,8 +55,7 @@ var
   N: PMail;
 begin
   New(N);
-  // datos
-  N^.Id         := NextMailId;  Inc(NextMailId);
+  N^.Id         := NextMailId; Inc(NextMailId);
   N^.Remitente  := ARem;
   N^.Estado     := 'NL';
   N^.Programado := AProg;
@@ -71,7 +63,6 @@ begin
   N^.Fecha      := AFecha;
   N^.Mensaje    := AMensaje;
 
-  // enlaces
   N^.Prev := B.Tail;
   N^.Next := nil;
 
@@ -86,8 +77,7 @@ begin
 end;
 
 function CountUnread(const B: TInbox): Integer;
-var
-  C: PMail;
+var C: PMail;
 begin
   Result := 0;
   C := B.Head;
@@ -99,18 +89,15 @@ begin
 end;
 
 function GetMailByIndex(const B: TInbox; Index: Integer): PMail;
-var
-  C: PMail;
-  i: Integer;
+var C: PMail; i: Integer;
 begin
   if (Index < 0) or (Index >= B.Count) then Exit(nil);
-  // recorrido sencillo (si quieres, puedes optimizar desde Tail cuando Index > Count/2)
   C := B.Head; i := 0;
   while (C <> nil) and (i < Index) do
   begin
     C := C^.Next; Inc(i);
   end;
-  Result := C; // será <> nil por el chequeo de rango
+  Result := C;
 end;
 
 procedure MarkRead(M: PMail);
@@ -139,19 +126,14 @@ begin
 end;
 
 procedure SortBySubject(var B: TInbox);
-var
-  SortedHead, SortedTail, Curr, NextN, P, InsBefore: PMail;
+var SortedHead, SortedTail, Curr, NextN, P, InsBefore: PMail;
 begin
-  SortedHead := nil;
-  SortedTail := nil;
+  SortedHead := nil; SortedTail := nil;
   Curr := B.Head;
-
-  // “insertion sort” sobre la lista, por Asunto (case-insensitive)
   while Curr <> nil do
   begin
     NextN := Curr^.Next;
-    Curr^.Prev := nil;
-    Curr^.Next := nil;
+    Curr^.Prev := nil; Curr^.Next := nil;
 
     if SortedHead = nil then
     begin
@@ -171,21 +153,18 @@ begin
 
       if InsBefore = nil then
       begin
-        // al final
         Curr^.Prev := SortedTail;
         SortedTail^.Next := Curr;
         SortedTail := Curr;
       end
       else if InsBefore^.Prev = nil then
       begin
-        // al inicio
         Curr^.Next := InsBefore;
         InsBefore^.Prev := Curr;
         SortedHead := Curr;
       end
       else
       begin
-        // en medio
         Curr^.Prev := InsBefore^.Prev;
         Curr^.Next := InsBefore;
         InsBefore^.Prev^.Next := Curr;
@@ -198,20 +177,16 @@ begin
 
   B.Head := SortedHead;
   B.Tail := SortedTail;
-  // B.Count no cambia
 end;
 
 function ExtractMailAt(var I: TInbox; Index: Integer): PMail;
-var
-  M: PMail;
+var M: PMail;
 begin
   Result := nil;
   M := GetMailByIndex(I, Index);
   if M = nil then Exit;
-
-  // sacar de la lista pero NO liberar, lo devuelve
   DetachMail(I, M);
-  Result := M;
+  Result := M; // queda “suelto”, lo puedes mandar a Trash
 end;
 
 end.

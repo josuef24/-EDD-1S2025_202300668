@@ -46,8 +46,6 @@ var
   dest: PUser;
 begin
 
-
-
   key    := Trim(edtPara.Text);
   asunto := Trim(edtAsunto.Text);
   cuerpo := Trim(memMensaje.Lines.Text);

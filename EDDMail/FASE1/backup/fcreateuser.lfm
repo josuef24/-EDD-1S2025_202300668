@@ -1,7 +1,7 @@
 object frmCreateUser: TfrmCreateUser
-  Left = 1265
+  Left = 1261
   Height = 437
-  Top = 188
+  Top = 183
   Width = 454
   Caption = 'frmCreateUser'
   ClientHeight = 437

@@ -1,7 +1,7 @@
 object frmInbox: TfrmInbox
   Left = 1263
   Height = 613
-  Top = 297
+  Top = 325
   Width = 636
   Caption = 'frmInbox'
   ClientHeight = 613
@@ -17,6 +17,7 @@ object frmInbox: TfrmInbox
     Font.Height = -27
     Font.Name = 'Sans'
     ParentFont = False
+    OnClick = lblUnreadClick
   end
   object btnOrdenarAZ: TButton
     Left = 8

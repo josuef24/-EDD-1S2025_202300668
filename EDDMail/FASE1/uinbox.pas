@@ -40,7 +40,7 @@ function ExtractMailAt(var I: TInbox; Index: Integer): PMail;
 
 implementation
 
-uses SysUtils;
+uses SysUtils, uMatrix;
 
 procedure InitInbox(var B: TInbox);
 begin

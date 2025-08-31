@@ -10,6 +10,7 @@ function LoadUsersFromJSON(const FileName: string;
 function ExistsId(const AId: Integer): Boolean;
 function AddUserWithId(const AId: Integer; const AName, AUsername, AEmail, APhone, APass: AnsiString;
                        const ARoot: Boolean): Integer;
+function ExportUsersDot(const DirPath: string): Boolean;
 
 
 type
@@ -48,7 +49,7 @@ function  ValidateUser(const Key, APass: AnsiString; out OutIsRoot: Boolean): Bo
 
 implementation
 
-uses SysUtils, fpjson, jsonparser, Classes;
+uses SysUtils, fpjson, jsonparser, Classes, uMatrix;
 
 function ExistsId(const AId: Integer): Boolean;
 var
@@ -244,10 +245,90 @@ procedure InitUsers;
 begin
   UsersHead := nil;
   NextId := 0;
+
+  // inicializar la matriz global de relaciones
+  InitRel;
+
   // Root obligatorio (ID=0)
-   AddUserWithId(0, 'root', 'root', 'root@edd.com', '', 'root123', True);
-   NextID := 1;
+  AddUserWithId(0, 'root', 'root', 'root@edd.com', '', 'root123', True);
+  NextID := 1;
 end;
+
+function ExportUsersDOT(const DirPath: string): Boolean;
+var
+  F: TextFile;
+  OutPath: string;
+  List: array of PUser;
+  Count, i: Integer;
+  U: PUser;
+begin
+  Result := False;
+
+  if DirPath = '' then Exit;
+  if not DirectoryExists(DirPath) then
+    if not ForceDirectories(DirPath) then Exit;
+
+  OutPath := IncludeTrailingPathDelimiter(DirPath) + 'usuarios.dot';
+  AssignFile(F, OutPath);
+  try
+    Rewrite(F);
+
+    // Encabezado DOT con estilo parecido al del enunciado
+    Writeln(F, 'digraph "Reporte de Usuarios" {');
+    Writeln(F, '  rankdir=LR;');
+    Writeln(F, '  graph [fontsize=12, labelloc="t"];');
+    Writeln(F, '  node  [shape=box, style="rounded,filled", color="#2c3e50", fillcolor="#cfe9f3", fontname="Helvetica", fontsize=10];');
+    Writeln(F, '  edge  [color="#2c3e50", arrowsize=0.6];');
+    Writeln(F, '  label="Reporte de Usuarios";');
+
+    // Cajita contenedora (cluster) para dar marco como en el PDF
+    Writeln(F, '  subgraph cluster_usuarios {');
+    Writeln(F, '    label="Lista Enlazada";');
+    Writeln(F, '    style="rounded";');
+    Writeln(F, '    color="#7f8c8d";');
+
+    // 1) Recorremos la lista enlazada y guardamos punteros en un array
+    Count := 0;
+    U := UsersHead;
+    while U <> nil do
+    begin
+      Inc(Count);
+      SetLength(List, Count);
+      List[Count-1] := U;
+      U := U^.Next;
+    end;
+
+    // 2) Emitimos los nodos en orden 0..N (invirtiendo el array)
+    for i := Count-1 downto 0 do
+    begin
+      U := List[i];
+      Writeln(F, '    u', U^.Id, ' [label=<',
+                '<b>ID: ', U^.Id, '</b><br/>',
+                'Nombre: ', U^.Name, '<br/>',
+                'Usuario: ', U^.Username, '<br/>',
+                'Email: ', U^.Email, '<br/>',
+                'Teléfono: ', U^.Phone,
+                '>];');
+
+      // Flecha al siguiente (de menor a mayor ID)
+      if i > 0 then
+        Writeln(F, '    u', U^.Id, ' -> u', List[i-1]^.Id, ';');
+    end;
+
+    Writeln(F, '  }'); // fin cluster
+    Writeln(F, '}');   // fin digraph
+
+    CloseFile(F);
+    Result := True;
+  except
+    on E: Exception do
+    begin
+      {$I-} CloseFile(F); {$I+}
+      Result := False;
+    end;
+  end;
+end;
+
 
 end.
 

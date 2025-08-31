@@ -2,10 +2,10 @@ object frmPerfil: TfrmPerfil
   Left = 1265
   Height = 260
   Top = 583
-  Width = 514
+  Width = 499
   Caption = 'frmPerfil'
   ClientHeight = 260
-  ClientWidth = 514
+  ClientWidth = 499
   LCLVersion = '4.2.0.0'
   object lblTitulo: TLabel
     Left = 104
@@ -51,21 +51,13 @@ object frmPerfil: TfrmPerfil
     Font.Name = 'Sans'
     ParentFont = False
   end
-  object btnCancelar: TButton
-    Left = 280
-    Height = 38
-    Top = 200
-    Width = 131
-    Caption = 'Cancelar'
-    TabOrder = 2
-    OnClick = btnCancelarClick
-  end
   object btnActualizar: TButton
-    Left = 112
+    Left = 311
     Height = 38
     Top = 200
     Width = 131
     Caption = 'Actualizar'
-    TabOrder = 3
+    TabOrder = 2
+    OnClick = btnActualizarClick
   end
 end

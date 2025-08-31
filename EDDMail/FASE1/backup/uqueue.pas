@@ -97,28 +97,30 @@ var
   Dest: PUser;
   sent: Integer;
   fechaTxt: AnsiString;
+  cutoff: TDateTime;
 begin
   sent := 0;
-  // Mientras el de la cabeza ya esté vencido, procesarlo
-  while (Q.Head <> nil) and (Q.Head^.SendAt <= Now) do
+  cutoff := Now + EncodeTime(0,0,1,0); // margen de 1 segundo
+
+  while (Q.Head <> nil) and (Q.Head^.SendAt <= cutoff) do
   begin
-    N := DequeueMail(Q);        // saca FIFO
+    N := DequeueMail(Q);
     if N <> nil then
     begin
-      // buscar destinatario por email o usuario
       Dest := FindUserByEmailOrUsername(N^.DestKey);
       if Dest <> nil then
       begin
         fechaTxt := FormatDateTime('yyyy-mm-dd hh:nn', Now);
-        // entrega a bandeja del destinatario (Programado = False al entregarse)
         AddMail(Dest^.Inbox, N^.Remitente, N^.Asunto, fechaTxt, N^.Mensaje, False);
         Inc(sent);
       end;
       Dispose(N);
     end;
   end;
+
   Result := sent;
 end;
+
 
 end.
 

@@ -8,6 +8,9 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls;
 
 type
+
+  { TfrmTrash }
+
   TfrmTrash = class(TForm)
     lblTitulo: TLabel;
     edtBuscar: TEdit;
@@ -133,7 +136,7 @@ end;
 
 procedure TfrmTrash.btnRegresarClick(Sender: TObject);
 begin
-  Hide;
+  frmTrash.Hide;
   frmUserN.Show;
 end;
 

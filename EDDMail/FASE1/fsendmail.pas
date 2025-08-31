@@ -26,7 +26,7 @@ var
 
 implementation
 
-uses uUsers, uInbox, frmUser, uContacts;   // CurrentUser, AddMail, y volver al menú
+uses uUsers, uInbox, frmUser, uContacts, uMatrix;   // CurrentUser, AddMail, y volver al menú
 
 {$R *.lfm}
 
@@ -89,6 +89,8 @@ begin
           cuerpo,
           False);              // no programado
 
+  // Registrar relación remitente -> destinatario
+  IncrementEdge(RelMatrix, CurrentUser, dest);
   ShowMessage('Correo enviado a ' + dest^.Email);
   Close;   // o Hide; y volver al menú
   frmUserN.Show;

@@ -2,7 +2,7 @@ uses
   {$IFDEF UNIX}{$IFDEF UseCThreads} cthreads, {$ENDIF}{$ENDIF}
   Interfaces, Forms, fLogin, fMaiin, fCreateUser, frmUser, uUsers, uInbox,
   fSendMail, fViewMail, uTrash, fTrash, uQueue, fProgramarMail, fProgramados,
-  uContacts, fContacts, fAddContact, fPerfil;
+  uContacts, fContacts, fAddContact, fPerfil, uMatrix;
 
 begin
   Application.Scaled:=True;

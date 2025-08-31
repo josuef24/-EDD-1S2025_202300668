@@ -10,6 +10,7 @@ function LoadUsersFromJSON(const FileName: string;
 function ExistsId(const AId: Integer): Boolean;
 function AddUserWithId(const AId: Integer; const AName, AUsername, AEmail, APhone, APass: AnsiString;
                        const ARoot: Boolean): Integer;
+function ExportUsersDot(const DirPath: string): Boolean;
 
 
 type
@@ -26,7 +27,7 @@ type
     Next:     PUser;        // Siguiente
     Trash: TTrash;
     Contacts: TContactList;
-    Sched: TSchedQueue      //Cola de correos programados
+    Sched: TSchedQueue;      //Cola de correos programados
   end;
 
 var
@@ -48,7 +49,7 @@ function  ValidateUser(const Key, APass: AnsiString; out OutIsRoot: Boolean): Bo
 
 implementation
 
-uses SysUtils, fpjson, jsonparser, Classes;
+uses SysUtils, fpjson, jsonparser, Classes, uMatrix;
 
 function ExistsId(const AId: Integer): Boolean;
 var
@@ -244,10 +245,70 @@ procedure InitUsers;
 begin
   UsersHead := nil;
   NextId := 0;
+
+  // inicializar la matriz global de relaciones
+  InitRel;
+
   // Root obligatorio (ID=0)
-   AddUserWithId(0, 'root', 'root', 'root@edd.com', '', 'root123', True);
-   NextID := 1;
+  AddUserWithId(0, 'root', 'root', 'root@edd.com', '', 'root123', True);
+  NextID := 1;
 end;
+
+function ExportUsersDOT(const DirPath: string): Boolean;
+var
+  F: TextFile;
+  OutPath: string;
+  U: PUser;
+begin
+  Result := False;
+  if DirPath = '' then Exit;
+
+  if not DirectoryExists(DirPath) then
+    if not ForceDirectories(DirPath) then Exit;
+
+  OutPath := IncludeTrailingPathDelimiter(DirPath) + 'usuarios.dot';
+  AssignFile(F, OutPath);
+  try
+    Rewrite(F);
+
+    Writeln(F, 'digraph Usuarios {');
+    Writeln(F, '  rankdir=LR;');
+    Writeln(F, '  labelloc="t";');
+    Writeln(F, '  label="Reporte de Usuarios";');
+    Writeln(F, '  node [shape=box, style=filled, fillcolor="#cfeef7", fontname="Helvetica"];');
+
+    Writeln(F, '  subgraph cluster_users {');
+    Writeln(F, '    label="Lista Enlazada"; style="rounded"; color="#8a8a8a";');
+
+    U := UsersHead;
+    while U <> nil do
+    begin
+      Writeln(F, '    u', U^.Id,
+                 ' [label=<<b>ID: ', U^.Id, '</b><br/>',
+                 'Nombre: ', U^.Name, '<br/>',
+                 'Usuario: ', U^.Username, '<br/>',
+                 'Email: ', U^.Email, '<br/>',
+                 'Teléfono: ', U^.Phone, '>];');
+
+      if U^.Next <> nil then
+        Writeln(F, '    u', U^.Id, ' -> u', U^.Next^.Id, ';');
+
+      U := U^.Next;
+    end;
+
+    Writeln(F, '  }'); // cluster
+    Writeln(F, '}');
+    CloseFile(F);
+    Result := True;
+  except
+    on E: Exception do
+    begin
+      {$I-} CloseFile(F); {$I+}
+      Result := False;
+    end;
+  end;
+end;
+
 
 end.
 

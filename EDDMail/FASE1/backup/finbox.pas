@@ -123,7 +123,7 @@ begin
   // MoveMailToTrash(CurrentUser^.Inbox, idx, CurrentUser^.Trash);
 
   // refresca la lista de la bandeja
-  CargarInboxEnListBox(); // <- tu rutina que repuebla el ListBox
+  RefrescarLista(); // <- tu rutina que repuebla el ListBox
 end;
 
 procedure TfrmInbox.btnRegresarClick(Sender: TObject);
