@@ -11,6 +11,10 @@ function ExistsId(const AId: Integer): Boolean;
 function AddUserWithId(const AId: Integer; const AName, AUsername, AEmail, APhone, APass: AnsiString;
                        const ARoot: Boolean): Integer;
 function ExportUsersDot(const DirPath: string): Boolean;
+function ExportContactsDOTForUser(const L: TContactList;
+                                  const OwnerEmail, BaseDir: string;
+                                  out DotPath: string): Boolean;
+
 
 
 type
@@ -258,11 +262,13 @@ function ExportUsersDOT(const DirPath: string): Boolean;
 var
   F: TextFile;
   OutPath: string;
+  List: array of PUser;
+  Count, i: Integer;
   U: PUser;
 begin
   Result := False;
-  if DirPath = '' then Exit;
 
+  if DirPath = '' then Exit;
   if not DirectoryExists(DirPath) then
     if not ForceDirectories(DirPath) then Exit;
 
@@ -271,34 +277,136 @@ begin
   try
     Rewrite(F);
 
-    Writeln(F, 'digraph Usuarios {');
+    // Encabezado DOT con estilo parecido al del enunciado
+    Writeln(F, 'digraph "Reporte de Usuarios" {');
     Writeln(F, '  rankdir=LR;');
-    Writeln(F, '  labelloc="t";');
+    Writeln(F, '  graph [fontsize=12, labelloc="t"];');
+    Writeln(F, '  node  [shape=box, style="rounded,filled", color="#2c3e50", fillcolor="#cfe9f3", fontname="Helvetica", fontsize=10];');
+    Writeln(F, '  edge  [color="#2c3e50", arrowsize=0.6];');
     Writeln(F, '  label="Reporte de Usuarios";');
-    Writeln(F, '  node [shape=box, style=filled, fillcolor="#cfeef7", fontname="Helvetica"];');
 
-    Writeln(F, '  subgraph cluster_users {');
-    Writeln(F, '    label="Lista Enlazada"; style="rounded"; color="#8a8a8a";');
+    // Cajita contenedora (cluster) para dar marco como en el PDF
+    Writeln(F, '  subgraph cluster_usuarios {');
+    Writeln(F, '    label="Lista Enlazada";');
+    Writeln(F, '    style="rounded";');
+    Writeln(F, '    color="#7f8c8d";');
 
+    // 1) Recorremos la lista enlazada y guardamos punteros en un array
+    Count := 0;
     U := UsersHead;
     while U <> nil do
     begin
-      Writeln(F, '    u', U^.Id,
-                 ' [label=<<b>ID: ', U^.Id, '</b><br/>',
-                 'Nombre: ', U^.Name, '<br/>',
-                 'Usuario: ', U^.Username, '<br/>',
-                 'Email: ', U^.Email, '<br/>',
-                 'Teléfono: ', U^.Phone, '>];');
-
-      if U^.Next <> nil then
-        Writeln(F, '    u', U^.Id, ' -> u', U^.Next^.Id, ';');
-
+      Inc(Count);
+      SetLength(List, Count);
+      List[Count-1] := U;
       U := U^.Next;
+    end;
+
+    // 2) Emitimos los nodos en orden 0..N (invirtiendo el array)
+    for i := Count-1 downto 0 do
+    begin
+      U := List[i];
+      Writeln(F, '    u', U^.Id, ' [label=<',
+                '<b>ID: ', U^.Id, '</b><br/>',
+                'Nombre: ', U^.Name, '<br/>',
+                'Usuario: ', U^.Username, '<br/>',
+                'Email: ', U^.Email, '<br/>',
+                'Teléfono: ', U^.Phone,
+                '>];');
+
+      // Flecha al siguiente (de menor a mayor ID)
+      if i > 0 then
+        Writeln(F, '    u', U^.Id, ' -> u', List[i-1]^.Id, ';');
+    end;
+
+    Writeln(F, '  }'); // fin cluster
+    Writeln(F, '}');   // fin digraph
+
+    CloseFile(F);
+    Result := True;
+  except
+    on E: Exception do
+    begin
+      {$I-} CloseFile(F); {$I+}
+      Result := False;
+    end;
+  end;
+end;
+
+function ExportContactsDOTForUser(const L: TContactList;
+  const UserEmail, BaseDir: string; out DotPath: string): Boolean;
+var
+  F      : TextFile;
+  Path   : string;
+  First, C: PContact;
+  idx, lastIdx: Integer;
+
+  function HtmlEsc(const s: string): string;
+  begin
+    Result := StringReplace(s, '&', '&amp;', [rfReplaceAll]);
+    Result := StringReplace(Result, '<', '&lt;', [rfReplaceAll]);
+    Result := StringReplace(Result, '>', '&gt;', [rfReplaceAll]);
+  end;
+
+begin
+  Result := False;
+  DotPath := '';
+
+  if (BaseDir = '') then Exit;
+  if not DirectoryExists(BaseDir) then
+    if not ForceDirectories(BaseDir) then Exit;
+
+  Path := IncludeTrailingPathDelimiter(BaseDir) + 'contactos_' + UserEmail + '.dot';
+  AssignFile(F, Path);
+  try
+    Rewrite(F);
+    Writeln(F, 'digraph "Reporte de Contactos" {');
+    Writeln(F, '  rankdir=LR;');
+    Writeln(F, '  labelloc="t";');
+    Writeln(F, '  label="Reporte de Contactos";');
+    Writeln(F, '  node [shape=box, style="rounded,filled", fillcolor="#cfeaf7"];');
+
+    // contenedor
+    Writeln(F, '  subgraph cluster_contacts {');
+    Writeln(F, '    label="Lista Circular";');
+    Writeln(F, '    color="#bbbbbb";');
+
+    if L.Tail <> nil then
+    begin
+      First := L.Tail^.Next;  // cabeza
+      C     := First;
+      idx   := 1;
+
+      // nodos
+      repeat
+        Writeln(F, '    n', idx, ' [label=<',
+          '<b>ID:</b> ', idx, '<br/>',
+          '<b>Nombre:</b> ', HtmlEsc(C^.Name), '<br/>',
+          '<b>Usuario:</b> ', HtmlEsc(C^.Username), '<br/>',
+          '<b>Email:</b> ', HtmlEsc(C^.Email), '<br/>',
+          '<b>Teléfono:</b> ', HtmlEsc(C^.Phone),
+          '> , width=3];');
+        C := C^.Next;
+        Inc(idx);
+      until C = First;
+
+      // aristas (doble, para simular ida/vuelta)
+      lastIdx := idx - 1;
+      if lastIdx >= 2 then
+      begin
+        // 1..last-1 → 2..last
+        for idx := 1 to lastIdx-1 do
+          Writeln(F, '    n', idx, ' -> n', idx+1, ' [dir=both, arrowsize=0.7];');
+        // cierre circular last → 1
+        Writeln(F, '    n', lastIdx, ' -> n1 [dir=both, arrowsize=0.7];');
+      end;
     end;
 
     Writeln(F, '  }'); // cluster
     Writeln(F, '}');
     CloseFile(F);
+
+    DotPath := Path;
     Result := True;
   except
     on E: Exception do

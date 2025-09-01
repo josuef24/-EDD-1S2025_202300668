@@ -7,6 +7,7 @@ object frmProgramados: TfrmProgramados
   ClientHeight = 389
   ClientWidth = 615
   LCLVersion = '4.2.0.0'
+  OnCreate = FormCreate
   OnShow = FormShow
   object lblTitulo: TLabel
     Left = 128

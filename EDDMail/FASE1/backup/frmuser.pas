@@ -50,7 +50,8 @@ var
 implementation
 
 uses fLogin, fSendMail, fTrash, fInbox, uQueue, uUsers, fProgramarMail,
-     fProgramados, fContacts, fAddContact, fPerfil, Process, uReportUserInbox;
+     fProgramados, fContacts, fAddContact, fPerfil, Process, uReportUserInbox,
+     uReportUserTrash;
 
 {$R *.lfm}
 
@@ -108,7 +109,7 @@ procedure TfrmUserN.btnProcesarProgramadosClick(Sender: TObject);
   var
   n: Integer;
 begin
-  n := ProcessDue(CurrentUser^.Sched);
+  n := ProcessFIFO(CurrentUser^.Sched);
   ShowMessage(Format('Enviados: %d', [n]));
 end;
 
@@ -165,22 +166,49 @@ begin
     Exit;
   end;
 
-  // 1) Generar el .dot del inbox del usuario
-  if not ExportInboxDOT(OUT_USER_DIR, CurrentUser) then
+  // ===== Reporte: Bandeja (recibidos) =====
+  if ExportInboxDOTForUser(CurrentUser^.Email, CurrentUser^.Inbox,
+                           OUT_USER_DIR, DotPath) then
   begin
-    ShowMessage('No se pudo generar el DOT del inbox.');
-    Exit;
-  end;
-
-  // 2) Ejecutar Graphviz (dot -> png)
-  DotPath := IncludeTrailingPathDelimiter(OUT_USER_DIR) + 'inbox_' + IntToStr(CurrentUser^.Id) + '.dot';
-  if RunGraphviz(DotPath, 'png') then
-  begin
-    PngPath := ChangeFileExt(DotPath, '.png');
-    ShowMessage('Reporte de correos recibidos generado: ' + PngPath);
+    if RunGraphviz(DotPath, 'png') then
+    begin
+      PngPath := ChangeFileExt(DotPath, '.png');
+      ShowMessage('Reporte de correos recibidos generado: ' + PngPath);
+    end
+    else
+      ShowMessage('Se creó el .dot del inbox, pero no pude ejecutar "dot" (Graphviz).');
   end
   else
-    ShowMessage('Se creó el .dot, pero no pude ejecutar "dot" (Graphviz). Verifica que esté instalado.');
+    ShowMessage('No se pudo generar el .dot de la bandeja.');
+
+  // ===== REPORTE: PAPELERA =====
+  if ExportTrashDOTForUser(CurrentUser^.Email, CurrentUser^.Trash, OUT_USER_DIR, DotPath) then
+  begin
+    if RunGraphviz(DotPath, 'png') then
+    begin
+      PngPath := ChangeFileExt(DotPath, '.png');
+      ShowMessage('Reporte de papelera generado: ' + PngPath);
+    end
+    else
+      ShowMessage('Se creó el .dot de papelera, pero no pude ejecutar "dot" (Graphviz).');
+  end
+  else
+    ShowMessage('No se pudo generar el .dot de la papelera.');
+
+  // ===== Reporte: Programados (cola FIFO) =====
+  if ExportSchedDOTForUser(CurrentUser^.Sched, CurrentUser^.Email,
+                           OUT_USER_DIR, DotPath) then
+  begin
+    if RunGraphviz(DotPath, 'png') then
+    begin
+      PngPath := ChangeFileExt(DotPath, '.png');
+      ShowMessage('Reporte de correos programados generado: ' + PngPath);
+    end
+    else
+      ShowMessage('Se creó el .dot de Programados, pero no pude ejecutar "dot" (Graphviz).');
+  end
+  else
+    ShowMessage('No se pudo generar el .dot de Programados.');
 end;
 
 

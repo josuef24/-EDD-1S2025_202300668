@@ -4,124 +4,211 @@ unit uQueue;
 
 interface
 
-uses
-  SysUtils;
-
 type
-  // Nodo de la cola de correos programados (FIFO)
-  PSchedNode = ^TSchedNode;
-  TSchedNode = record
-    Remitente : AnsiString;   // quien envía (p.ej., CurrentUser^.Email)
-    DestKey   : AnsiString;   // email o usuario de destino
-    Asunto    : AnsiString;
-    Mensaje   : AnsiString;
-    SendAt    : TDateTime;    // cuándo debe enviarse
-    Next      : PSchedNode;
+  PSchedItem = ^TSchedItem;
+  TSchedItem = record
+    Dest    : AnsiString;   // email o username del destinatario
+    Asunto  : AnsiString;
+    Fecha   : AnsiString;   // solo para mostrar; ya no controla nada
+    Mensaje : AnsiString;
+    Next    : PSchedItem;
   end;
 
-  // Cola simple (cabeza/cola)
   TSchedQueue = record
-    Head, Tail : PSchedNode;
+    Head, Tail : PSchedItem;
     Count      : Integer;
   end;
 
 procedure InitQueue(var Q: TSchedQueue);
-procedure EnqueueMail(var Q: TSchedQueue; const ARem, ADestKey, AAsunto, AMensaje: AnsiString; ASendAt: TDateTime);
-function  DequeueMail(var Q: TSchedQueue): PSchedNode;   // recuerda Dispose() después de usarlo
-function  PeekMail(const Q: TSchedQueue): PSchedNode;
-function  IsQueueEmpty(const Q: TSchedQueue): Boolean;
+procedure ClearQueue(var Q: TSchedQueue);
 
-// Procesa todos los correos cuyo SendAt <= Now, entregándolos a la bandeja
-// Devuelve cuántos correos se enviaron.
-function  ProcessDue(var Q: TSchedQueue): Integer;
+// Encola al final (FIFO)
+procedure EnqueueScheduled(var Q: TSchedQueue; const ADest, AAsunto, AFecha, AMsg: AnsiString);
+
+// PROCESA TODO en orden FIFO. Devuelve cuántos envió.
+function ProcessFIFO(var Q: TSchedQueue): Integer;
+
+// Reporte DOT de la cola del usuario (no muta la cola)
+function ExportSchedDOTForUser(const Q: TSchedQueue;
+                               const UserEmail, BaseDir: string;
+                               out DotPath: string): Boolean;
 
 implementation
 
 uses
-  uUsers, uInbox, uMatrix;  // para FindUserByEmailOrUsername y AddMail
+  SysUtils, uUsers, uInbox, uMatrix;
 
 procedure InitQueue(var Q: TSchedQueue);
 begin
-  Q.Head := nil;
-  Q.Tail := nil;
-  Q.Count := 0;
+  Q.Head := nil; Q.Tail := nil; Q.Count := 0;
 end;
 
-procedure EnqueueMail(var Q: TSchedQueue; const ARem, ADestKey, AAsunto, AMensaje: AnsiString; ASendAt: TDateTime);
+procedure ClearQueue(var Q: TSchedQueue);
 var
-  N: PSchedNode;
+  N, T: PSchedItem;
+begin
+  N := Q.Head;
+  while N <> nil do begin
+    T := N^.Next; Dispose(N); N := T;
+  end;
+  InitQueue(Q);
+end;
+
+procedure EnqueueScheduled(var Q: TSchedQueue;
+  const ADest, AAsunto, AFecha, AMsg: AnsiString);
+var
+  N: PSchedItem;
 begin
   New(N);
-  N^.Remitente := ARem;
-  N^.DestKey   := ADestKey;
-  N^.Asunto    := AAsunto;
-  N^.Mensaje   := AMensaje;
-  N^.SendAt    := ASendAt;
-  N^.Next      := nil;
+  N^.Dest    := ADest;
+  N^.Asunto  := AAsunto;
+  N^.Fecha   := AFecha;     // solo decorativo
+  N^.Mensaje := AMsg;
+  N^.Next    := nil;
 
-  if Q.Tail <> nil then
-    Q.Tail^.Next := N
-  else
-    Q.Head := N;
+  if Q.Head = nil then Q.Head := N
+  else Q.Tail^.Next := N;
 
   Q.Tail := N;
   Inc(Q.Count);
 end;
 
-function DequeueMail(var Q: TSchedQueue): PSchedNode;
-begin
-  Result := Q.Head;
-  if Result = nil then Exit;
-
-  Q.Head := Result^.Next;
-  if Q.Head = nil then
-    Q.Tail := nil;
-
-  Result^.Next := nil;
-  Dec(Q.Count);
-end;
-
-function PeekMail(const Q: TSchedQueue): PSchedNode;
-begin
-  Result := Q.Head;
-end;
-
-function IsQueueEmpty(const Q: TSchedQueue): Boolean;
-begin
-  Result := Q.Head = nil;
-end;
-
-function ProcessDue(var Q: TSchedQueue): Integer;
+function ProcessFIFO(var Q: TSchedQueue): Integer;
 var
-  N: PSchedNode;
+  It: PSchedItem;
   Dest: PUser;
-  sent: Integer;
-  fechaTxt: AnsiString;
-  cutoff: TDateTime;
 begin
-  sent := 0;
-  cutoff := Now + EncodeTime(0,0,1,0); // margen de 1 segundo
-
-  while (Q.Head <> nil) and (Q.Head^.SendAt <= cutoff) do
+  Result := 0;
+  while Q.Head <> nil do
   begin
-    N := DequeueMail(Q);
-    if N <> nil then
+    It := Q.Head;
+    Q.Head := It^.Next;
+    if Q.Head = nil then Q.Tail := nil;
+    Dec(Q.Count);
+
+    Dest := FindUserByEmailOrUsername(It^.Dest);
+    if (Dest <> nil) and (CurrentUser <> nil) then
     begin
-      Dest := FindUserByEmailOrUsername(N^.DestKey);
-      if Dest <> nil then
-      begin
-        fechaTxt := FormatDateTime('yyyy-mm-dd hh:nn', Now);
-        AddMail(Dest^.Inbox, N^.Remitente, N^.Asunto, fechaTxt, N^.Mensaje, False);
-        IncrementEdge(RelMatrix, FindUserByEmailOrUsername(N^.Remitente), Dest);
-        Inc(sent);
-      end;
-      Dispose(N);
+      // Se marca como Programado=True al insertarlo en la bandeja
+      AddMail(Dest^.Inbox, CurrentUser^.Email, It^.Asunto, It^.Fecha, It^.Mensaje, True);
+      IncrementEdge(RelMatrix, CurrentUser, Dest); // matriz dispersa
+      Inc(Result);
+    end;
+
+    Dispose(It);
+  end;
+end;
+
+
+function ExportSchedDOTForUser(const Q: TSchedQueue;
+  const UserEmail, BaseDir: string; out DotPath: string): Boolean;
+var
+  F: TextFile;
+  N: PSchedItem;
+  Path: string;
+  idx: Integer;
+begin
+  Result := False;
+  DotPath := '';
+
+  if (BaseDir = '') then Exit;
+  if not DirectoryExists(BaseDir) then
+    if not ForceDirectories(BaseDir) then Exit;
+
+  Path := IncludeTrailingPathDelimiter(BaseDir) + 'programados_' + UserEmail + '.dot';
+  AssignFile(F, Path);
+  try
+    Rewrite(F);
+    Writeln(F, 'digraph "Reporte de Correos Programados" {');
+    Writeln(F, '  rankdir=TB;');
+    Writeln(F, '  labelloc="t";');
+    Writeln(F, '  label="Reporte de Correos Programados";');
+    Writeln(F, '  node [shape=box, style="rounded,filled", fillcolor="#d7f5f9"];');
+
+    Writeln(F, '  subgraph cluster_q {');
+    Writeln(F, '    label="Cola"; color="#bbbbbb";');
+
+    N := Q.Head; idx := 1;
+    while N <> nil do
+    begin
+      Writeln(F, '    n', idx, ' [label=<',
+        '<b>ID:</b> ', idx, '<br/>',
+        '<b>Remitente:</b> ', UserEmail, '<br/>',
+        '<b>Estado:</b> Programado<br/>',
+        '<b>Programado:</b> Sí<br/>',
+        '<b>Asunto:</b> ', N^.Asunto, '<br/>',
+        '<b>Fecha:</b> ', N^.Fecha, '<br/>',
+        '<b>Mensaje:</b> ', StringReplace(N^.Mensaje, '<', '&lt;', [rfReplaceAll]),
+        '> , width=3 ];');
+      if N^.Next <> nil then
+        Writeln(F, '    n', idx, ' -> n', idx+1, ' [arrowsize=0.7];');
+      N := N^.Next;
+      Inc(idx);
+    end;
+
+    Writeln(F, '  }');
+    Writeln(F, '}');
+    CloseFile(F);
+
+    DotPath := Path;
+    Result := True;
+  except
+    on E: Exception do
+    begin
+      {$I-} CloseFile(F); {$I+}
+      Result := False;
     end;
   end;
-
-  Result := sent;
 end;
 
+function ExportSchedDOT(const UserEmail: string; const Q: TSchedQueue;
+                        const BaseDir: string; out DotPath: string): Boolean;
+var
+  F: TextFile;
+  It: PSchedItem;
+  Path: string;
+  idn: Integer;
+begin
+  Result := False;
+  DotPath := '';
+  if BaseDir = '' then Exit;
+
+  if not DirectoryExists(BaseDir) then
+    if not ForceDirectories(BaseDir) then Exit;
+
+  Path := IncludeTrailingPathDelimiter(BaseDir) + 'sched_' + UserEmail + '.dot';
+  AssignFile(F, Path);
+  try
+    Rewrite(F);
+    Writeln(F, 'digraph "ColaProgramados" {');
+    Writeln(F, '  rankdir=LR;');
+    Writeln(F, '  node [shape=record, style=filled, fillcolor="#d0f0ff"];');
+    Writeln(F, '  label="Correos Programados (Cola FIFO)"; labelloc="t";');
+
+    It := Q.Head;
+    idn := 0;
+    while It <> nil do
+    begin
+      Writeln(F, Format('  n%d [label="Dest: %s | Asunto: %s | Fecha: %s"];',
+        [idn, It^.Dest, It^.Asunto, It^.Fecha]));
+      if (It^.Next <> nil) then
+        Writeln(F, Format('  n%d -> n%d;', [idn, idn+1]));
+      Inc(idn);
+      It := It^.Next;
+    end;
+
+    Writeln(F, '}');
+    CloseFile(F);
+    DotPath := Path;
+    Result := True;
+  except
+    on E: Exception do
+    begin
+      {$I-} CloseFile(F); {$I+}
+      Result := False;
+    end;
+  end;
+end;
 
 end.
 

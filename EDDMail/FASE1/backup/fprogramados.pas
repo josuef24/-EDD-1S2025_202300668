@@ -5,7 +5,7 @@ unit fProgramados;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, uQueue;
 
 type
 
@@ -16,6 +16,7 @@ type
     lstQueue: TListBox;
     btnProcesar: TButton;
     btnRegresar: TButton;
+    procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnProcesarClick(Sender: TObject);
     procedure btnRegresarClick(Sender: TObject);
@@ -31,13 +32,13 @@ var
 implementation
 
 uses
-  uUsers, uQueue, uInbox, frmUser; // <- importante: uQueue y uUsers
+  uUsers, uInbox, frmUser;
 
 {$R *.lfm}
 
 procedure TfrmProgramados.LlenarLista;
 var
-  P: PSchedNode;
+  P: PSchedItem;   // <-- antes ponías PSchedNode
   linea: string;
 begin
   lstQueue.Items.BeginUpdate;
@@ -46,23 +47,20 @@ begin
 
     if (CurrentUser = nil) then Exit;
 
-    P := CurrentUser^.Sched.Head;  // cabeza de la cola (FIFO)
+    // cabeza de la cola FIFO del usuario actual
+    P := CurrentUser^.Sched.Head;
     while P <> nil do
     begin
-      linea := Format('%s | %s | %s',
-        [FormatDateTime('yyyy-mm-dd hh:nn', P^.SendAt),
-         P^.DestKey,
-         P^.Asunto]);
+      // En cola nueva: Fecha es string (no DateTime), así que la mostramos directo
+      linea := Format('%s | %s | %s', [P^.Dest, P^.Asunto, P^.Fecha]);
       lstQueue.Items.Add(linea);
       P := P^.Next;
     end;
-
-    if lstQueue.Count > 0 then
-      lstQueue.ItemIndex := 0;
   finally
     lstQueue.Items.EndUpdate;
   end;
 end;
+
 
 procedure TfrmProgramados.FormShow(Sender: TObject);
 begin
@@ -71,18 +69,23 @@ begin
   LlenarLista;
 end;
 
+procedure TfrmProgramados.FormCreate(Sender: TObject);
+begin
+
+end;
+
 procedure TfrmProgramados.btnProcesarClick(Sender: TObject);
 var
   enviados: Integer;
 begin
   if (CurrentUser = nil) then Exit;
 
-  // Procesa los que ya vencieron (<= Now)
-  enviados := ProcessDue(CurrentUser^.Sched);
+  enviados := ProcessFIFO(CurrentUser^.Sched);
 
   ShowMessage(Format('Enviados: %d', [enviados]));
-  LlenarLista; // refresca la cola (algunos se habrán ido)
+  LlenarLista; // refresca la cola
 end;
+
 
 procedure TfrmProgramados.btnRegresarClick(Sender: TObject);
 begin

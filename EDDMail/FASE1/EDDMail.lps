@@ -9,7 +9,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="21"/>
         <CursorPos X="17" Y="6"/>
-        <UsageCount Value="105"/>
+        <UsageCount Value="108"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -21,7 +21,7 @@
         <UnitName Value="fMaiin"/>
         <TopLine Value="110"/>
         <CursorPos X="3" Y="129"/>
-        <UsageCount Value="105"/>
+        <UsageCount Value="108"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -35,7 +35,7 @@
         <EditorIndex Value="15"/>
         <TopLine Value="64"/>
         <CursorPos X="3" Y="70"/>
-        <UsageCount Value="105"/>
+        <UsageCount Value="108"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -49,7 +49,7 @@
         <EditorIndex Value="17"/>
         <TopLine Value="63"/>
         <CursorPos X="17" Y="96"/>
-        <UsageCount Value="105"/>
+        <UsageCount Value="108"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -60,11 +60,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="frmUser"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="167"/>
-        <CursorPos X="63" Y="198"/>
-        <UsageCount Value="104"/>
+        <TopLine Value="194"/>
+        <CursorPos X="50" Y="214"/>
+        <UsageCount Value="107"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -72,10 +71,11 @@
         <Filename Value="uusers.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uUsers"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="19"/>
-        <TopLine Value="300"/>
-        <CursorPos X="5" Y="330"/>
-        <UsageCount Value="96"/>
+        <TopLine Value="373"/>
+        <CursorPos Y="409"/>
+        <UsageCount Value="99"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -85,7 +85,7 @@
         <EditorIndex Value="12"/>
         <TopLine Value="33"/>
         <CursorPos X="42" Y="46"/>
-        <UsageCount Value="89"/>
+        <UsageCount Value="92"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -98,7 +98,7 @@
         <EditorIndex Value="22"/>
         <TopLine Value="70"/>
         <CursorPos X="19" Y="108"/>
-        <UsageCount Value="89"/>
+        <UsageCount Value="92"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -112,7 +112,7 @@
         <EditorIndex Value="23"/>
         <TopLine Value="43"/>
         <CursorPos X="3" Y="48"/>
-        <UsageCount Value="86"/>
+        <UsageCount Value="89"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -125,7 +125,7 @@
         <UnitName Value="fViewMail"/>
         <EditorIndex Value="11"/>
         <CursorPos X="24" Y="21"/>
-        <UsageCount Value="84"/>
+        <UsageCount Value="87"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -136,7 +136,7 @@
         <EditorIndex Value="1"/>
         <TopLine Value="30"/>
         <CursorPos Y="71"/>
-        <UsageCount Value="82"/>
+        <UsageCount Value="85"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -149,7 +149,7 @@
         <EditorIndex Value="25"/>
         <TopLine Value="103"/>
         <CursorPos X="3" Y="115"/>
-        <UsageCount Value="68"/>
+        <UsageCount Value="71"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -158,9 +158,7 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="uQueue"/>
         <EditorIndex Value="26"/>
-        <TopLine Value="85"/>
-        <CursorPos X="39" Y="115"/>
-        <UsageCount Value="66"/>
+        <UsageCount Value="69"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -172,8 +170,8 @@
         <UnitName Value="fProgramarMail"/>
         <EditorIndex Value="10"/>
         <TopLine Value="91"/>
-        <CursorPos X="20" Y="127"/>
-        <UsageCount Value="66"/>
+        <CursorPos Y="123"/>
+        <UsageCount Value="69"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -185,9 +183,9 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="fProgramados"/>
         <EditorIndex Value="6"/>
-        <TopLine Value="57"/>
-        <CursorPos Y="95"/>
-        <UsageCount Value="65"/>
+        <TopLine Value="61"/>
+        <CursorPos X="3" Y="81"/>
+        <UsageCount Value="68"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -198,7 +196,7 @@
         <EditorIndex Value="5"/>
         <TopLine Value="101"/>
         <CursorPos X="45" Y="142"/>
-        <UsageCount Value="56"/>
+        <UsageCount Value="59"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -211,7 +209,7 @@
         <EditorIndex Value="7"/>
         <TopLine Value="34"/>
         <CursorPos X="51" Y="51"/>
-        <UsageCount Value="56"/>
+        <UsageCount Value="59"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -225,7 +223,7 @@
         <EditorIndex Value="8"/>
         <TopLine Value="46"/>
         <CursorPos X="19" Y="83"/>
-        <UsageCount Value="51"/>
+        <UsageCount Value="54"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -239,7 +237,7 @@
         <EditorIndex Value="24"/>
         <TopLine Value="25"/>
         <CursorPos X="18" Y="34"/>
-        <UsageCount Value="41"/>
+        <UsageCount Value="44"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -250,7 +248,26 @@
         <EditorIndex Value="4"/>
         <TopLine Value="246"/>
         <CursorPos Y="287"/>
-        <UsageCount Value="38"/>
+        <UsageCount Value="41"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ureportuserinbox.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uReportUserInbox"/>
+        <EditorIndex Value="13"/>
+        <CursorPos X="46" Y="8"/>
+        <UsageCount Value="28"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ureportusertrash.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uReportUserTrash"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="65"/>
+        <CursorPos X="5" Y="106"/>
+        <UsageCount Value="23"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -258,7 +275,7 @@
         <EditorIndex Value="20"/>
         <TopLine Value="38"/>
         <CursorPos X="18" Y="78"/>
-        <UsageCount Value="54"/>
+        <UsageCount Value="55"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit>
@@ -266,14 +283,14 @@
         <Filename Value="fmaiin.lfm"/>
         <EditorIndex Value="16"/>
         <CursorPos X="25"/>
-        <UsageCount Value="53"/>
+        <UsageCount Value="54"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit>
       <Unit>
         <Filename Value="frmuser.lfm"/>
         <EditorIndex Value="14"/>
-        <UsageCount Value="49"/>
+        <UsageCount Value="50"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit>
@@ -282,7 +299,7 @@
         <EditorIndex Value="18"/>
         <TopLine Value="68"/>
         <CursorPos X="16" Y="109"/>
-        <UsageCount Value="49"/>
+        <UsageCount Value="50"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit>
@@ -304,134 +321,19 @@
         <Filename Value="finbox.lfm"/>
         <EditorIndex Value="27"/>
         <CursorPos X="20" Y="8"/>
-        <UsageCount Value="45"/>
+        <UsageCount Value="46"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit>
       <Unit>
         <Filename Value="faddcontact.lfm"/>
         <EditorIndex Value="9"/>
-        <UsageCount Value="27"/>
+        <UsageCount Value="28"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit>
-      <Unit>
-        <Filename Value="ureportuserinbox.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="uReportUserInbox"/>
-        <EditorIndex Value="13"/>
-        <CursorPos X="46" Y="8"/>
-        <UsageCount Value="25"/>
-        <Loaded Value="True"/>
-      </Unit>
-      <Unit>
-        <Filename Value="ureportusertrash.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="uReportUserTrash"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="65"/>
-        <CursorPos X="5" Y="106"/>
-        <UsageCount Value="20"/>
-        <Loaded Value="True"/>
-      </Unit>
     </Units>
     <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="uinbox.pas"/>
-        <Caret Line="231" Column="32" TopLine="211"/>
-      </Position>
-      <Position>
-        <Filename Value="uinbox.pas"/>
-        <Caret Line="46" Column="42" TopLine="33"/>
-      </Position>
-      <Position>
-        <Filename Value="ureportuserinbox.pas"/>
-        <Caret Line="8" Column="46"/>
-      </Position>
-      <Position>
-        <Filename Value="frmuser.pas"/>
-        <Caret Line="59" Column="57" TopLine="38"/>
-      </Position>
-      <Position>
-        <Filename Value="frmuser.pas"/>
-        <Caret Line="151" Column="21" TopLine="130"/>
-      </Position>
-      <Position>
-        <Filename Value="frmuser.pas"/>
-        <Caret Line="155" Column="3" TopLine="136"/>
-      </Position>
-      <Position>
-        <Filename Value="frmuser.pas"/>
-        <Caret Line="12" Column="26"/>
-      </Position>
-      <Position>
-        <Filename Value="frmuser.pas"/>
-        <Caret Line="200" Column="21" TopLine="182"/>
-      </Position>
-      <Position>
-        <Filename Value="frmuser.pas"/>
-        <Caret Line="131" Column="3" TopLine="129"/>
-      </Position>
-      <Position>
-        <Filename Value="frmuser.pas"/>
-        <Caret Line="145" Column="3" TopLine="129"/>
-      </Position>
-      <Position>
-        <Filename Value="frmuser.pas"/>
-        <Caret Line="194" Column="3" TopLine="182"/>
-      </Position>
-      <Position>
-        <Filename Value="frmuser.pas"/>
-        <Caret Line="114" Column="3" TopLine="112"/>
-      </Position>
-      <Position>
-        <Filename Value="frmuser.pas"/>
-        <Caret Line="123" Column="3" TopLine="112"/>
-      </Position>
-      <Position>
-        <Filename Value="frmuser.pas"/>
-        <Caret Line="139" Column="3" TopLine="112"/>
-      </Position>
-      <Position>
-        <Filename Value="frmuser.pas"/>
-        <Caret Line="186" Column="3" TopLine="182"/>
-      </Position>
-      <Position>
-        <Filename Value="frmuser.pas"/>
-        <Caret Line="98" Column="3" TopLine="96"/>
-      </Position>
-      <Position>
-        <Filename Value="frmuser.pas"/>
-        <Caret Line="205" Column="21" TopLine="187"/>
-      </Position>
-      <Position>
-        <Filename Value="frmuser.pas"/>
-        <Caret Line="162" TopLine="155"/>
-      </Position>
-      <Position>
-        <Filename Value="frmuser.pas"/>
-        <Caret Line="59" Column="57" TopLine="39"/>
-      </Position>
-      <Position>
-        <Filename Value="frmuser.pas"/>
-        <Caret Line="155" Column="3" TopLine="130"/>
-      </Position>
-      <Position>
-        <Filename Value="frmuser.pas"/>
-        <Caret Line="59" Column="57" TopLine="38"/>
-      </Position>
-      <Position>
-        <Filename Value="frmuser.pas"/>
-        <Caret Line="155" TopLine="153"/>
-      </Position>
-      <Position>
-        <Filename Value="frmuser.pas"/>
-        <Caret Line="61" Column="20" TopLine="38"/>
-      </Position>
-      <Position>
-        <Filename Value="frmuser.pas"/>
-        <Caret Line="63" Column="57" TopLine="42"/>
-      </Position>
       <Position>
         <Filename Value="frmuser.pas"/>
         <Caret Line="159" Column="21" TopLine="138"/>
@@ -454,6 +356,101 @@
       <Position>
         <Filename Value="frmuser.pas"/>
         <Caret Line="54" Column="6" TopLine="28"/>
+      </Position>
+      <Position>
+        <Filename Value="fprogramados.pas"/>
+        <Caret Line="95" TopLine="57"/>
+      </Position>
+      <Position>
+        <Filename Value="fprogramados.pas"/>
+        <Caret Line="85" Column="9" TopLine="57"/>
+      </Position>
+      <Position>
+        <Filename Value="fprogramados.pas"/>
+        <Caret Line="81" Column="22" TopLine="57"/>
+      </Position>
+      <Position>
+        <Filename Value="uqueue.pas"/>
+        <Caret Line="29" Column="21" TopLine="8"/>
+      </Position>
+      <Position>
+        <Filename Value="fprogramados.pas"/>
+        <Caret Line="81" Column="22" TopLine="57"/>
+      </Position>
+      <Position>
+        <Filename Value="uqueue.pas"/>
+        <Caret Line="211" Column="5" TopLine="174"/>
+      </Position>
+      <Position>
+        <Filename Value="fprogramados.pas"/>
+        <Caret Line="85" TopLine="57"/>
+      </Position>
+      <Position>
+        <Filename Value="fprogramarmail.pas"/>
+      </Position>
+      <Position>
+        <Filename Value="fprogramados.pas"/>
+        <Caret Line="78" Column="3" TopLine="57"/>
+      </Position>
+      <Position>
+        <Filename Value="fprogramados.pas"/>
+        <Caret Line="41" Column="6" TopLine="32"/>
+      </Position>
+      <Position>
+        <Filename Value="fprogramados.pas"/>
+        <Caret Line="8" Column="74"/>
+      </Position>
+      <Position>
+        <Filename Value="fprogramados.pas"/>
+        <Caret Line="35" Column="28" TopLine="10"/>
+      </Position>
+      <Position>
+        <Filename Value="fprogramados.pas"/>
+        <Caret Line="63" TopLine="29"/>
+      </Position>
+      <Position>
+        <Filename Value="fprogramados.pas"/>
+        <Caret Line="89" TopLine="61"/>
+      </Position>
+      <Position>
+        <Filename Value="frmuser.pas"/>
+        <Caret Line="54" Column="22" TopLine="33"/>
+      </Position>
+      <Position>
+        <Filename Value="fprogramados.pas"/>
+        <Caret Line="89" TopLine="61"/>
+      </Position>
+      <Position>
+        <Filename Value="frmuser.pas"/>
+        <Caret Line="112" Column="40" TopLine="91"/>
+      </Position>
+      <Position>
+        <Filename Value="frmuser.pas"/>
+        <Caret Line="199" Column="10" TopLine="164"/>
+      </Position>
+      <Position>
+        <Filename Value="frmuser.pas"/>
+        <Caret Line="127" Column="3" TopLine="124"/>
+      </Position>
+      <Position>
+        <Filename Value="frmuser.pas"/>
+        <Caret Line="184" Column="11" TopLine="196"/>
+      </Position>
+      <Position>
+        <Filename Value="frmuser.pas"/>
+        <Caret Line="213" Column="59" TopLine="207"/>
+      </Position>
+      <Position>
+        <Filename Value="frmuser.pas"/>
+        <Caret Line="214" Column="30" TopLine="193"/>
+      </Position>
+      <Position>
+        <Filename Value="uusers.pas"/>
+        <Caret Line="17"/>
+      </Position>
+      <Position>
+        <Filename Value="uusers.pas"/>
+        <Caret Line="336" Column="10"/>
       </Position>
     </JumpHistory>
     <RunParams>

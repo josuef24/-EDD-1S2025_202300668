@@ -11,6 +11,10 @@ function ExistsId(const AId: Integer): Boolean;
 function AddUserWithId(const AId: Integer; const AName, AUsername, AEmail, APhone, APass: AnsiString;
                        const ARoot: Boolean): Integer;
 function ExportUsersDot(const DirPath: string): Boolean;
+function ExportContactsDOTForUser(const L: TContactList;
+                                  const OwnerEmail, BaseDir: string;
+                                  out DotPath: string): Boolean;
+
 
 
 type
@@ -328,6 +332,81 @@ begin
     end;
   end;
 end;
+
+function ExportContactsDOTForUser(const L: TContactList;
+  const OwnerEmail, BaseDir: string; out DotPath: string): Boolean;
+var
+  F: TextFile;
+  First, C: PContact;
+  Path: string;
+  idx, i: Integer;
+begin
+  Result  := False;
+  DotPath := '';
+
+  if (BaseDir = '') then Exit;
+  if not DirectoryExists(BaseDir) then
+    if not ForceDirectories(BaseDir) then Exit;
+
+  Path := IncludeTrailingPathDelimiter(BaseDir) + 'contactos_' + OwnerEmail + '.dot';
+  AssignFile(F, Path);
+  try
+    Rewrite(F);
+    Writeln(F, 'digraph "Reporte de Contactos" {');
+    Writeln(F, '  rankdir=LR;');
+    Writeln(F, '  labelloc="t";');
+    Writeln(F, '  label="Reporte de Contactos";');
+    Writeln(F, '  node [shape=box, style="rounded,filled", fillcolor="#cfe9f7"];');
+
+    // contenedor (como en otros reportes)
+    Writeln(F, '  subgraph cluster_contacts {');
+    Writeln(F, '    label="Lista Circular"; color="#bbbbbb";');
+
+    if L.Tail <> nil then
+    begin
+      First := L.Tail^.Next;  // cabeza
+      C     := First;
+      idx   := 1;
+
+      // nodos
+      repeat
+        Writeln(F, '    n', idx, ' [label=<',
+          '<b>ID:</b> ', idx, '<br/>',
+          '<b>Nombre:</b> ', C^.Name, '<br/>',
+          '<b>Usuario:</b> ', C^.Username, '<br/>',
+          '<b>Email:</b> ', C^.Email, '<br/>',
+          '<b>Teléfono:</b> ', C^.Phone,
+          '>, width=3];');
+        C := C^.Next;
+        Inc(idx);
+      until C = First;
+
+      // aristas doble flecha para mostrar circularidad
+      if idx > 2 then
+      begin
+        for i := 1 to idx-2 do
+          Writeln(F, '    n', i, ' -> n', i+1, ' [dir=both, arrowsize=0.7];');
+        // último <-> primero
+        Writeln(F, '    n', idx-1, ' -> n1 [dir=both, arrowsize=0.7];');
+      end;
+      // si solo hay 1, no dibujamos aristas
+    end;
+
+    Writeln(F, '  }'); // cluster
+    Writeln(F, '}');
+    CloseFile(F);
+
+    DotPath := Path;
+    Result  := True;
+  except
+    on E: Exception do
+    begin
+      {$I-} CloseFile(F); {$I+}
+      Result := False;
+    end;
+  end;
+end;
+
 
 
 end.

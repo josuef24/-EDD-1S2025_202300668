@@ -79,6 +79,7 @@ procedure TfrmProgramarMail.btnProgramarClick(Sender: TObject);
 var
   destKey, asunto, cuerpo: AnsiString;
   when: TDateTime;
+  fechaStr: string;
 begin
   if CurrentUser = nil then
   begin
@@ -96,31 +97,30 @@ begin
     Exit;
   end;
 
-  if not ParseDateTimeSafe(Trim(edtFecha.Text), Trim(edtHora.Text), when) then
-  begin
-    ShowMessage('Fecha/Hora inválidas. Usa yyyy-mm-dd y hh:nn');
-    Exit;
-  end;
-
-  // (opcional) Validar que el destinatario exista; más adelante restringimos a contactos
   if FindUserByEmailOrUsername(destKey) = nil then
   begin
     ShowMessage('El destinatario no existe.');
     Exit;
   end;
 
-  // Encolar en la cola del usuario actual
-  EnqueueMail(CurrentUser^.Sched,
-              CurrentUser^.Email,  // remitente
-              destKey,
-              asunto,
-              cuerpo,
-              when);
+  // La fecha/hora ya no controla el envío; solo la guardamos como texto.
+  if ParseDateTimeSafe(Trim(edtFecha.Text), Trim(edtHora.Text), when) then
+    fechaStr := FormatDateTime('yyyy-mm-dd hh:nn', when)
+  else
+    fechaStr := Trim(edtFecha.Text) + ' ' + Trim(edtHora.Text);
 
-  ShowMessage('Programado para: ' + DateTimeToStr(when));
+  // ⬇️ Encolar al final de la cola FIFO
+  EnqueueScheduled(CurrentUser^.Sched,  // cola del usuario logueado
+                   destKey,             // destinatario (email/usuario)
+                   asunto,              // asunto
+                   fechaStr,            // fecha/hora (solo decorativa)
+                   cuerpo);             // mensaje
+
+  ShowMessage('Correo agregado a la cola (programado).');
   frmProgramarMail.Hide;
   frmUserN.Show;
 end;
+
 
 procedure TfrmProgramarMail.btnCancelarClick(Sender: TObject);
 begin
