@@ -173,6 +173,16 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="uMatrix"/>
       </Unit>
+      <Unit>
+        <Filename Value="ureportuserinbox.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uReportUserInbox"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ureportusertrash.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uReportUserTrash"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

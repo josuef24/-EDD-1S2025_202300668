@@ -37,10 +37,13 @@ procedure DetachMail(var B: TInbox; M: PMail);
 procedure SortBySubject(var B: TInbox);
 // NUEVO
 function ExtractMailAt(var I: TInbox; Index: Integer): PMail;
+function ExportInboxDOTForUser(const UserEmail: string; const B: TInbox;
+                               const BaseDir: string; out DotPath: string): Boolean;
+
 
 implementation
 
-uses SysUtils, uMatrix;
+uses SysUtils, uMatrix, Classes, StrUtils;
 
 procedure InitInbox(var B: TInbox);
 begin
@@ -188,6 +191,73 @@ begin
   DetachMail(I, M);
   Result := M; // queda “suelto”, lo puedes mandar a Trash
 end;
+
+function ExportInboxDOTForUser(const UserEmail: string; const B: TInbox;
+                               const BaseDir: string; out DotPath: string): Boolean;
+var
+  F: TextFile;
+  N: PMail;
+  Path: string;
+begin
+  Result := False;
+  DotPath := '';
+  if BaseDir = '' then Exit;
+
+  if not DirectoryExists(BaseDir) then
+    if not ForceDirectories(BaseDir) then Exit;
+
+  Path := IncludeTrailingPathDelimiter(BaseDir) + 'inbox_' + UserEmail + '.dot';
+  AssignFile(F, Path);
+  try
+    Rewrite(F);
+    Writeln(F, 'digraph "Reporte de Correos Recibidos" {');
+    Writeln(F, '  rankdir=LR;');
+    Writeln(F, '  labelloc="t";');
+    Writeln(F, '  label="Reporte de Correos Recibidos";');
+    Writeln(F, '  node [shape=box, style="rounded,filled", fillcolor="#fff7cc"];');
+
+    // contenedor “lista doblemente enlazada”
+    Writeln(F, '  subgraph cluster_inbox {');
+    Writeln(F, '    label="Lista Doblemente Enlazada";');
+    Writeln(F, '    color="#bbbbbb";');
+
+    N := B.Head;
+    while N <> nil do
+    begin
+      Writeln(F, '    n', N^.Id, ' [label=<',
+        '<b>ID:</b> ', N^.Id, '<br/>',
+        '<b>Remitente:</b> ', N^.Remitente, '<br/>',
+        '<b>Estado:</b> ', N^.Estado, '<br/>',
+        '<b>Programado:</b> ', IfThen(N^.Programado, 'Sí', 'No'), '<br/>',
+        '<b>Asunto:</b> ', N^.Asunto, '<br/>',
+        '<b>Fecha:</b> ', N^.Fecha, '<br/>',
+        '<b>Mensaje:</b> ', StringReplace(N^.Mensaje, '<', '&lt;', [rfReplaceAll]),
+        '>, width=3];');
+
+      // flechas dobles (prev/next) cuando existan
+      if N^.Next <> nil then
+        Writeln(F, '    n', N^.Id, ' -> n', N^.Next^.Id, ' [dir=both, arrowsize=0.6];');
+
+      N := N^.Next;
+    end;
+
+    Writeln(F, '  }'); // fin subgraph
+    Writeln(F, '}');
+    CloseFile(F);
+
+    DotPath := Path;
+    Result  := True;
+  except
+    on E: Exception do
+    begin
+      {$I-} CloseFile(F); {$I+}
+      Result := False;
+    end;
+  end;
+end;
+
+
+
 
 end.
 

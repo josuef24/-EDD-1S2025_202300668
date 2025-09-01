@@ -99,12 +99,13 @@ object frmUserN: TfrmUserN
     TabOrder = 8
     OnClick = btnPerfilClick
   end
-  object btnCargaMasiva8: TButton
+  object btnReportes: TButton
     Left = 200
     Height = 40
     Top = 608
     Width = 200
     Caption = 'Generar reportes'
     TabOrder = 9
+    OnClick = btnReportesClick
   end
 end

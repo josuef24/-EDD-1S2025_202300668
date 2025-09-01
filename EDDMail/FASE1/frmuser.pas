@@ -23,12 +23,13 @@ type
     btnAgregarContacto: TButton;
     btnContactos: TButton;
     btnPerfil: TButton;
-    btnCargaMasiva8: TButton;
+    btnReportes: TButton;
     btnCerrarSesion: TButton;
     lblWelcome: TLabel;
     procedure btnAgregarContactoClick(Sender: TObject);
     procedure btnBandejaClick(Sender: TObject);
     procedure btnCargaMasiva1Click(Sender: TObject);
+    procedure btnReportesClick(Sender: TObject);
     procedure btnContactosClick(Sender: TObject);
     procedure btnPapeleraClick(Sender: TObject);
     procedure btnCerrarSesionClick(Sender: TObject);
@@ -49,11 +50,42 @@ var
 implementation
 
 uses fLogin, fSendMail, fTrash, fInbox, uQueue, uUsers, fProgramarMail,
-     fProgramados, fContacts, fAddContact, fPerfil;
+     fProgramados, fContacts, fAddContact, fPerfil, Process, uReportUserInbox,
+     uReportUserTrash;
 
 {$R *.lfm}
 
 { TfrmUserN }
+
+var
+  P: TProcess;
+  OutFile: string;
+
+function RunGraphviz(const DotPath: string; const OutFormat: string = 'png'): Boolean;
+
+
+begin
+  Result := False;
+  if not FileExists(DotPath) then Exit;
+
+  OutFile := ChangeFileExt(DotPath, '.' + OutFormat);
+
+  P := TProcess.Create(nil);
+  try
+    P.Executable := 'dot';               // requiere graphviz instalado
+    P.Parameters.Add('-T' + OutFormat);  // png|svg|pdf
+    P.Parameters.Add(DotPath);
+    P.Parameters.Add('-o');
+    P.Parameters.Add(OutFile);
+    P.Options := [poWaitOnExit];
+    P.ShowWindow := swoHIDE;
+    P.Execute;
+    Result := (P.ExitStatus = 0) and FileExists(OutFile);
+  finally
+    P.Free;
+  end;
+end;
+
 
 
 
@@ -119,6 +151,53 @@ begin
   frmUserN.Hide;
   frmSendMail.Show;
 end;
+
+const
+  OUT_USER_DIR = 'User-Reportes';
+var
+  DotPath, PngPath: string;
+
+procedure TfrmUserN.btnReportesClick(Sender: TObject);
+
+begin
+  if (CurrentUser = nil) then
+  begin
+    ShowMessage('No hay usuario activo.');
+    Exit;
+  end;
+
+  // 1) Generar el .dot del inbox del usuario
+  if not ExportInboxDOT(OUT_USER_DIR, CurrentUser) then
+  begin
+    ShowMessage('No se pudo generar el DOT del inbox.');
+    Exit;
+  end;
+
+  // 2) Ejecutar Graphviz (dot -> png)
+  DotPath := IncludeTrailingPathDelimiter(OUT_USER_DIR) + 'inbox_' + IntToStr(CurrentUser^.Id) + '.dot';
+  if RunGraphviz(DotPath, 'png') then
+  begin
+    PngPath := ChangeFileExt(DotPath, '.png');
+    ShowMessage('Reporte de correos recibidos generado: ' + PngPath);
+  end
+  else
+    ShowMessage('Se creó el .dot, pero no pude ejecutar "dot" (Graphviz). Verifica que esté instalado.');
+
+  // ===== 2) REPORTE: PAPELERA =====
+  if ExportTrashDOTForUser(CurrentUser^.Email, CurrentUser^.Trash, OUT_USER_DIR, DotPath) then
+  begin
+    if RunGraphviz(DotPath, 'png') then
+    begin
+      PngPath := ChangeFileExt(DotPath, '.png');
+      ShowMessage('Reporte de papelera generado: ' + PngPath);
+    end
+    else
+      ShowMessage('Se creó el .dot de papelera, pero no pude ejecutar "dot" (Graphviz).');
+  end
+  else
+    ShowMessage('No se pudo generar el .dot de la papelera.');
+end;
+
 
 procedure TfrmUserN.btnContactosClick(Sender: TObject);
 begin
