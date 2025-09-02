@@ -1,0 +1,31 @@
+digraph "Reporte de Comunidades" {
+  rankdir=LR;
+  labelloc="t";
+  label="Reporte de Comunidades";
+  node  [fontname="Helvetica"];
+  edge  [arrowsize=0.8];
+  // Estilos
+  subgraph cluster_legend { style=invis; }
+  // Comunidad: caja azul
+  // Usuario: caja amarilla
+  c1 [shape=box, style="rounded,filled", fillcolor="#a9d1e6", color="#2c3e50", label=< <b>2</b> >, width=2.8, height=0.9];
+  c1_u1 [shape=box, style="rounded,filled", fillcolor="#f6f4c0", color="#7f8c8d", label=< smejia >, width=3.3, height=0.8];
+  c1 -> c1_u1;
+  c1_u2 [shape=box, style="rounded,filled", fillcolor="#f6f4c0", color="#7f8c8d", label=< mitzep >, width=3.3, height=0.8];
+  c1_u1 -> c1_u2;
+  {
+    rank=same; c1;
+  }
+  c2 [shape=box, style="rounded,filled", fillcolor="#a9d1e6", color="#2c3e50", label=< <b>1</b> >, width=2.8, height=0.9];
+  c1 -> c2;
+  c2_u1 [shape=box, style="rounded,filled", fillcolor="#f6f4c0", color="#7f8c8d", label=< mitzep >, width=3.3, height=0.8];
+  c2 -> c2_u1;
+  c2_u2 [shape=box, style="rounded,filled", fillcolor="#f6f4c0", color="#7f8c8d", label=< bfox >, width=3.3, height=0.8];
+  c2_u1 -> c2_u2;
+  c2_u3 [shape=box, style="rounded,filled", fillcolor="#f6f4c0", color="#7f8c8d", label=< daniel >, width=3.3, height=0.8];
+  c2_u2 -> c2_u3;
+  {
+    rank=same; c2;
+  }
+  { rank=same; c1; c2;  }
+}

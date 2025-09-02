@@ -209,6 +209,21 @@ begin
   end
   else
     ShowMessage('No se pudo generar el .dot de Programados.');
+
+  // ======= Reporte de Contactos (lista circular) =======
+  if ExportContactsDOTForUser(CurrentUser^.Contacts, CurrentUser^.Email, OUT_USER_DIR, DotPath) then
+  begin
+    if RunGraphviz(DotPath, 'png') then
+    begin
+      PngPath := ChangeFileExt(DotPath, '.png');
+      // opcional: mostrar un único mensaje final, o deja estos por cada reporte
+      // ShowMessage('Reporte de contactos generado: ' + PngPath);
+    end
+    else
+      ShowMessage('Se creó el .dot de contactos, pero no pude ejecutar Graphviz (dot).');
+  end
+  else
+    ShowMessage('No se pudo generar el .dot de contactos.');
 end;
 
 

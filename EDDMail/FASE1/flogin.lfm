@@ -1,5 +1,5 @@
 object frmLogin: TfrmLogin
-  Left = 1264
+  Left = 1262
   Height = 424
   Top = 148
   Width = 446
@@ -7,6 +7,7 @@ object frmLogin: TfrmLogin
   ClientHeight = 424
   ClientWidth = 446
   LCLVersion = '4.2.0.0'
+  OnCreate = FormCreate
   object Label1: TLabel
     Left = 136
     Height = 36

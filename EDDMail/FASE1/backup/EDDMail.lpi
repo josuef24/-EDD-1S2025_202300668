@@ -183,6 +183,23 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="uReportUserTrash"/>
       </Unit>
+      <Unit>
+        <Filename Value="ucomunidades.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="UComunidades"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ucomunidadesadapters.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="UComunidadesAdapters"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fcomunidades.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmComunidades"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fComunidades"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

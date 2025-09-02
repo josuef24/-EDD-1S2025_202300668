@@ -3,7 +3,7 @@ uses
   Interfaces, Forms, fLogin, fMaiin, fCreateUser, frmUser, uUsers, uInbox,
   fSendMail, fViewMail, uTrash, fTrash, uQueue, fProgramarMail, fProgramados,
   uContacts, fContacts, fAddContact, fPerfil, uMatrix, uReportUserInbox,
-uReportUserTrash;
+uReportUserTrash, UComunidades, UComunidadesAdapters, fComunidades;
 
 begin
   Application.Scaled:=True;
@@ -12,6 +12,7 @@ begin
   Application.CreateForm(TfrmLogin, frmLogin);
   Application.CreateForm(TfrmAddContact, frmAddContact);
   Application.CreateForm(TfrmPerfil, frmPerfil);
+  Application.CreateForm(TfrmComunidades, frmComunidades);
   Application.Run;
 end.
 

@@ -1,0 +1,99 @@
+object frmComunidades: TfrmComunidades
+  Left = 1264
+  Height = 383
+  Top = 606
+  Width = 502
+  Caption = 'frmComunidades'
+  ClientHeight = 383
+  ClientWidth = 502
+  LCLVersion = '4.2.0.0'
+  OnCreate = FormCreate
+  object lblTitulo: TLabel
+    Left = 160
+    Height = 36
+    Top = 16
+    Width = 213
+    Caption = 'Comunidades'
+    Font.Height = -35
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object lblNombre: TLabel
+    Left = 48
+    Height = 28
+    Top = 96
+    Width = 112
+    Caption = 'Nombre: '
+    Font.Height = -27
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object edNombreComunidad: TEdit
+    Left = 168
+    Height = 22
+    Top = 96
+    Width = 274
+    TabOrder = 0
+  end
+  object btnCrear: TButton
+    Left = 184
+    Height = 40
+    Top = 144
+    Width = 144
+    Caption = 'Crear'
+    TabOrder = 1
+    OnClick = btnCrearClick
+  end
+  object lblNombre1: TLabel
+    Left = 48
+    Height = 28
+    Top = 216
+    Width = 153
+    Caption = 'Comunidad: '
+    Font.Height = -27
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object edComunidad: TEdit
+    Left = 216
+    Height = 22
+    Top = 216
+    Width = 226
+    TabOrder = 2
+  end
+  object lblCorreo: TLabel
+    Left = 48
+    Height = 28
+    Top = 256
+    Width = 98
+    Caption = 'Correo: '
+    Font.Height = -27
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object edCorreo: TEdit
+    Left = 216
+    Height = 22
+    Top = 256
+    Width = 226
+    TabOrder = 3
+  end
+  object btnAgregar: TButton
+    Left = 184
+    Height = 40
+    Top = 320
+    Width = 144
+    Caption = 'Agregar'
+    TabOrder = 4
+    OnClick = btnAgregarClick
+  end
+  object btnSalir: TButton
+    Left = 400
+    Height = 25
+    Top = 352
+    Width = 96
+    Caption = 'Salir'
+    TabOrder = 5
+    OnClick = btnSalirClick
+  end
+end

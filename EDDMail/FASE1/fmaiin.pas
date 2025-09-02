@@ -16,16 +16,23 @@ type
   published
     btnExportRel: TButton;
     btnExportUsers: TButton;
+    btnComunidades: TButton;
+    btnExportComunidades: TButton;
     btnSalir: TButton;
     btnCargaMasiva: TButton;
     Label1: TLabel;
     procedure btnCargaMasivaClick(Sender: TObject);
+    procedure btnComunidadesClick(Sender: TObject);
+    procedure btnExportComunidadesClick(Sender: TObject);
     procedure btnExportRelClick(Sender: TObject);
     procedure btnExportUsersClick(Sender: TObject);
     procedure btnSalirClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   public
     procedure Button1Click(Sender: TObject);
+    procedure ActionCrearComunidad;
+    procedure ActionAgregarUsuarioAComunidad;
+    procedure ActionExportarComunidades;
   end;
 
 var
@@ -36,12 +43,14 @@ const
 
 implementation
 
-uses fLogin, uMatrix;
+uses fLogin, uMatrix, UComunidades, UComunidadesAdapters, fComunidades;
 
 {$R *.lfm}
 
 procedure TfrmRoot.FormCreate(Sender: TObject);
 begin
+  // Inicializa la lista de Comunidades al abrir el root
+  InitComunidades;
 end;
 
 procedure TfrmRoot.Button1Click(Sender: TObject);
@@ -73,6 +82,19 @@ begin
   finally
     dlg.Free;
   end;
+end;
+
+procedure TfrmRoot.btnComunidadesClick(Sender: TObject);
+begin
+  if not Assigned(frmComunidades) then
+    Application.CreateForm(TfrmComunidades, frmComunidades);
+  frmRoot.Hide;
+  frmComunidades.Show;
+end;
+
+procedure TfrmRoot.btnExportComunidadesClick(Sender: TObject);
+begin
+  ActionExportarComunidades;
 end;
 
 var
@@ -141,6 +163,66 @@ begin
     ShowMessage('No se pudo generar el .dot de usuarios.');
 end;
 
+procedure TfrmRoot.ActionCrearComunidad;
+var
+  nom: String;
+begin
+  nom := '';
+  if InputQuery('Crear Comunidad', 'Nombre de la comunidad:', nom) and (Trim(nom) <> '') then
+  begin
+    CrearComunidad(Trim(nom));
+    ShowMessage('Comunidad "'+Trim(nom)+'" creada/lista.');
+  end
+  else
+    ShowMessage('Operación cancelada o nombre vacío.');
+end;
+
+procedure TfrmRoot.ActionAgregarUsuarioAComunidad;
+var
+  nomCom, uid, uname: String;
+begin
+  nomCom := ''; uid := ''; uname := '';
+
+  if not (InputQuery('Agregar a Comunidad', 'Nombre de la comunidad:', nomCom) and (Trim(nomCom)<>'')) then
+  begin
+    ShowMessage('Operación cancelada o nombre vacío.'); Exit;
+  end;
+
+  if not (InputQuery('Agregar a Comunidad', 'ID de usuario (String):', uid) and (Trim(uid)<>'')) then
+  begin
+    ShowMessage('Operación cancelada o ID vacío.'); Exit;
+  end;
+
+  if not (InputQuery('Agregar a Comunidad', 'Nombre/Username del usuario:', uname) and (Trim(uname)<>'')) then
+  begin
+    ShowMessage('Operación cancelada o nombre vacío.'); Exit;
+  end;
+
+  if AddUserToCommunity_StrId(Trim(nomCom), Trim(uid), Trim(uname)) then
+    ShowMessage('Usuario agregado a "'+Trim(nomCom)+'".')
+  else
+    ShowMessage('No se pudo agregar (¿ya existe en esa comunidad?).');
+end;
+
+procedure TfrmRoot.ActionExportarComunidades;
+const
+  Carpeta = OUT_DIR;              // ya tienes OUT_DIR = 'Root-Reportes'
+  Archivo = 'Reporte_Comunidades.dot';
+var
+  rutaDot, rutaPng: String;
+begin
+  ExportarReporteComunidadesDOT(Carpeta, Archivo);
+  rutaDot := IncludeTrailingPathDelimiter(Carpeta) + Archivo;
+  rutaPng := ChangeFileExt(rutaDot, '.png');
+
+  // Reusa tu runner para Graphviz:
+  if RunGraphviz(rutaDot, 'png') then
+    ShowMessage('Reporte creado: ' + rutaPng)
+  else
+    ShowMessage('DOT generado: ' + rutaDot + sLineBreak +
+                'No pude ejecutar Graphviz (dot). Instálalo o corre: ' +
+                'dot -Tpng "'+rutaDot+'" -o "'+rutaPng+'"');
+end;
 
 procedure TfrmRoot.btnSalirClick(Sender: TObject);
 begin

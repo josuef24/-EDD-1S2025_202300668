@@ -1,0 +1,10 @@
+digraph "Reporte de Correos Recibidos" {
+  rankdir=LR;
+  labelloc="t";
+  label="Reporte de Correos Recibidos";
+  node [shape=box, style="rounded,filled", fillcolor="#fff7cc"];
+  subgraph cluster_inbox {
+    label="Lista Doblemente Enlazada";
+    color="#bbbbbb";
+  }
+}

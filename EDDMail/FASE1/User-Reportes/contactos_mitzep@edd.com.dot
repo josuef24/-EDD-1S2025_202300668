@@ -1,0 +1,10 @@
+digraph "Reporte de Contactos" {
+  rankdir=LR;
+  labelloc="t";
+  label="Reporte de Contactos";
+  node [shape=box, style="rounded,filled", fillcolor="#cfe9f7"];
+  subgraph cluster_contacts {
+    label="Lista Circular"; color="#bbbbbb";
+    n1 [label=<<b>ID:</b> 1<br/><b>Nombre:</b> Mark Shuttleworth<br/><b>Usuario:</b> mshuttleworth<br/><b>Email:</b> mshuttleworth@edd.com<br/><b>Teléfono:</b> 76018423>, width=3];
+  }
+}

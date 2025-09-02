@@ -1,5 +1,5 @@
 object frmViewMail: TfrmViewMail
-  Left = 1260
+  Left = 1265
   Height = 544
   Top = 359
   Width = 624

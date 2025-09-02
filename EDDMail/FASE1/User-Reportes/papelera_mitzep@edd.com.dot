@@ -1,0 +1,13 @@
+digraph "Reporte de Papelera" {
+  labelloc="t";
+  label="Reporte de Papelera";
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fillcolor="#f8d6d6"];
+  subgraph cluster_trash {
+    label="Pila";
+    color="#bbbbbb";
+    n5 [label=<<b>ID:</b> 5<br/><b>Remitente:</b> mshuttleworth@edd.com<br/><b>Estado:</b> Eliminado<br/><b>Programado:</b> Sí<br/><b>Asunto:</b> pro2<br/><b>Fecha:</b> 2024-08-24 14:30<br/><b>Mensaje:</b> 55555>];
+    n5 -> n4 [arrowsize=0.8];
+    n4 [label=<<b>ID:</b> 4<br/><b>Remitente:</b> mshuttleworth@edd.com<br/><b>Estado:</b> Eliminado<br/><b>Programado:</b> Sí<br/><b>Asunto:</b> pro1<br/><b>Fecha:</b> 2026-08-24 14:30<br/><b>Mensaje:</b> 4444>];
+  }
+}
