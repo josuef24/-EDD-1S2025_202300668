@@ -75,40 +75,26 @@ end;
 
 function ProcessFIFO(var Q: TSchedQueue): Integer;
 var
-  It  : PSchedItem;
+  It: PSchedItem;
   Dest: PUser;
 begin
-  // Procesa toda la cola en orden FIFO, ignorando fecha/hora.
   Result := 0;
-
   while Q.Head <> nil do
   begin
-    // Tomar el frente (dequeue)
     It := Q.Head;
     Q.Head := It^.Next;
-    if Q.Head = nil then
-      Q.Tail := nil;     // quedó vacía
+    if Q.Head = nil then Q.Tail := nil;
     Dec(Q.Count);
 
-    // Enviar al destinatario si existe
     Dest := FindUserByEmailOrUsername(It^.Dest);
     if (Dest <> nil) and (CurrentUser <> nil) then
     begin
-      // Añade a la bandeja del destinatario marcando Programado=True
-      AddMail(Dest^.Inbox,
-              CurrentUser^.Email,   // remitente
-              It^.Asunto,
-              It^.Fecha,            // puedes mantener el texto de fecha que guardaste
-              It^.Mensaje,
-              True);
-
-      // Actualiza la matriz de relaciones
-      IncrementEdge(RelMatrix, CurrentUser, Dest);
-
+      // Se marca como Programado=True al insertarlo en la bandeja
+      AddMail(Dest^.Inbox, CurrentUser^.Email, It^.Asunto, It^.Fecha, It^.Mensaje, True);
+      IncrementEdge(RelMatrix, CurrentUser, Dest); // matriz dispersa
       Inc(Result);
     end;
 
-    // Liberar el nodo desencolado
     Dispose(It);
   end;
 end;
@@ -164,6 +150,55 @@ begin
     Writeln(F, '}');
     CloseFile(F);
 
+    DotPath := Path;
+    Result := True;
+  except
+    on E: Exception do
+    begin
+      {$I-} CloseFile(F); {$I+}
+      Result := False;
+    end;
+  end;
+end;
+
+function ExportSchedDOT(const UserEmail: string; const Q: TSchedQueue;
+                        const BaseDir: string; out DotPath: string): Boolean;
+var
+  F: TextFile;
+  It: PSchedItem;
+  Path: string;
+  idn: Integer;
+begin
+  Result := False;
+  DotPath := '';
+  if BaseDir = '' then Exit;
+
+  if not DirectoryExists(BaseDir) then
+    if not ForceDirectories(BaseDir) then Exit;
+
+  Path := IncludeTrailingPathDelimiter(BaseDir) + 'sched_' + UserEmail + '.dot';
+  AssignFile(F, Path);
+  try
+    Rewrite(F);
+    Writeln(F, 'digraph "ColaProgramados" {');
+    Writeln(F, '  rankdir=LR;');
+    Writeln(F, '  node [shape=record, style=filled, fillcolor="#d0f0ff"];');
+    Writeln(F, '  label="Correos Programados (Cola FIFO)"; labelloc="t";');
+
+    It := Q.Head;
+    idn := 0;
+    while It <> nil do
+    begin
+      Writeln(F, Format('  n%d [label="Dest: %s | Asunto: %s | Fecha: %s"];',
+        [idn, It^.Dest, It^.Asunto, It^.Fecha]));
+      if (It^.Next <> nil) then
+        Writeln(F, Format('  n%d -> n%d;', [idn, idn+1]));
+      Inc(idn);
+      It := It^.Next;
+    end;
+
+    Writeln(F, '}');
+    CloseFile(F);
     DotPath := Path;
     Result := True;
   except

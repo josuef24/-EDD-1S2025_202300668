@@ -5,146 +5,137 @@ unit uContacts;
 interface
 
 type
-  PContact = ^TContactNode;
-
-  TContactNode = record
-    // Datos del contacto (ajústalos según tu enunciado)
-    Name:     AnsiString;
+  PContact = ^TContact;
+  TContact = record
+    Name    : AnsiString;
     Username: AnsiString;
-    Email:    AnsiString;
-    Phone:    AnsiString;
-
-    Next: PContact;  // lista CIRCULAR (último^.Next -> Head)
+    Email   : AnsiString;
+    Phone   : AnsiString;
+    Next    : PContact;  // lista **circular** simple
   end;
 
-  // Lista circular simple + un cursor para navegar (Anterior/Siguiente)
+  // Lista circular con puntero a cola (Tail^.Next es la cabeza)
   TContactList = record
-    Head:    PContact;  // nil si está vacía
-    Current: PContact;  // puntero de navegación (opcional)
-    Count:   Integer;
+    Tail : PContact;   // nil si está vacía
+    Curr : PContact;   // para navegar (UI)
+    Count: Integer;
   end;
 
 procedure InitContacts(var L: TContactList);
-function  AddContact(var L: TContactList; const AName, AUser, AEmail, APhone: AnsiString): PContact;
-function  ExistsContact(const L: TContactList; const Key: AnsiString): Boolean;
-function  FindContact(const L: TContactList; const Key: AnsiString): PContact;
+procedure ClearContacts(var L: TContactList);
 
-procedure SetCurrentFirst(var L: TContactList);
-function  NextContact(var L: TContactList): PContact;
-function  PrevContact(var L: TContactList): PContact;
+// Inserta al final si no existe (por email/username). Devuelve True si se agregó.
+function AddContact(var L: TContactList; const AName, AUser, AEmail, APhone: AnsiString): Boolean;
+
+// ¿Existe un contacto por email o username?
+function ExistsInContacts(const L: TContactList; const Key: AnsiString): Boolean;
+
+// Iteración para la UI (siguiente / anterior en la lista circular)
+function HeadContact(const L: TContactList): PContact;
+function NextContact(var L: TContactList): PContact;  // avanza Curr y lo retorna
+function PrevContact(var L: TContactList): PContact;  // retrocede Curr y lo retorna
 
 implementation
 
-uses
-  SysUtils;
+uses SysUtils;
 
 procedure InitContacts(var L: TContactList);
 begin
-  L.Head    := nil;
-  L.Current := nil;
-  L.Count   := 0;
+  L.Tail  := nil;
+  L.Curr  := nil;
+  L.Count := 0;
 end;
 
-// Inserta al final manteniendo circularidad
-function AddContact(var L: TContactList; const AName, AUser, AEmail, APhone: AnsiString): PContact;
+procedure ClearContacts(var L: TContactList);
 var
-  N, Tail: PContact;
+  H, N: PContact;
 begin
+  if L.Tail = nil then Exit;
+  H := L.Tail^.Next;           // cabeza
+  L.Tail^.Next := nil;         // rompe el ciclo para recorrer lineal
+  while H <> nil do
+  begin
+    N := H^.Next;
+    Dispose(H);
+    H := N;
+  end;
+  InitContacts(L);
+end;
+
+function ExistsInContacts(const L: TContactList; const Key: AnsiString): Boolean;
+var
+  H, C: PContact;
+begin
+  Result := False;
+  if L.Tail = nil then Exit;
+  H := L.Tail^.Next;  // cabeza
+  C := H;
+  repeat
+    if (AnsiCompareText(C^.Email, Key) = 0) or
+       (AnsiCompareText(C^.Username, Key) = 0) then Exit(True);
+    C := C^.Next;
+  until C = H;
+end;
+
+function AddContact(var L: TContactList; const AName, AUser, AEmail, APhone: AnsiString): Boolean;
+var
+  N: PContact;
+begin
+  // evita duplicados por email/username
+  if ExistsInContacts(L, AEmail) or ExistsInContacts(L, AUser) then
+    Exit(False);
+
   New(N);
   N^.Name     := AName;
   N^.Username := AUser;
   N^.Email    := AEmail;
   N^.Phone    := APhone;
-  N^.Next     := nil;
 
-  if L.Head = nil then
+  if L.Tail = nil then
   begin
-    // primer nodo -> se apunta a sí mismo
-    L.Head    := N;
-    N^.Next   := N;
-    L.Current := N;
+    N^.Next := N;       // primer nodo: se apunta a sí mismo
+    L.Tail  := N;
   end
   else
   begin
-    // buscar el "tail" (el que apunta a Head)
-    Tail := L.Head;
-    while Tail^.Next <> L.Head do
-      Tail := Tail^.Next;
-
-    // insertar al final: tail -> N -> head
-    Tail^.Next := N;
-    N^.Next    := L.Head;
+    N^.Next     := L.Tail^.Next; // a la cabeza actual
+    L.Tail^.Next:= N;            // viejo tail apunta al nuevo
+    L.Tail      := N;            // nuevo tail
   end;
 
   Inc(L.Count);
-  Result := N;
+  if L.Curr = nil then L.Curr := L.Tail^.Next; // apunta a la cabeza
+  Result := True;
 end;
 
-// Key puede ser email o username (case-insensitive)
-function ExistsContact(const L: TContactList; const Key: AnsiString): Boolean;
+function HeadContact(const L: TContactList): PContact;
 begin
-  Result := FindContact(L, Key) <> nil;
+  if L.Tail = nil then Exit(nil);
+  Result := L.Tail^.Next;
 end;
 
-function FindContact(const L: TContactList; const Key: AnsiString): PContact;
-var
-  C: PContact;
-  k: AnsiString;
-begin
-  Result := nil;
-  if L.Head = nil then Exit;
-
-  k := LowerCase(Trim(Key));
-  C := L.Head;
-  repeat
-    if (LowerCase(C^.Email) = k) or (LowerCase(C^.Username) = k) then
-      Exit(C);
-    C := C^.Next;
-  until C = L.Head;
-end;
-
-procedure SetCurrentFirst(var L: TContactList);
-begin
-  L.Current := L.Head; // puede quedar en nil si está vacío
-end;
-
-// Avanza Current y lo devuelve (para navegar)
 function NextContact(var L: TContactList): PContact;
 begin
-  if L.Current = nil then
-    L.Current := L.Head
-  else
-    L.Current := L.Current^.Next;
-
-  Result := L.Current;
+  if L.Tail = nil then Exit(nil);
+  if L.Curr = nil then L.Curr := L.Tail^.Next else L.Curr := L.Curr^.Next;
+  Result := L.Curr;
 end;
 
-// Retrocede Current O(n) (porque la lista es simple)
-// Suficiente para la UI de "Anterior/Siguiente"
 function PrevContact(var L: TContactList): PContact;
 var
   P: PContact;
 begin
-  if (L.Head = nil) then
-  begin
-    L.Current := nil; Exit(nil);
-  end;
-
-  if (L.Current = nil) then
-    L.Current := L.Head
+  if L.Tail = nil then Exit(nil);
+  if (L.Curr = nil) then
+    L.Curr := L.Tail^.Next   // cabeza
   else
   begin
-    // buscar el nodo previo a Current
-    P := L.Head;
-    while (P^.Next <> L.Current) do
-    begin
-      P := P^.Next;
-      if P = L.Head then Break; // seguridad
-    end;
-    L.Current := P;
+    // para retroceder en circular simple, buscamos el anterior
+    P := L.Tail^.Next;
+    while (P^.Next <> L.Curr) do P := P^.Next;
+    L.Curr := P;
   end;
-
-  Result := L.Current;
+  Result := L.Curr;
 end;
 
 end.

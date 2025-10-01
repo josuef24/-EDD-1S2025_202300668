@@ -26,6 +26,7 @@ type
     procedure btnEliminarClick(Sender: TObject);
     procedure btnRegresarClick(Sender: TObject);
     procedure lstMailsDblClick(Sender: TObject);
+
   private
     procedure RefrescarLista;
     function  IndexValido: Boolean;
@@ -53,7 +54,7 @@ end;
 
 procedure TfrmInbox.FormCreate(Sender: TObject);
 begin
-
+  RefrescarLista();
 end;
 
 procedure TfrmInbox.RefrescarLista;
@@ -84,23 +85,30 @@ end;
 
 procedure TfrmInbox.lstMailsClick(Sender: TObject);
 var
-  idx: Integer;
-  mail: PMail;
+  idx: Integer;   //guardo el índice del correo seleccionado en la lista gráfica
+  mail: PMail;    // puntero al nodo de correo dentro de la lista doblemente enlazada
 
 begin
+  // índice seleccionado en el ListBox
   idx := lstMails.ItemIndex;
   if idx < 0 then Exit;
 
+  // ufunción GetMailByIndex para traer el puntero al correo real en la estructura Inbox
   mail := GetMailByIndex(CurrentUser^.Inbox, idx);
+
+  // si logré obtener el puntero al correo
   if mail <> nil then
   begin
     if not Assigned(frmViewMail) then
       Application.CreateForm(TfrmViewMail, frmViewMail);
+
+    // mando el puntero del correo al form de visualización para que cargue todos sus datos
     frmViewMail.ShowMail(mail);
     frmViewMail.Show;
   end;
 
 end;
+
 
 procedure TfrmInbox.btnOrdenarAZClick(Sender: TObject);
 begin
@@ -113,23 +121,18 @@ var
   idx: Integer;
   M: PMail;
 begin
-  idx := lstMails.ItemIndex; // o como obtienes el seleccionado
   if idx < 0 then
   begin
     ShowMessage('Selecciona un correo.');
     Exit;
   end;
 
-  // Opción A: usando la función Extract + Push
   M := ExtractMailAt(CurrentUser^.Inbox, idx);
   if M <> nil then
     PushTrash(CurrentUser^.Trash, M);
 
-  // Opción B (si agregaste MoveMailToTrash):
-  // MoveMailToTrash(CurrentUser^.Inbox, idx, CurrentUser^.Trash);
-
   // refresca la lista de la bandeja
-  RefrescarLista(); // <- tu rutina que repuebla el ListBox
+  RefrescarLista();
 end;
 
 procedure TfrmInbox.btnRegresarClick(Sender: TObject);

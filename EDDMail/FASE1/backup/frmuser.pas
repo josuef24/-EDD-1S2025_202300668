@@ -50,7 +50,7 @@ var
 implementation
 
 uses fLogin, fSendMail, fTrash, fInbox, uQueue, uUsers, fProgramarMail,
-     fProgramados, fContacts, fAddContact, fPerfil, Process, uReportUserInbox,
+     fProgramados, fContacts, fAddContact, fPerfil, Process,
      uReportUserTrash;
 
 {$R *.lfm}

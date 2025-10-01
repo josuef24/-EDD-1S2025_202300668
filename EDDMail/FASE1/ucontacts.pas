@@ -5,20 +5,20 @@ unit uContacts;
 interface
 
 type
-  PContact = ^TContact;
+  PContact = ^TContact;  // [APUNTADOR] Puntero a un nodo de contacto
   TContact = record
     Name    : AnsiString;
     Username: AnsiString;
     Email   : AnsiString;
     Phone   : AnsiString;
-    Next    : PContact;  // lista **circular** simple
+    Next    : PContact;  // [APUNTADOR] Lista **circular** simple: Next del último apunta a la cabeza
   end;
 
   // Lista circular con puntero a cola (Tail^.Next es la cabeza)
   TContactList = record
-    Tail : PContact;   // nil si está vacía
-    Curr : PContact;   // para navegar (UI)
-    Count: Integer;
+    Tail : PContact;   // [APUNTADOR] nil si está vacía; Tail^.Next = cabeza
+    Curr : PContact;   // [APUNTADOR] cursor para navegar en UI (siguiente/anterior)
+    Count: Integer;    // cantidad de contactos
   end;
 
 procedure InitContacts(var L: TContactList);
@@ -27,13 +27,13 @@ procedure ClearContacts(var L: TContactList);
 // Inserta al final si no existe (por email/username). Devuelve True si se agregó.
 function AddContact(var L: TContactList; const AName, AUser, AEmail, APhone: AnsiString): Boolean;
 
-// ¿Existe un contacto por email o username?
+// Existe un contacto por email o username?
 function ExistsInContacts(const L: TContactList; const Key: AnsiString): Boolean;
 
 // Iteración para la UI (siguiente / anterior en la lista circular)
 function HeadContact(const L: TContactList): PContact;
-function NextContact(var L: TContactList): PContact;  // avanza Curr y lo retorna
-function PrevContact(var L: TContactList): PContact;  // retrocede Curr y lo retorna
+function NextContact(var L: TContactList): PContact;  //  avanzo y lo retorno
+function PrevContact(var L: TContactList): PContact;  //  retrocedo y lo retorno
 
 implementation
 
@@ -41,50 +41,58 @@ uses SysUtils;
 
 procedure InitContacts(var L: TContactList);
 begin
-  L.Tail  := nil;
-  L.Curr  := nil;
+
+  L.Tail  := nil;  // [APUNTADOR] sin cola => no hay cabeza (Tail^.Next) tampoco
+  L.Curr  := nil;  // [APUNTADOR] cursor nulo
   L.Count := 0;
 end;
 
 procedure ClearContacts(var L: TContactList);
 var
-  H, N: PContact;
+  H, N: PContact; // [APUNTADORES] H = cabeza, N = siguiente temporal
 begin
+  //  Si está vacía, no hago nada
   if L.Tail = nil then Exit;
-  H := L.Tail^.Next;           // cabeza
-  L.Tail^.Next := nil;         // rompe el ciclo para recorrer lineal
+
+
+  H := L.Tail^.Next;   // [APUNTADOR] cabeza actual
+  L.Tail^.Next := nil; // rompo el ciclo; ahora termino en nil
   while H <> nil do
   begin
-    N := H^.Next;
-    Dispose(H);
-    H := N;
+    N := H^.Next; // guardo siguiente antes de liberar
+    Dispose(H);   // libero nodo
+    H := N;       // avanzo
   end;
+
+
   InitContacts(L);
 end;
 
 function ExistsInContacts(const L: TContactList; const Key: AnsiString): Boolean;
 var
-  H, C: PContact;
+  H, C: PContact; // [APUNTADORES] H = cabeza para corte de ciclo; C = cursor
 begin
+  //  Recorro circularmente comparando Email o Username (case-insensitive)
   Result := False;
   if L.Tail = nil then Exit;
-  H := L.Tail^.Next;  // cabeza
+  H := L.Tail^.Next;  // [APUNTADOR] cabeza
   C := H;
   repeat
     if (AnsiCompareText(C^.Email, Key) = 0) or
        (AnsiCompareText(C^.Username, Key) = 0) then Exit(True);
-    C := C^.Next;
-  until C = H;
+    C := C^.Next; // [APUNTADOR] avanzo circular
+  until C = H;    // doy la vuelta completa
 end;
 
 function AddContact(var L: TContactList; const AName, AUser, AEmail, APhone: AnsiString): Boolean;
 var
-  N: PContact;
+  N: PContact; // [APUNTADOR] nuevo nodo
 begin
-  // evita duplicados por email/username
+  // Evito duplicados por email o username
   if ExistsInContacts(L, AEmail) or ExistsInContacts(L, AUser) then
     Exit(False);
 
+  //  Creo el nodo y seteo sus campos
   New(N);
   N^.Name     := AName;
   N^.Username := AUser;
@@ -93,47 +101,56 @@ begin
 
   if L.Tail = nil then
   begin
-    N^.Next := N;       // primer nodo: se apunta a sí mismo
-    L.Tail  := N;
+    //  Primer nodo se apunta a sí mismo (circularidad mínima)
+    N^.Next := N;
+    L.Tail  := N; // ahora hay un único nodo y es la cola a la vez
   end
   else
   begin
-    N^.Next     := L.Tail^.Next; // a la cabeza actual
-    L.Tail^.Next:= N;            // viejo tail apunta al nuevo
-    L.Tail      := N;            // nuevo tail
+    // INSERCIÓN FINAL Inserto después de Tail y muevo Tail al nuevo
+    N^.Next      := L.Tail^.Next; // [APUNTADOR] el siguiente del nuevo es la cabeza actual
+    L.Tail^.Next := N;            // Tail anterior ahora apunta al nuevo
+    L.Tail       := N;            // el nuevo se convierte en Tail
   end;
 
   Inc(L.Count);
-  if L.Curr = nil then L.Curr := L.Tail^.Next; // apunta a la cabeza
+  //  Si el cursor estaba nulo, lo fijo a la cabeza (Tail^.Next) para navegar desde ahí
+  if L.Curr = nil then L.Curr := L.Tail^.Next;
   Result := True;
 end;
 
 function HeadContact(const L: TContactList): PContact;
 begin
+  //  Devuelvo la cabeza (Tail^.Next), o nil si no hay nodos
   if L.Tail = nil then Exit(nil);
-  Result := L.Tail^.Next;
+  Result := L.Tail^.Next; // [APUNTADOR]
 end;
 
 function NextContact(var L: TContactList): PContact;
 begin
+  //  Avanzo el cursor circularmente y lo retorno
   if L.Tail = nil then Exit(nil);
-  if L.Curr = nil then L.Curr := L.Tail^.Next else L.Curr := L.Curr^.Next;
+  if L.Curr = nil then
+    L.Curr := L.Tail^.Next  // si estaba nulo, inicio en cabeza
+  else
+    L.Curr := L.Curr^.Next; // [APUNTADOR] paso al siguiente
   Result := L.Curr;
 end;
 
 function PrevContact(var L: TContactList): PContact;
 var
-  P: PContact;
+  P: PContact; // [APUNTADOR] busco el "anterior" al cursor (en circular simple no tengo Prev directo)
 begin
+  //  Para retroceder en una lista circular simple, camino hasta encontrar el que apunta a Curr
   if L.Tail = nil then Exit(nil);
   if (L.Curr = nil) then
-    L.Curr := L.Tail^.Next   // cabeza
+    L.Curr := L.Tail^.Next   // si no tengo cursor, parto de la cabeza
   else
   begin
-    // para retroceder en circular simple, buscamos el anterior
-    P := L.Tail^.Next;
+    // Recorro desde cabeza hasta que P^.Next sea Curr
+    P := L.Tail^.Next;       // cabeza
     while (P^.Next <> L.Curr) do P := P^.Next;
-    L.Curr := P;
+    L.Curr := P;             // ahora Curr es el anterior
   end;
   Result := L.Curr;
 end;

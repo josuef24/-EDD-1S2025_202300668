@@ -62,6 +62,7 @@ end;
 procedure TfrmViewMail.btnCerrarClick(Sender: TObject);
 begin
   Close;
+
 end;
 
 end.

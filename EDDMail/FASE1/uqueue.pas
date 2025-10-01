@@ -5,18 +5,18 @@ unit uQueue;
 interface
 
 type
-  PSchedItem = ^TSchedItem;
+  PSchedItem = ^TSchedItem;   // [APUNTADOR] Puntero a nodo de la cola (cada item programado)
   TSchedItem = record
-    Dest    : AnsiString;   // email o username del destinatario
+    Dest    : AnsiString;     // correo o username del destinatario
     Asunto  : AnsiString;
-    Fecha   : AnsiString;   // solo para mostrar; ya no controla nada
+    Fecha   : AnsiString;     // para mostrar en reporte
     Mensaje : AnsiString;
-    Next    : PSchedItem;
+    Next    : PSchedItem;     // [APUNTADOR] enlace al siguiente nodo (cola simple)
   end;
 
   TSchedQueue = record
-    Head, Tail : PSchedItem;
-    Count      : Integer;
+    Head, Tail : PSchedItem;  // [APUNTADOR] cabeza y cola de la cola FIFO (nil si vacía)
+    Count      : Integer;     // cantidad de elementos (lo llevo por conveniencia)
   end;
 
 procedure InitQueue(var Q: TSchedQueue);
@@ -40,61 +40,70 @@ uses
 
 procedure InitQueue(var Q: TSchedQueue);
 begin
+  // Dejo la cola vacía: ambos punteros a nil y contador en 0
   Q.Head := nil; Q.Tail := nil; Q.Count := 0;
 end;
 
 procedure ClearQueue(var Q: TSchedQueue);
 var
-  N, T: PSchedItem;
+  N, T: PSchedItem; // [APUNTADOR] N recorre; T guarda el siguiente antes de liberar
 begin
+  //  Recorro desapilando memoria nodo por nodo
   N := Q.Head;
   while N <> nil do begin
-    T := N^.Next; Dispose(N); N := T;
+    T := N^.Next; Dispose(N); N := T; // [APUNTADOR] avanzo usando el siguiente
   end;
-  InitQueue(Q);
+  InitQueue(Q); //  restauro a estado vacío
 end;
 
 procedure EnqueueScheduled(var Q: TSchedQueue;
   const ADest, AAsunto, AFecha, AMsg: AnsiString);
 var
-  N: PSchedItem;
+  N: PSchedItem; // [APUNTADOR] nuevo nodo a encolar
 begin
+  //  Reservo nodo y seteo sus campos
   New(N);
   N^.Dest    := ADest;
   N^.Asunto  := AAsunto;
-  N^.Fecha   := AFecha;     // solo decorativo
+  N^.Fecha   := AFecha;     // decorativo para mostrar
   N^.Mensaje := AMsg;
-  N^.Next    := nil;
+  N^.Next    := nil;        // [APUNTADOR] como va al final, su siguiente es nil
 
+  // FIFO Si la cola estaba vacía, el nuevo es Head; si no, lo engancho al final
   if Q.Head = nil then Q.Head := N
-  else Q.Tail^.Next := N;
+  else Q.Tail^.Next := N;   // [APUNTADOR] apunto el último actual al nuevo
 
-  Q.Tail := N;
-  Inc(Q.Count);
+  Q.Tail := N;              // [APUNTADOR] el nuevo pasa a ser la cola
+  Inc(Q.Count);             //  actualizo tamaño
 end;
 
 function ProcessFIFO(var Q: TSchedQueue): Integer;
 var
-  It: PSchedItem;
-  Dest: PUser;
+  It: PSchedItem; // [APUNTADOR] cursor al elemento que proceso (pop de la cola)
+  Dest: PUser;    // [APUNTADOR] puntero al usuario destino (buscado por email/usuario)
 begin
   Result := 0;
+  //  Saco de la cabeza hasta vaciar
   while Q.Head <> nil do
   begin
-    It := Q.Head;
-    Q.Head := It^.Next;
-    if Q.Head = nil then Q.Tail := nil;
+    //  Quito la cabeza y adelanto
+    It := Q.Head;                  // [APUNTADOR] guardo el item actual
+    Q.Head := It^.Next;            // [APUNTADOR] adelanto la cabeza
+    if Q.Head = nil then Q.Tail := nil; // si quedó vacío, muevo Tail también
     Dec(Q.Count);
 
+    // Busco al usuario destinatario por email/username
     Dest := FindUserByEmailOrUsername(It^.Dest);
     if (Dest <> nil) and (CurrentUser <> nil) then
     begin
-      // Se marca como Programado=True al insertarlo en la bandeja
+      //  Inserto en la bandeja de Dest; lo marco Programado=True
       AddMail(Dest^.Inbox, CurrentUser^.Email, It^.Asunto, It^.Fecha, It^.Mensaje, True);
-      IncrementEdge(RelMatrix, CurrentUser, Dest); // matriz dispersa
-      Inc(Result);
+      // MATRIZ DISPERSA Actualizo la relación emisor->receptor
+      IncrementEdge(RelMatrix, CurrentUser, Dest);
+      Inc(Result); // contado como enviado
     end;
 
+    //  Libero el nodo procesado
     Dispose(It);
   end;
 end;
@@ -103,14 +112,15 @@ end;
 function ExportSchedDOTForUser(const Q: TSchedQueue;
   const UserEmail, BaseDir: string; out DotPath: string): Boolean;
 var
-  F: TextFile;
-  N: PSchedItem;
-  Path: string;
-  idx: Integer;
+  F: TextFile;     //  archivo .dot
+  N: PSchedItem;   // [APUNTADOR] cursor para recorrer sin mutar la cola
+  Path: string;    //  ruta destino
+  idx: Integer;    //  índice para etiquetar nodos consecutivos
 begin
   Result := False;
   DotPath := '';
 
+  //  Directorio de salida
   if (BaseDir = '') then Exit;
   if not DirectoryExists(BaseDir) then
     if not ForceDirectories(BaseDir) then Exit;
@@ -119,6 +129,7 @@ begin
   AssignFile(F, Path);
   try
     Rewrite(F);
+    //  Encabezado y estilo
     Writeln(F, 'digraph "Reporte de Correos Programados" {');
     Writeln(F, '  rankdir=TB;');
     Writeln(F, '  labelloc="t";');
@@ -128,6 +139,7 @@ begin
     Writeln(F, '  subgraph cluster_q {');
     Writeln(F, '    label="Cola"; color="#bbbbbb";');
 
+    // [RECORRIDO] Camino desde Head hasta nil, dibujando nodos y flechas en orden FIFO
     N := Q.Head; idx := 1;
     while N <> nil do
     begin
@@ -141,8 +153,8 @@ begin
         '<b>Mensaje:</b> ', StringReplace(N^.Mensaje, '<', '&lt;', [rfReplaceAll]),
         '> , width=3 ];');
       if N^.Next <> nil then
-        Writeln(F, '    n', idx, ' -> n', idx+1, ' [arrowsize=0.7];');
-      N := N^.Next;
+        Writeln(F, '    n', idx, ' -> n', idx+1, ' [arrowsize=0.7];'); // [APUNTADOR] enlazo con el siguiente
+      N := N^.Next; // [APUNTADOR] avanzo
       Inc(idx);
     end;
 
@@ -150,7 +162,7 @@ begin
     Writeln(F, '}');
     CloseFile(F);
 
-    DotPath := Path;
+    DotPath := Path; //  devuelvo la ruta
     Result := True;
   except
     on E: Exception do
@@ -165,9 +177,9 @@ function ExportSchedDOT(const UserEmail: string; const Q: TSchedQueue;
                         const BaseDir: string; out DotPath: string): Boolean;
 var
   F: TextFile;
-  It: PSchedItem;
+  It: PSchedItem;// [APUNTADOR] cursor de lectura
   Path: string;
-  idn: Integer;
+  idn: Integer;  // [DATA] contador para nombres de nodo
 begin
   Result := False;
   DotPath := '';
@@ -180,11 +192,13 @@ begin
   AssignFile(F, Path);
   try
     Rewrite(F);
+    //  Variante simple LR
     Writeln(F, 'digraph "ColaProgramados" {');
     Writeln(F, '  rankdir=LR;');
     Writeln(F, '  node [shape=record, style=filled, fillcolor="#d0f0ff"];');
     Writeln(F, '  label="Correos Programados (Cola FIFO)"; labelloc="t";');
 
+    // [RECORRIDO] Camino de Head a nil y dibujo cadena hacia la derecha
     It := Q.Head;
     idn := 0;
     while It <> nil do
@@ -192,9 +206,9 @@ begin
       Writeln(F, Format('  n%d [label="Dest: %s | Asunto: %s | Fecha: %s"];',
         [idn, It^.Dest, It^.Asunto, It^.Fecha]));
       if (It^.Next <> nil) then
-        Writeln(F, Format('  n%d -> n%d;', [idn, idn+1]));
+        Writeln(F, Format('  n%d -> n%d;', [idn, idn+1])); // [APUNTADOR] flecha al siguiente
       Inc(idn);
-      It := It^.Next;
+      It := It^.Next; // [APUNTADOR] avanzo
     end;
 
     Writeln(F, '}');
@@ -211,4 +225,5 @@ begin
 end;
 
 end.
+
 

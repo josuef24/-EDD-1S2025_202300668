@@ -59,15 +59,12 @@ begin
 end;
 
 
-
-
-
 procedure TfrmLogin.btnIngresarClick(Sender: TObject);
 var
   key, pass: string;
   isRoot: Boolean;
 begin
-  key   := Trim(edtEmail.Text);  // puede ser email o usuario
+  key   := Trim(edtEmail.Text);  // EMAIL O USER
   pass  := Trim(edtPass.Text);
   isRoot := False;               // evita la advertencia
 

@@ -5,7 +5,7 @@ unit uReportUserInbox;
 interface
 
 uses
-  SysUtils, Classes, uUsers, uInbox;
+  SysUtils, Classes, uUsers, uInbox, StrUtils;
 
 function ExportInboxDOT(const DirPath: string; const U: PUser): Boolean;
 

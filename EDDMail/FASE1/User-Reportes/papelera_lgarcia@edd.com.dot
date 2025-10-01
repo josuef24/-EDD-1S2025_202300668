@@ -1,0 +1,10 @@
+digraph "Reporte de Papelera" {
+  labelloc="t";
+  label="Reporte de Papelera";
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fillcolor="#f8d6d6"];
+  subgraph cluster_trash {
+    label="Pila";
+    color="#bbbbbb";
+  }
+}

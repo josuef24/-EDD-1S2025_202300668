@@ -90,7 +90,7 @@
         <UnitName Value="fInbox"/>
       </Unit>
       <Unit>
-        <Filename Value="fsendmail.pas"/>
+        <Filename Value="../FASE2/fsendmail.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmSendMail"/>
         <HasResources Value="True"/>
@@ -197,6 +197,7 @@
         <Filename Value="fcomunidades.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmComunidades"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="fComunidades"/>
       </Unit>
@@ -209,6 +210,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
+      <OtherUnitFiles Value="../FASE2"/>
       <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>

@@ -18,19 +18,17 @@ type
     lblEmail:    TLabel;
     lblTelefono: TLabel;
     lblPass:     TLabel;
-
-    edtNombre:   TEdit;   // ← OJO con los nombres: edtNombre/edtUsuario/...
+    edtNombre:   TEdit;
     edtUsuario:  TEdit;
     edtEmail:    TEdit;
     edtTelefono: TEdit;
     edtPass:     TEdit;
-
     btnCrear:    TButton;
     btnCancelar: TButton;
 
-    procedure FormCreate(Sender: TObject);
-    procedure btnCrearClick(Sender: TObject);
-    procedure btnCancelarClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);       //  Configuro textos iniciales del form
+    procedure btnCrearClick(Sender: TObject);    // Intento crear el usuario
+    procedure btnCancelarClick(Sender: TObject); // Regreso a la pantalla de login
   end;
 
 var
@@ -38,7 +36,7 @@ var
 
 implementation
 
-uses uUsers, fLogin;  // ← necesarios (AddUser/Exists... y volver al Login)
+uses uUsers, fLogin;
 
 {$R *.lfm}
 
@@ -57,35 +55,43 @@ end;
 
 procedure TfrmCreateUser.btnCrearClick(Sender: TObject);
 var
-  nombre, usuario, email, tel, pass: AnsiString;
-  id: Integer;
+  nombre, usuario, email, tel, pass: AnsiString; // Datos capturados del formulario
+  id: Integer;                                   // ID asignado tras crear el usuario
 begin
+  // Tomo y normalizo los valores de las cajas de texto
   nombre  := Trim(edtNombre.Text);
   usuario := Trim(edtUsuario.Text);
   email   := Trim(edtEmail.Text);
   tel     := Trim(edtTelefono.Text);
   pass    := Trim(edtPass.Text);
 
+  // Campos obligatorios
   if (nombre = '') or (usuario = '') or (email = '') or (pass = '') then
   begin
     ShowMessage('Nombre, Usuario, Email y Contraseña son obligatorios.');
     Exit;
   end;
 
+  // Chequeo muy básico de formato de email (solo presencia de @ y .)
   if (Pos('@', email) = 0) or (Pos('.', email) = 0) then
   begin
     ShowMessage('El email no parece válido.');
     Exit;
   end;
 
+  // No permito duplicados por email o username
+  // ExistsEmailOrUsername busca en la lista enlazada de usuarios (internamente recorre punteros PUser)
   if ExistsEmailOrUsername(email) or ExistsEmailOrUsername(usuario) then
   begin
     ShowMessage('Ya existe un usuario con ese email o nombre de usuario.');
     Exit;
   end;
 
-  id := AddUser(nombre, usuario, email, tel, pass, False); // ← guarda en la lista
+  // agrego el usuario a la lista enlazada y obtengo su ID autoincremental
+  //  AddUser internamente crea un nodo (puntero PUser) y lo enlaza al inicio
+  id := AddUser(nombre, usuario, email, tel, pass, False);
   ShowMessage('Usuario creado con ID = ' + IntToStr(id));
+
 
   if not Assigned(frmLogin) then
     Application.CreateForm(TfrmLogin, frmLogin);
@@ -102,4 +108,5 @@ begin
 end;
 
 end.
+
 

@@ -1,7 +1,7 @@
 object frmAddContact: TfrmAddContact
-  Left = 1264
+  Left = 1269
   Height = 231
-  Top = 535
+  Top = 565
   Width = 532
   Caption = 'frmAddContact'
   ClientHeight = 231

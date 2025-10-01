@@ -1,7 +1,7 @@
 object frmComunidades: TfrmComunidades
-  Left = 1264
+  Left = 1270
   Height = 383
-  Top = 606
+  Top = 527
   Width = 502
   Caption = 'frmComunidades'
   ClientHeight = 383

@@ -1,7 +1,7 @@
 object frmUserN: TfrmUserN
-  Left = 1261
+  Left = 1259
   Height = 708
-  Top = 218
+  Top = 217
   Width = 612
   Caption = 'frmUserN'
   ClientHeight = 708

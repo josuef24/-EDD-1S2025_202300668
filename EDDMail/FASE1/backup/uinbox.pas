@@ -43,7 +43,7 @@ function ExportInboxDOTForUser(const UserEmail: string; const B: TInbox;
 
 implementation
 
-uses SysUtils, uMatrix, Classes;
+uses SysUtils, uMatrix, Classes, StrUtils;
 
 procedure InitInbox(var B: TInbox);
 begin

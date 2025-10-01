@@ -10,7 +10,7 @@ digraph "Reporte de Usuarios" {
     color="#7f8c8d";
     u0 [label=<<b>ID: 0</b><br/>Nombre: root<br/>Usuario: root<br/>Email: root@edd.com<br/>Teléfono: >];
     u0 -> u1;
-    u1 [label=<<b>ID: 1</b><br/>Nombre: josue<br/>Usuario: daniel<br/>Email: josue@edd.com<br/>Teléfono: >];
+    u1 [label=<<b>ID: 1</b><br/>Nombre: Luis Garcia<br/>Usuario: luisg<br/>Email: lgarcia@edd.com<br/>Teléfono: 1234>];
     u1 -> u2;
     u2 [label=<<b>ID: 2</b><br/>Nombre: Marcos Itzep<br/>Usuario: mitzep<br/>Email: mitzep@edd.com<br/>Teléfono: 87654321>];
     u2 -> u3;
@@ -29,5 +29,7 @@ digraph "Reporte de Usuarios" {
     u9 [label=<<b>ID: 9</b><br/>Nombre: Mitchell Baker<br/>Usuario: mbaker<br/>Email: mbaker@edd.com<br/>Teléfono: 19384756>];
     u9 -> u10;
     u10 [label=<<b>ID: 10</b><br/>Nombre: Ian Murdock<br/>Usuario: imurdock<br/>Email: imurdock@edd.com<br/>Teléfono: 41235678>];
+    u10 -> u11;
+    u11 [label=<<b>ID: 11</b><br/>Nombre: Erick Lopez<br/>Usuario: erick<br/>Email: erick@edd.com<br/>Teléfono: 1234>];
   }
 }

@@ -29,7 +29,7 @@ var
 
 implementation
 
-uses uInbox; // PMail, MarkRead
+uses uInbox, frmInbox; // PMail, MarkRead
 
 {$R *.lfm}
 
@@ -62,6 +62,7 @@ end;
 procedure TfrmViewMail.btnCerrarClick(Sender: TObject);
 begin
   Close;
+  RefrescarLista();
 end;
 
 end.

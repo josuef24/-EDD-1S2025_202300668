@@ -7,34 +7,34 @@ digraph G {
   // Cabeceras de columnas (destinatarios)
   { rank=same;
     col_title [label="", width=0.1, height=0.1, shape=box, style=invis];
-    col_2 [label="mitzep@edd.com", style="filled", fillcolor="#bfe3f0"];
-    col_4 [label="mshuttleworth@edd.com", style="filled", fillcolor="#bfe3f0"];
+    col_1 [label="lgarcia@edd.com", style="filled", fillcolor="#bfe3f0"];
+    col_6 [label="bfox@edd.com", style="filled", fillcolor="#bfe3f0"];
   }
 
-  { rank=same; row_2 [label="mitzep@edd.com", style="filled", fillcolor="#c9f7c2"];
-    cell_2_2 [label="", width=1.2, height=0.6, style=invis, shape=box];
-    cell_2_4 [label="", width=1.2, height=0.6, style=invis, shape=box];
+  { rank=same; row_1 [label="lgarcia@edd.com", style="filled", fillcolor="#c9f7c2"];
+    cell_1_1 [label="", width=1.2, height=0.6, style=invis, shape=box];
+    cell_1_6 [label="", width=1.2, height=0.6, style=invis, shape=box];
   }
-  cell_2_4 [label="3", style="filled", fillcolor="#f9a825"];
-  row_2 -> cell_2_4 [color="#888888", dir=none, penwidth=1];
-  cell_2_4 -> col_4 [color="#888888", dir=none, penwidth=1];
+  cell_1_6 [label="1", style="filled", fillcolor="#f9a825"];
+  row_1 -> cell_1_6 [color="#888888", dir=none, penwidth=1];
+  cell_1_6 -> col_6 [color="#888888", dir=none, penwidth=1];
 
-  { rank=same; row_4 [label="mshuttleworth@edd.com", style="filled", fillcolor="#c9f7c2"];
-    cell_4_2 [label="", width=1.2, height=0.6, style=invis, shape=box];
-    cell_4_4 [label="", width=1.2, height=0.6, style=invis, shape=box];
+  { rank=same; row_11 [label="erick@edd.com", style="filled", fillcolor="#c9f7c2"];
+    cell_11_1 [label="", width=1.2, height=0.6, style=invis, shape=box];
+    cell_11_6 [label="", width=1.2, height=0.6, style=invis, shape=box];
   }
-  cell_4_2 [label="2", style="filled", fillcolor="#f9a825"];
-  row_4 -> cell_4_2 [color="#888888", dir=none, penwidth=1];
-  cell_4_2 -> col_2 [color="#888888", dir=none, penwidth=1];
+  cell_11_1 [label="5", style="filled", fillcolor="#f9a825"];
+  row_11 -> cell_11_1 [color="#888888", dir=none, penwidth=1];
+  cell_11_1 -> col_1 [color="#888888", dir=none, penwidth=1];
 
   // Alineación vertical por columnas
-  col_title -> col_2 [style=invis, weight=10];
-  col_2 -> cell_2_2 [style=invis, weight=10];
-  cell_2_2 -> cell_4_2 [style=invis, weight=10];
-  col_title -> col_4 [style=invis, weight=10];
-  col_4 -> cell_2_4 [style=invis, weight=10];
-  cell_2_4 -> cell_4_4 [style=invis, weight=10];
+  col_title -> col_1 [style=invis, weight=10];
+  col_1 -> cell_1_1 [style=invis, weight=10];
+  cell_1_1 -> cell_11_1 [style=invis, weight=10];
+  col_title -> col_6 [style=invis, weight=10];
+  col_6 -> cell_1_6 [style=invis, weight=10];
+  cell_1_6 -> cell_11_6 [style=invis, weight=10];
   // Alineación horizontal de la fila de cabeceras
-  col_title -> col_2 [style=invis, weight=50];
-  col_2 -> col_4 [style=invis, weight=50];
+  col_title -> col_1 [style=invis, weight=50];
+  col_1 -> col_6 [style=invis, weight=50];
 }

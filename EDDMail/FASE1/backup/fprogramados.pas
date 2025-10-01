@@ -80,11 +80,13 @@ var
 begin
   if (CurrentUser = nil) then Exit;
 
+  // Ahora procesamos TODA la cola, en orden FIFO, sin mirar fechas
   enviados := ProcessFIFO(CurrentUser^.Sched);
 
   ShowMessage(Format('Enviados: %d', [enviados]));
   LlenarLista; // refresca la cola
 end;
+
 
 
 procedure TfrmProgramados.btnRegresarClick(Sender: TObject);

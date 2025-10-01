@@ -1,7 +1,7 @@
 object frmPerfil: TfrmPerfil
-  Left = 1263
+  Left = 1266
   Height = 260
-  Top = 571
+  Top = 605
   Width = 499
   Caption = 'frmPerfil'
   ClientHeight = 260

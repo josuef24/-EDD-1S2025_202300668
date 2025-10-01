@@ -197,6 +197,7 @@
         <Filename Value="fcomunidades.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmComunidades"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="fComunidades"/>
       </Unit>
