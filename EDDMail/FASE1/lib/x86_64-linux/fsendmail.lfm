@@ -1,7 +1,7 @@
 object frmSendMail: TfrmSendMail
   Left = 1269
   Height = 615
-  Top = 324
+  Top = 287
   Width = 558
   Caption = 'frmSendMail'
   ClientHeight = 615
@@ -73,7 +73,7 @@ object frmSendMail: TfrmSendMail
     ParentFont = False
   end
   object btnEnviar: TButton
-    Left = 80
+    Left = 56
     Height = 40
     Top = 560
     Width = 144
@@ -82,12 +82,20 @@ object frmSendMail: TfrmSendMail
     OnClick = btnEnviarClick
   end
   object btnCancelar: TButton
-    Left = 328
+    Left = 208
     Height = 40
     Top = 560
     Width = 144
     Caption = 'Cancelar'
     TabOrder = 4
     OnClick = btnCancelarClick
+  end
+  object Button1: TButton
+    Left = 360
+    Height = 40
+    Top = 560
+    Width = 139
+    Caption = 'Button1'
+    TabOrder = 5
   end
 end

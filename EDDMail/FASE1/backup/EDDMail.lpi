@@ -90,14 +90,6 @@
         <UnitName Value="fInbox"/>
       </Unit>
       <Unit>
-        <Filename Value="fsendmail.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="frmSendMail"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="fSendMail"/>
-      </Unit>
-      <Unit>
         <Filename Value="fviewmail.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmViewMail"/>
@@ -200,6 +192,30 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="fComunidades"/>
+      </Unit>
+      <Unit>
+        <Filename Value="uavl_borradores.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="UAVL_Borradores"/>
+      </Unit>
+      <Unit>
+        <Filename Value="udataavl.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="UDataAVL"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fborradores.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormBorradores"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="FBorradores"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fsendmail.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <UnitName Value="fSendMail"/>
       </Unit>
     </Units>
   </ProjectOptions>

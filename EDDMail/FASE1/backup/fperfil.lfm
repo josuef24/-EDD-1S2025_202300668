@@ -1,12 +1,14 @@
 object frmPerfil: TfrmPerfil
-  Left = 1263
+  Left = 1266
   Height = 260
-  Top = 571
+  Top = 605
   Width = 499
+  ActiveControl = edtUsuario
   Caption = 'frmPerfil'
   ClientHeight = 260
   ClientWidth = 499
   LCLVersion = '4.2.0.0'
+  OnCreate = FormCreate
   object lblTitulo: TLabel
     Left = 104
     Height = 36

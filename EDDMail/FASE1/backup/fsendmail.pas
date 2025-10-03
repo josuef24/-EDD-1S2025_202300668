@@ -5,20 +5,31 @@ unit fSendMail;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, UAVL_Borradores, UDataAVL;
 
 type
 
   { TfrmSendMail }
 
   TfrmSendMail = class(TForm)
+      Button1: TButton;
     lblParaa: TLabel; lblAsunto: TLabel; lblMensaje: TLabel;
     edtPara: TEdit; edtAsunto: TEdit;
+    lblWelcome: TLabel;
     memMensaje: TMemo;
     btnEnviar: TButton; btnCancelar: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnEnviarClick(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
+
+
+    public
+    BorradorIDEnEdicion: LongInt; // 0 si no viene de borrador
+    procedure CargarDesdeBorrador(const D: TMailDraft; const IDBorrador: LongInt);
+    procedure btnGuardarBorradorClick(Sender: TObject);
+
+
+
   end;
 
 var
@@ -26,7 +37,7 @@ var
 
 implementation
 
-uses uUsers, uInbox, frmUser, uContacts, uMatrix;   // CurrentUser, AddMail, y volver al menú
+uses uUsers, uInbox, frmUser, uContacts, uMatrix, FBorradores;
 
 {$R *.lfm}
 
@@ -38,6 +49,10 @@ begin
   lblMensaje.Caption := 'Mensaje:';
   btnEnviar.Caption  := 'Enviar';
   btnCancelar.Caption:= 'Cancelar';
+
+  BorradorIDEnEdicion := 0;
+
+
 end;
 
 procedure TfrmSendMail.btnEnviarClick(Sender: TObject);
@@ -91,6 +106,14 @@ begin
 
   // Registrar relación remitente -> destinatario
   IncrementEdge(RelMatrix, CurrentUser, dest);
+
+  //borrar de borradores
+   if BorradorIDEnEdicion <> 0 then
+   begin
+      AVL_Delete(BorradoresRoot, BorradorIDEnEdicion);
+      BorradorIDEnEdicion := 0;
+   end;
+
   ShowMessage('Correo enviado a ' + dest^.Email);
   Close;   // o Hide; y volver al menú
   frmUserN.Show;
@@ -104,6 +127,50 @@ begin
 
   frmSendMail.Hide;
   frmUserN.Show;
+end;
+
+procedure TfrmSendMail.CargarDesdeBorrador(const D: TMailDraft; const IDBorrador: LongInt);
+begin
+  edtPara.Text    := D.Destinatario;
+  edtAsunto.Text  := D.Asunto;
+  memMensaje.Text := D.Mensaje;
+  // El remitente es el usuario actual; no lo pedimos en UI
+  BorradorIDEnEdicion := IDBorrador;
+end;
+
+procedure TfrmSendMail.btnGuardarBorradorClick(Sender: TObject);
+var
+  D: TMailDraft;
+begin
+  // si ya era un borrador, elimínalo para re-guardar actualizado
+  if BorradorIDEnEdicion <> 0 then
+    AVL_Delete(BorradoresRoot, BorradorIDEnEdicion);
+
+  // si es nuevo, genera un ID
+  if BorradorIDEnEdicion = 0 then
+    BorradorIDEnEdicion := NextDraftID();
+
+  // llenar el registro
+  D.ID           := BorradorIDEnEdicion;
+  D.Remitente    := CurrentUser^.Email;
+  D.Destinatario := Trim(edtPara.Text);
+  D.Asunto       := Trim(edtAsunto.Text);
+  D.Mensaje      := memMensaje.Lines.Text;
+
+  // insertar/actualizar en el AVL
+  if AVL_Insert(BorradoresRoot, D) then
+    ShowMessage('Borrador guardado (ID=' + IntToStr(D.ID) + ').')
+  else
+    ShowMessage('No se guardó (ID duplicado).');
+end;
+
+
+
+procedure TfrmMain.mnBorradoresClick(Sender: TObject);
+begin
+  if not Assigned(FormBorradores) then Application.CreateForm(TFormBorradores, FormBorradores);
+  FormBorradores.Show;
+  FormBorradores.btnRefrescar.Click;
 end;
 
 end.

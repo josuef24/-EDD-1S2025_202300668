@@ -1,7 +1,7 @@
 object frmUserN: TfrmUserN
-  Left = 1259
+  Left = 1265
   Height = 708
-  Top = 217
+  Top = 215
   Width = 612
   Caption = 'frmUserN'
   ClientHeight = 708
@@ -28,84 +28,93 @@ object frmUserN: TfrmUserN
     OnClick = btnCerrarSesionClick
   end
   object btnBandeja: TButton
-    Left = 200
+    Left = 48
     Height = 40
-    Top = 96
+    Top = 104
     Width = 200
     Caption = 'Bandeja de entrada'
     TabOrder = 1
     OnClick = btnBandejaClick
   end
   object btnCargaMasiva1: TButton
-    Left = 200
+    Left = 48
     Height = 40
-    Top = 160
+    Top = 168
     Width = 200
     Caption = 'Enviar correo'
     TabOrder = 2
     OnClick = btnCargaMasiva1Click
   end
   object btnPapelera: TButton
-    Left = 200
+    Left = 48
     Height = 40
-    Top = 224
+    Top = 232
     Width = 200
     Caption = 'Papelera'
     TabOrder = 3
     OnClick = btnPapeleraClick
   end
   object btnProgramarCorreo: TButton
-    Left = 200
+    Left = 48
     Height = 40
-    Top = 288
+    Top = 296
     Width = 200
     Caption = 'Programar correo'
     TabOrder = 4
     OnClick = btnProgramarCorreoClick
   end
   object btnVerProgramados: TButton
-    Left = 200
+    Left = 48
     Height = 40
-    Top = 352
+    Top = 360
     Width = 200
     Caption = 'Correos programados'
     TabOrder = 5
     OnClick = btnVerProgramadosClick
   end
   object btnAgregarContacto: TButton
-    Left = 200
+    Left = 296
     Height = 40
-    Top = 416
+    Top = 104
     Width = 200
     Caption = 'Agregar contacto'
     TabOrder = 6
     OnClick = btnAgregarContactoClick
   end
   object btnContactos: TButton
-    Left = 200
+    Left = 296
     Height = 40
-    Top = 480
+    Top = 168
     Width = 200
     Caption = 'Contactos'
     TabOrder = 7
     OnClick = btnContactosClick
   end
   object btnPerfil: TButton
-    Left = 200
+    Left = 296
     Height = 40
-    Top = 544
+    Top = 232
     Width = 200
     Caption = 'Actualizar perfil'
     TabOrder = 8
     OnClick = btnPerfilClick
   end
   object btnReportes: TButton
-    Left = 200
+    Left = 296
     Height = 40
-    Top = 608
+    Top = 296
     Width = 200
     Caption = 'Generar reportes'
     TabOrder = 9
     OnClick = btnReportesClick
+  end
+  object btnBorradores: TButton
+    Left = 296
+    Height = 40
+    Top = 360
+    Width = 200
+    Caption = 'Borradores'
+    TabOrder = 10
+    OnClick = btnBorradoresClick
   end
 end

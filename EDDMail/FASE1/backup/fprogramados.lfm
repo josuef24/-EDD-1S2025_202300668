@@ -1,7 +1,7 @@
 object frmProgramados: TfrmProgramados
-  Left = 1261
+  Left = 1263
   Height = 389
-  Top = 497
+  Top = 498
   Width = 615
   Caption = 'frmProgramados'
   ClientHeight = 389

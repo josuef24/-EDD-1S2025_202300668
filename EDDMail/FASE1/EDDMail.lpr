@@ -1,9 +1,10 @@
 uses
   {$IFDEF UNIX}{$IFDEF UseCThreads} cthreads, {$ENDIF}{$ENDIF}
   Interfaces, Forms, fLogin, fMaiin, fCreateUser, frmUser, uUsers, uInbox,
-  fSendMail, fViewMail, uTrash, fTrash, uQueue, fProgramarMail, fProgramados,
+  fViewMail, uTrash, fTrash, uQueue, fProgramarMail, fProgramados,
   uContacts, fContacts, fAddContact, fPerfil, uMatrix, uReportUserInbox,
-uReportUserTrash, UComunidades, UComunidadesAdapters, fComunidades;
+uReportUserTrash, UComunidades, UComunidadesAdapters, fComunidades,
+UAVL_Borradores, UDataAVL, FBorradores, fSendMail;
 
 begin
   Application.Scaled:=True;
@@ -13,6 +14,9 @@ begin
   Application.CreateForm(TfrmAddContact, frmAddContact);
   Application.CreateForm(TfrmPerfil, frmPerfil);
   Application.CreateForm(TfrmComunidades, frmComunidades);
+  Application.CreateForm(TFormBorradores, FormBorradores);
+  Application.CreateForm(TfrmViewMail, frmViewMail);
+  Application.CreateForm(TfrmSendMail, frmSendMail);
   Application.Run;
 end.
 

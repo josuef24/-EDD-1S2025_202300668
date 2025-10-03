@@ -1,7 +1,7 @@
 object frmViewMail: TfrmViewMail
-  Left = 1265
+  Left = 1264
   Height = 544
-  Top = 358
+  Top = 326
   Width = 624
   Caption = 'frmViewMail'
   ClientHeight = 544

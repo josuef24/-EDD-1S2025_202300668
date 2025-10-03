@@ -18,6 +18,7 @@ type
     edtUsuario: TEdit;
     edtTelefono: TEdit;
     btnActualizar: TButton;
+    procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnActualizarClick(Sender: TObject);
   private
@@ -49,6 +50,11 @@ begin
   Caption := 'Actualizar Perfil';
   lblTitulo.Caption := 'Actualizar Perfil';
   CargarDatosActuales;
+end;
+
+procedure TfrmPerfil.FormCreate(Sender: TObject);
+begin
+
 end;
 
 procedure TfrmPerfil.btnActualizarClick(Sender: TObject);

@@ -16,6 +16,7 @@ type
 
   TfrmUserN = class(TForm)
     btnBandeja: TButton;
+    btnBorradores: TButton;
     btnCargaMasiva1: TButton;
     btnPapelera: TButton;
     btnProgramarCorreo: TButton;
@@ -28,6 +29,7 @@ type
     lblWelcome: TLabel;
     procedure btnAgregarContactoClick(Sender: TObject);
     procedure btnBandejaClick(Sender: TObject);
+    procedure btnBorradoresClick(Sender: TObject);
     procedure btnCargaMasiva1Click(Sender: TObject);
     procedure btnReportesClick(Sender: TObject);
     procedure btnContactosClick(Sender: TObject);
@@ -51,7 +53,7 @@ implementation
 
 uses fLogin, fSendMail, fTrash, fInbox, uQueue, uUsers, fProgramarMail,
      fProgramados, fContacts, fAddContact, fPerfil, Process,
-     uReportUserTrash;
+     uReportUserTrash, FBorradores;
 
 {$R *.lfm}
 
@@ -136,6 +138,16 @@ begin
     Application.CreateForm(TfrmInbox, frmInbox);
   frmUserN.Hide;
   frmInbox.Show;
+end;
+
+procedure TfrmUserN.btnBorradoresClick(Sender: TObject);
+begin
+  if not Assigned(FormBorradores) then
+     Application.CreateForm(TFormBorradores, FormBorradores);
+  FormBorradores.Show;
+  FormBorradores.btnRefrescar.Click;
+  frmUserN.Hide;
+
 end;
 
 procedure TfrmUserN.btnAgregarContactoClick(Sender: TObject);

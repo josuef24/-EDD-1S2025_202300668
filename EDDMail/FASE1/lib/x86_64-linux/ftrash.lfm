@@ -1,7 +1,7 @@
 object frmTrash: TfrmTrash
   Left = 1266
   Height = 480
-  Top = 393
+  Top = 364
   Width = 629
   Caption = 'frmTrash'
   ClientHeight = 480
