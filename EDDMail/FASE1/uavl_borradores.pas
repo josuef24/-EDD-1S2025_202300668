@@ -39,8 +39,18 @@ procedure AVL_InOrder(Root: PAVLNode; Visit: TVisitDraftProc);
 procedure AVL_PreOrder(Root: PAVLNode; Visit: TVisitDraftProc);
 procedure AVL_PostOrder(Root: PAVLNode; Visit: TVisitDraftProc);
 
+function AVL_Count(Root: PAVLNode): LongInt;
+
 
 implementation
+
+
+function AVL_Count(Root: PAVLNode): LongInt;
+begin
+  if Root=nil then exit(0);
+  Result := 1 + AVL_Count(Root^.Left) + AVL_Count(Root^.Right);
+end;
+
 
 function Height(N: PAVLNode): SmallInt; inline;
 begin

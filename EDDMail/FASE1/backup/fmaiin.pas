@@ -17,11 +17,13 @@ type
     btnExportRel: TButton;
     btnExportUsers: TButton;
     btnComunidades: TButton;
+    btnExportComunidades: TButton;
     btnSalir: TButton;
     btnCargaMasiva: TButton;
     Label1: TLabel;
     procedure btnCargaMasivaClick(Sender: TObject);
     procedure btnComunidadesClick(Sender: TObject);
+    procedure btnExportComunidadesClick(Sender: TObject);
     procedure btnExportRelClick(Sender: TObject);
     procedure btnExportUsersClick(Sender: TObject);
     procedure btnSalirClick(Sender: TObject);
@@ -88,6 +90,11 @@ begin
     Application.CreateForm(TfrmComunidades, frmComunidades);
   frmRoot.Hide;
   frmComunidades.Show;
+end;
+
+procedure TfrmRoot.btnExportComunidadesClick(Sender: TObject);
+begin
+  ActionExportarComunidades;
 end;
 
 var

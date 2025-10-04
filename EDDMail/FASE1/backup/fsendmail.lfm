@@ -1,13 +1,12 @@
 object frmSendMail: TfrmSendMail
-  Left = 1269
+  Left = 1264
   Height = 615
-  Top = 324
+  Top = 300
   Width = 558
   Caption = 'frmSendMail'
   ClientHeight = 615
   ClientWidth = 558
   LCLVersion = '4.2.0.0'
-  OnCreate = FormCreate
   object lblWelcome: TLabel
     Left = 160
     Height = 36
@@ -73,7 +72,7 @@ object frmSendMail: TfrmSendMail
     ParentFont = False
   end
   object btnEnviar: TButton
-    Left = 80
+    Left = 56
     Height = 40
     Top = 560
     Width = 144
@@ -82,12 +81,21 @@ object frmSendMail: TfrmSendMail
     OnClick = btnEnviarClick
   end
   object btnCancelar: TButton
-    Left = 328
+    Left = 208
     Height = 40
     Top = 560
     Width = 144
     Caption = 'Cancelar'
     TabOrder = 4
     OnClick = btnCancelarClick
+  end
+  object btnGuardarBorrador: TButton
+    Left = 360
+    Height = 41
+    Top = 560
+    Width = 144
+    Caption = 'Guardar Borrador'
+    TabOrder = 5
+    OnClick = btnGuardarBorradorClick
   end
 end

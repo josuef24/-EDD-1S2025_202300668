@@ -15,6 +15,7 @@ begin
   Application.CreateForm(TfrmPerfil, frmPerfil);
   Application.CreateForm(TfrmComunidades, frmComunidades);
   Application.CreateForm(TFormBorradores, FormBorradores);
+  Application.CreateForm(TfrmViewMail, frmViewMail);
   Application.CreateForm(TfrmSendMail, frmSendMail);
   Application.Run;
 end.

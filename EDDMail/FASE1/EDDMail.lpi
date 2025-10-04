@@ -214,7 +214,9 @@
       <Unit>
         <Filename Value="fsendmail.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmSendMail"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <UnitName Value="fSendMail"/>
       </Unit>
     </Units>

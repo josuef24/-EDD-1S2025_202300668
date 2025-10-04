@@ -1,44 +1,62 @@
 object FormBorradores: TFormBorradores
-  Left = 1277
+  Left = 1262
   Height = 358
-  Top = 649
+  Top = 551
   Width = 526
   Caption = 'TFormBorradores'
   ClientHeight = 358
   ClientWidth = 526
   LCLVersion = '4.2.0.0'
+  OnCreate = FormCreate
   object sgBorradores: TStringGrid
-    Left = 88
+    Left = 32
     Height = 152
-    Top = 64
-    Width = 344
+    Top = 24
+    Width = 456
     ColCount = 4
     FixedCols = 0
     RowCount = 1
     TabOrder = 0
+    ColWidths = (
+      121
+      122
+      106
+      103
+    )
   end
   object btnRefrescar: TButton
-    Left = 64
+    Left = 80
     Height = 34
-    Top = 262
+    Top = 208
     Width = 100
     Caption = 'Refrescar'
     TabOrder = 1
+    OnClick = btnRefrescarClick
   end
   object btnAbrir: TButton
-    Left = 184
+    Left = 200
     Height = 34
-    Top = 262
+    Top = 208
     Width = 100
     Caption = 'Abrir'
     TabOrder = 2
+    OnClick = btnAbrirClick
   end
   object btnEliminar: TButton
-    Left = 304
+    Left = 320
     Height = 34
-    Top = 262
+    Top = 208
     Width = 100
     Caption = 'Eliminar'
     TabOrder = 3
+  end
+  object btnRegresar: TButton
+    Left = 376
+    Height = 40
+    Top = 264
+    Width = 112
+    Caption = 'Regresar'
+    TabOrder = 4
+    OnClick = btnRegresarClick
   end
 end

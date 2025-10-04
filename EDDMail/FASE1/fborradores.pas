@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Dialogs, Grids, StdCtrls,
-  UAVL_Borradores, UDataAVL; // <- usamos tu editor real
+  UAVL_Borradores, UDataAVL, frmUser;
 
 type
   { TFormBorradores }
@@ -14,11 +14,15 @@ type
     btnRefrescar: TButton;
     btnAbrir: TButton;
     btnEliminar: TButton;
+    btnRegresar: TButton;
     sgBorradores: TStringGrid;
+    procedure btnRegresarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnRefrescarClick(Sender: TObject);
     procedure btnAbrirClick(Sender: TObject);
     procedure btnEliminarClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+
   private
     procedure LlenarGrid;
     function  IDSeleccionado(out AID: LongInt): boolean;
@@ -47,12 +51,24 @@ begin
   sgBorradores.Cells[3,0] := 'Asunto';
 end;
 
+procedure TFormBorradores.btnRegresarClick(Sender: TObject);
+begin
+  FormBorradores.Hide;
+  frmUserN.Show;
+end;
+
 procedure TFormBorradores.LlenarGrid;
 begin
   FFila := 1;
   sgBorradores.RowCount := 1;
   AVL_InOrder(BorradoresRoot, @VisitAddToGrid); // método del form
 end;
+
+procedure TFormBorradores.FormShow(Sender: TObject);
+begin
+  LlenarGrid;           // refresca cada vez que se muestra
+end;
+
 
 procedure TFormBorradores.VisitAddToGrid(const D: TMailDraft);
 begin

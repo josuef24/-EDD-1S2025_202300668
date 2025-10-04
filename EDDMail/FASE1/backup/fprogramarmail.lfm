@@ -1,7 +1,7 @@
 object frmProgramarMail: TfrmProgramarMail
-  Left = 1263
+  Left = 1267
   Height = 458
-  Top = 429
+  Top = 399
   Width = 445
   Caption = 'frmProgramarMail'
   ClientHeight = 458

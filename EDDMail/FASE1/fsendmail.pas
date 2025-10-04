@@ -12,12 +12,13 @@ type
   { TfrmSendMail }
 
   TfrmSendMail = class(TForm)
-      Button1: TButton;
+      btnGuardarBorrador: TButton;
     lblParaa: TLabel; lblAsunto: TLabel; lblMensaje: TLabel;
     edtPara: TEdit; edtAsunto: TEdit;
     lblWelcome: TLabel;
     memMensaje: TMemo;
     btnEnviar: TButton; btnCancelar: TButton;
+    procedure btnGuardarBorradorClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnEnviarClick(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
@@ -26,7 +27,6 @@ type
     public
     BorradorIDEnEdicion: LongInt; // 0 si no viene de borrador
     procedure CargarDesdeBorrador(const D: TMailDraft; const IDBorrador: LongInt);
-    procedure btnGuardarBorradorClick(Sender: TObject);
 
 
 
@@ -51,9 +51,12 @@ begin
   btnCancelar.Caption:= 'Cancelar';
 
   BorradorIDEnEdicion := 0;
+  if Assigned(frmSendMail) then
+  frmSendMail.OnClick := @btnGuardarBorradorClick;
 
 
 end;
+
 
 procedure TfrmSendMail.btnEnviarClick(Sender: TObject);
 var
@@ -139,31 +142,36 @@ begin
 end;
 
 procedure TfrmSendMail.btnGuardarBorradorClick(Sender: TObject);
+
 var
   D: TMailDraft;
+
 begin
-  // si ya era un borrador, elimínalo para re-guardar actualizado
+
   if BorradorIDEnEdicion <> 0 then
     AVL_Delete(BorradoresRoot, BorradorIDEnEdicion);
 
-  // si es nuevo, genera un ID
   if BorradorIDEnEdicion = 0 then
     BorradorIDEnEdicion := NextDraftID();
 
-  // llenar el registro
   D.ID           := BorradorIDEnEdicion;
   D.Remitente    := CurrentUser^.Email;
   D.Destinatario := Trim(edtPara.Text);
   D.Asunto       := Trim(edtAsunto.Text);
   D.Mensaje      := memMensaje.Lines.Text;
 
-  // insertar/actualizar en el AVL
   if AVL_Insert(BorradoresRoot, D) then
     ShowMessage('Borrador guardado (ID=' + IntToStr(D.ID) + ').')
   else
     ShowMessage('No se guardó (ID duplicado).');
-end;
 
+  ShowMessage('Guardado. Total borradores = ' + IntToStr(AVL_Count(BorradoresRoot)));
+
+  if Assigned(FormBorradores) then
+  FormBorradores.btnRefrescarClick(FormBorradores);
+
+
+end;
 
 
 

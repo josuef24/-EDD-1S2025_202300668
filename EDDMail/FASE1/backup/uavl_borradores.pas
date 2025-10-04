@@ -14,11 +14,13 @@ type
     Asunto      : AnsiString;
     Mensaje     : AnsiString;
 
+    function AVL_Count(Root: PAVLNode): LongInt;
+
 
   end;
 
   type
-      TVisitDraftProc = procedure(const D: TMailDraft);
+  TVisitDraftProc = procedure(const D: TMailDraft) of object;
 
   // Nodo del AVL
   PAVLNode = ^TAVLNode;
@@ -41,6 +43,14 @@ procedure AVL_PostOrder(Root: PAVLNode; Visit: TVisitDraftProc);
 
 
 implementation
+
+
+function AVL_Count(Root: PAVLNode): LongInt;
+begin
+  if Root=nil then exit(0);
+  Result := 1 + AVL_Count(Root^.Left) + AVL_Count(Root^.Right);
+end;
+
 
 function Height(N: PAVLNode): SmallInt; inline;
 begin
