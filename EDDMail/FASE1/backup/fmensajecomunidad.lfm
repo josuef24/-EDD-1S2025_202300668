@@ -1,0 +1,58 @@
+object frmMensajeComunidad: TfrmMensajeComunidad
+  Left = 1260
+  Height = 240
+  Top = 650
+  Width = 376
+  Caption = 'frmMensajeComunidad'
+  ClientHeight = 240
+  ClientWidth = 376
+  LCLVersion = '4.2.0.0'
+  OnCreate = FormCreate
+  object edNombreComunidad: TEdit
+    Left = 168
+    Height = 22
+    Top = 43
+    Width = 168
+    TabOrder = 0
+    Text = 'edNombreComunidad'
+  end
+  object lblPara: TLabel
+    Left = 8
+    Height = 28
+    Top = 43
+    Width = 153
+    Caption = 'Comunidad: '
+    Font.Height = -27
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object lblPara1: TLabel
+    Left = 8
+    Height = 28
+    Top = 80
+    Width = 117
+    Caption = 'Mensaje: '
+    Font.Height = -27
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object memMensaje: TMemo
+    Left = 168
+    Height = 72
+    Top = 72
+    Width = 168
+    Lines.Strings = (
+      'memMensaje'
+    )
+    TabOrder = 1
+  end
+  object btnEnviar: TButton
+    Left = 96
+    Height = 40
+    Top = 176
+    Width = 144
+    Caption = 'Enviar'
+    TabOrder = 2
+    OnClick = btnEnviarClick
+  end
+end

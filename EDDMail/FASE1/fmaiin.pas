@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Process, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  uUsers;
+  uUsers, UDataMail;
 
 type
 
@@ -20,7 +20,9 @@ type
     btnExportComunidades: TButton;
     btnSalir: TButton;
     btnCargaMasiva: TButton;
+    btnCargaCorreos: TButton;
     Label1: TLabel;
+    procedure btnCargaCorreosClick(Sender: TObject);
     procedure btnCargaMasivaClick(Sender: TObject);
     procedure btnComunidadesClick(Sender: TObject);
     procedure btnExportComunidadesClick(Sender: TObject);
@@ -33,7 +35,12 @@ type
     procedure ActionCrearComunidad;
     procedure ActionAgregarUsuarioAComunidad;
     procedure ActionExportarComunidades;
+
+  private
+    FImp, FDup: Integer;
+    procedure AddCorreo(const C: TCorreo);
   end;
+
 
 var
   frmRoot: TfrmRoot;
@@ -43,7 +50,11 @@ const
 
 implementation
 
-uses fLogin, uMatrix, UComunidades, UComunidadesAdapters, fComunidades;
+uses fLogin, uMatrix, UComunidades, UComunidadesAdapters, fComunidades,
+     UMailLoader_JSON, UCorreoStore, Math, uInbox, UComunidadesBST,
+     UDataComunidadesBST, UComReport_BST;
+
+procedure ImportCorreosStoreToUsers; forward;
 
 {$R *.lfm}
 
@@ -83,6 +94,8 @@ begin
     dlg.Free;
   end;
 end;
+
+
 
 procedure TfrmRoot.btnComunidadesClick(Sender: TObject);
 begin
@@ -170,12 +183,24 @@ begin
   nom := '';
   if InputQuery('Crear Comunidad', 'Nombre de la comunidad:', nom) and (Trim(nom) <> '') then
   begin
-    CrearComunidad(Trim(nom));
-    ShowMessage('Comunidad "'+Trim(nom)+'" creada/lista.');
+    nom := Trim(nom);
+
+    // ¿ya existe en el BST?
+    if BST_Find(ComunidadesRoot, nom) <> nil then
+    begin
+      ShowMessage('La comunidad "'+nom+'" ya existe.');
+      Exit;
+    end;
+
+    // crear en el BST (fecha = ahora)
+    BST_Insert(ComunidadesRoot, nom);
+
+    ShowMessage('Comunidad "'+nom+'" creada en el árbol BST.');
   end
   else
     ShowMessage('Operación cancelada o nombre vacío.');
 end;
+
 
 procedure TfrmRoot.ActionAgregarUsuarioAComunidad;
 var
@@ -206,28 +231,93 @@ end;
 
 procedure TfrmRoot.ActionExportarComunidades;
 const
-  Carpeta = OUT_DIR;              // ya tienes OUT_DIR = 'Root-Reportes'
-  Archivo = 'Reporte_Comunidades.dot';
+  Carpeta = OUT_DIR;
 var
   rutaDot, rutaPng: String;
 begin
-  ExportarReporteComunidadesDOT(Carpeta, Archivo);
-  rutaDot := IncludeTrailingPathDelimiter(Carpeta) + Archivo;
-  rutaPng := ChangeFileExt(rutaDot, '.png');
-
-  // Reusa tu runner para Graphviz:
-  if RunGraphviz(rutaDot, 'png') then
-    ShowMessage('Reporte creado: ' + rutaPng)
+  if ExportComunidadesBST_DOT(ComunidadesRoot, Carpeta, rutaDot) then
+  begin
+    if RunGraphviz(rutaDot, 'png') then
+    begin
+      rutaPng := ChangeFileExt(rutaDot, '.png');
+      ShowMessage('Reporte creado: ' + rutaPng);
+    end
+    else
+      ShowMessage('DOT generado: ' + rutaDot + sLineBreak +
+                  'No pude ejecutar Graphviz (dot).');
+  end
   else
-    ShowMessage('DOT generado: ' + rutaDot + sLineBreak +
-                'No pude ejecutar Graphviz (dot). Instálalo o corre: ' +
-                'dot -Tpng "'+rutaDot+'" -o "'+rutaPng+'"');
+    ShowMessage('No se pudo generar el .dot del BST de comunidades.');
 end;
 
 procedure TfrmRoot.btnSalirClick(Sender: TObject);
 begin
   frmRoot.Hide;
   frmLogin.Show;
+end;
+
+procedure TfrmRoot.AddCorreo(const C: TCorreo);
+begin
+  if MailStore_AddIfNew(C) then
+    Inc(FImp)
+  else
+    Inc(FDup);
+end;
+
+procedure ImportCorreosStoreToUsers;
+var
+  i: Integer;
+  C: TCorreo;
+  U: PUser;  // tu tipo de usuario en uUsers
+begin
+  for i := 0 to MailStore_Count - 1 do
+  begin
+    if not MailStore_Get(i, C) then Continue;
+
+    // buscar destinatario en tus usuarios
+    U := FindUserByEmail(C.Destinatario);   // asegúrate de tener esta función en uUsers
+    if U = nil then Continue;               // si no existe, lo saltamos
+
+    // insertar en su Inbox (sin duplicar)
+    InboxAppendFromJSON(U^.Inbox,
+                        C.ID,
+                        C.Remitente,
+                        C.Destinatario,
+                        C.Estado,       // "NL" en tu JSON
+                        C.Asunto,
+                        '',             // Fecha (si no viene en JSON)
+                        C.Mensaje);
+  end;
+end;
+
+procedure TfrmRoot.btnCargaCorreosClick(Sender: TObject);
+var
+  dlg  : TOpenDialog;
+  total: Integer;
+  ok   : Boolean;
+begin
+  dlg := TOpenDialog.Create(Self);
+  try
+    dlg.Title  := 'Seleccionar archivo JSON de correos';
+    dlg.Filter := 'Archivos JSON|*.json|Todos|*.*';
+    if not dlg.Execute then Exit;
+
+    FImp := 0; FDup := 0;
+    // MailStore_Clear; // opcional
+
+    ok := LoadCorreosJSON(dlg.FileName, @AddCorreo, total);
+
+    if ok then
+    begin
+      ShowMessage(Format('Carga completada.'#10'Leídos: %d'#10'Importados: %d'#10'Duplicados: %d',
+                         [total, FImp, FDup]));
+      ImportCorreosStoreToUsers;  // ← aquí, DENTRO del if ok
+    end
+    else
+      ShowMessage('No se pudo leer el archivo o el formato es inválido.');
+  finally
+    dlg.Free;                     // ← cierra el try..finally
+  end;
 end;
 
 end.

@@ -24,6 +24,10 @@ type
 procedure InitContacts(var L: TContactList);
 procedure ClearContacts(var L: TContactList);
 
+function ContactExists(const L: TContactList; const Username: AnsiString): Boolean;
+function ContactRemove(var L: TContactList; const Username: AnsiString): Boolean;
+
+
 // Inserta al final si no existe (por email/username). Devuelve True si se agregó.
 function AddContact(var L: TContactList; const AName, AUser, AEmail, APhone: AnsiString): Boolean;
 
@@ -154,6 +158,113 @@ begin
   end;
   Result := L.Curr;
 end;
+
+function ExistsContact(const L: TContactList; const Email: string): Boolean;
+var
+  First, C: PContact;
+begin
+  Result := False;
+  if L.Tail = nil then Exit;
+
+  First := L.Tail^.Next; // cabeza real
+  C := First;
+  repeat
+    if AnsiCompareText(C^.Email, Email) = 0 then Exit(True);
+    C := C^.Next;
+  until C = First;
+end;
+
+function RemoveContact(var L: TContactList; const Email: string): Boolean;
+var
+  First, Prev, Cur: PContact;
+begin
+  Result := False;
+  if L.Tail = nil then Exit;        // lista vacía
+
+  First := L.Tail^.Next;
+  Prev := L.Tail;                   // previo al primero (en circular)
+  Cur  := First;
+
+  // Recorremos UNA vuelta máximo
+  repeat
+    if AnsiCompareText(Cur^.Email, Email) = 0 then
+    begin
+      // único nodo
+      if (Cur = Prev) and (Cur = L.Tail) then
+      begin
+        Dispose(Cur);
+        L.Tail := nil;
+      end
+      else
+      begin
+        // puenteo
+        Prev^.Next := Cur^.Next;
+
+        // si quité la cabeza, la nueva cabeza es Prev^.Next (no hace falta guardarla)
+        // si quité el tail, muevo tail a Prev
+        if Cur = L.Tail then
+          L.Tail := Prev;
+
+        Dispose(Cur);
+      end;
+
+      Exit(True);
+    end;
+
+    Prev := Cur;
+    Cur  := Cur^.Next;
+  until Cur = First;
+end;
+
+function ContactExists(const L: TContactList; const Username: AnsiString): Boolean;
+var
+  First, C: PContact;
+begin
+  Result := False;
+  if L.Tail = nil then Exit;
+
+  First := L.Tail^.Next;
+  C := First;
+  repeat
+    if AnsiCompareText(C^.Username, Username) = 0 then Exit(True);
+    C := C^.Next;
+  until C = First;
+end;
+
+function ContactRemove(var L: TContactList; const Username: AnsiString): Boolean;
+var
+  First, Prev, Cur: PContact;
+begin
+  Result := False;
+  if L.Tail = nil then Exit;
+
+  First := L.Tail^.Next;
+  Prev  := L.Tail;
+  Cur   := First;
+
+  repeat
+    if AnsiCompareText(Cur^.Username, Username) = 0 then
+    begin
+      if (Cur = Prev) and (Cur = L.Tail) then
+      begin
+        Dispose(Cur);
+        L.Tail := nil;
+      end
+      else
+      begin
+        Prev^.Next := Cur^.Next;
+        if Cur = L.Tail then
+          L.Tail := Prev;
+        Dispose(Cur);
+      end;
+      Exit(True);
+    end;
+    Prev := Cur;
+    Cur  := Cur^.Next;
+  until Cur = First;
+end;
+
+
 
 end.
 

@@ -1,0 +1,54 @@
+digraph "Reporte de comunidades (Árbol BST)" {
+  rankdir=TB;
+  labelloc="t";
+  node [fontname="Helvetica"];
+  edge [color="#555555"];
+  label="Reporte de comunidades (Árbol BST)";
+  n1 [shape=plain, label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" BGCOLOR="#fff7ef">
+      <TR><TD><B>juegos</B></TD></TR>
+      <TR><TD>Fecha creaci&oacute;n: 11-10-2025</TD></TR>
+      <TR><TD>Mensajes publicados: 2</TD></TR>
+    </TABLE>
+  >];
+  n2 [shape=plain, label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" BGCOLOR="#fff7ef">
+      <TR><TD><B>comida</B></TD></TR>
+      <TR><TD>Fecha creaci&oacute;n: 11-10-2025</TD></TR>
+      <TR><TD>Mensajes publicados: 3</TD></TR>
+    </TABLE>
+  >];
+  n3 [shape=plain, label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" BGCOLOR="#fff7ef">
+      <TR><TD><B>animales</B></TD></TR>
+      <TR><TD>Fecha creaci&oacute;n: 11-10-2025</TD></TR>
+      <TR><TD>Mensajes publicados: 1</TD></TR>
+    </TABLE>
+  >];
+  n4 [shape=plain, label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" BGCOLOR="#fff7ef">
+      <TR><TD><B>dinosaurios</B></TD></TR>
+      <TR><TD>Fecha creaci&oacute;n: 11-10-2025</TD></TR>
+      <TR><TD>Mensajes publicados: 0</TD></TR>
+    </TABLE>
+  >];
+  n2 -> n3 [arrowsize=0.8];
+  n2 -> n4 [arrowsize=0.8];
+  n5 [shape=plain, label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" BGCOLOR="#fff7ef">
+      <TR><TD><B>series</B></TD></TR>
+      <TR><TD>Fecha creaci&oacute;n: 11-10-2025</TD></TR>
+      <TR><TD>Mensajes publicados: 0</TD></TR>
+    </TABLE>
+  >];
+  n6 [shape=plain, label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" BGCOLOR="#fff7ef">
+      <TR><TD><B>musica</B></TD></TR>
+      <TR><TD>Fecha creaci&oacute;n: 11-10-2025</TD></TR>
+      <TR><TD>Mensajes publicados: 0</TD></TR>
+    </TABLE>
+  >];
+  n5 -> n6 [arrowsize=0.8];
+  n1 -> n2 [arrowsize=0.8];
+  n1 -> n5 [arrowsize=0.8];
+}

@@ -8,16 +8,13 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   uInbox;
 
-
-
 type
-
   { TfrmUserN }
-
   TfrmUserN = class(TForm)
     btnBandeja: TButton;
     btnBorradores: TButton;
     btnCargaMasiva1: TButton;
+    btnEliminarContacto: TButton;
     btnPapelera: TButton;
     btnProgramarCorreo: TButton;
     btnVerProgramados: TButton;
@@ -26,11 +23,15 @@ type
     btnPerfil: TButton;
     btnReportes: TButton;
     btnCerrarSesion: TButton;
+    btnFavoritos: TButton;
+    btnMensajeComunidad: TButton;
     lblWelcome: TLabel;
     procedure btnAgregarContactoClick(Sender: TObject);
     procedure btnBandejaClick(Sender: TObject);
     procedure btnBorradoresClick(Sender: TObject);
     procedure btnCargaMasiva1Click(Sender: TObject);
+    procedure btnEliminarContactoClick(Sender: TObject);
+    procedure btnMensajeComunidadClick(Sender: TObject);
     procedure btnReportesClick(Sender: TObject);
     procedure btnContactosClick(Sender: TObject);
     procedure btnPapeleraClick(Sender: TObject);
@@ -39,11 +40,10 @@ type
     procedure btnProcesarProgramadosClick(Sender: TObject);
     procedure btnProgramarCorreoClick(Sender: TObject);
     procedure btnVerProgramadosClick(Sender: TObject);
+    procedure btnFavoritosClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
-
   public
-
   end;
 
 var
@@ -53,19 +53,17 @@ implementation
 
 uses fLogin, fSendMail, fTrash, fInbox, uQueue, uUsers, fProgramarMail,
      fProgramados, fContacts, fAddContact, fPerfil, Process,
-     uReportUserTrash, FBorradores;
+     uReportUserTrash, FBorradores, FFavoritos, UDataBT_Fav,
+     uDraftsReport_AVL, UDataAVL, uFavReport_BTree, fMensajeComunidad,
+     fDelContact;
 
 {$R *.lfm}
-
-{ TfrmUserN }
 
 var
   P: TProcess;
   OutFile: string;
 
 function RunGraphviz(const DotPath: string; const OutFormat: string = 'png'): Boolean;
-
-
 begin
   Result := False;
   if not FileExists(DotPath) then Exit;
@@ -74,8 +72,8 @@ begin
 
   P := TProcess.Create(nil);
   try
-    P.Executable := 'dot';               // requiere graphviz instalado
-    P.Parameters.Add('-T' + OutFormat);  // png|svg|pdf
+    P.Executable := 'dot';
+    P.Parameters.Add('-T' + OutFormat);
     P.Parameters.Add(DotPath);
     P.Parameters.Add('-o');
     P.Parameters.Add(OutFile);
@@ -87,9 +85,6 @@ begin
     P.Free;
   end;
 end;
-
-
-
 
 procedure TfrmUserN.btnCerrarSesionClick(Sender: TObject);
 begin
@@ -108,7 +103,7 @@ begin
 end;
 
 procedure TfrmUserN.btnProcesarProgramadosClick(Sender: TObject);
-  var
+var
   n: Integer;
 begin
   n := ProcessFIFO(CurrentUser^.Sched);
@@ -121,7 +116,6 @@ begin
     Application.CreateForm(TfrmProgramarMail, frmProgramarMail);
   frmUserN.Hide;
   frmProgramarMail.Show;
-
 end;
 
 procedure TfrmUserN.btnVerProgramadosClick(Sender: TObject);
@@ -147,7 +141,6 @@ begin
   FormBorradores.Show;
   FormBorradores.btnRefrescar.Click;
   frmUserN.Hide;
-
 end;
 
 procedure TfrmUserN.btnAgregarContactoClick(Sender: TObject);
@@ -164,13 +157,39 @@ begin
   frmSendMail.Show;
 end;
 
+procedure TfrmUserN.btnEliminarContactoClick(Sender: TObject);
+begin
+  if not Assigned(frmDelContact) then
+    Application.CreateForm(TfrmDelContact, frmDelContact);
+  frmDelContact.Show;
+  frmUserN.Hide;
+end;
+
+procedure TfrmUserN.btnMensajeComunidadClick(Sender: TObject);
+begin
+  if not Assigned(frmMensajeComunidad) then
+    Application.CreateForm(TfrmMensajeComunidad, frmMensajeComunidad);
+  frmUserN.Hide;
+  frmMensajeComunidad.Show;
+end;
+
+procedure TfrmUserN.btnFavoritosClick(Sender: TObject);
+begin
+  FavInit;
+
+  if not Assigned(FormFavoritos) then
+    Application.CreateForm(TFormFavoritos, FormFavoritos);
+
+  frmUserN.Hide;
+  FormFavoritos.Show;
+end;
+
 const
   OUT_USER_DIR = 'User-Reportes';
 var
   DotPath, PngPath: string;
 
 procedure TfrmUserN.btnReportesClick(Sender: TObject);
-
 begin
   if (CurrentUser = nil) then
   begin
@@ -178,7 +197,6 @@ begin
     Exit;
   end;
 
-  // ===== Reporte: Bandeja (recibidos) =====
   if ExportInboxDOTForUser(CurrentUser^.Email, CurrentUser^.Inbox,
                            OUT_USER_DIR, DotPath) then
   begin
@@ -193,7 +211,6 @@ begin
   else
     ShowMessage('No se pudo generar el .dot de la bandeja.');
 
-  // ===== REPORTE: PAPELERA =====
   if ExportTrashDOTForUser(CurrentUser^.Email, CurrentUser^.Trash, OUT_USER_DIR, DotPath) then
   begin
     if RunGraphviz(DotPath, 'png') then
@@ -207,7 +224,6 @@ begin
   else
     ShowMessage('No se pudo generar el .dot de la papelera.');
 
-  // ===== Reporte: Programados (cola FIFO) =====
   if ExportSchedDOTForUser(CurrentUser^.Sched, CurrentUser^.Email,
                            OUT_USER_DIR, DotPath) then
   begin
@@ -222,22 +238,45 @@ begin
   else
     ShowMessage('No se pudo generar el .dot de Programados.');
 
-  // ======= Reporte de Contactos (lista circular) =======
   if ExportContactsDOTForUser(CurrentUser^.Contacts, CurrentUser^.Email, OUT_USER_DIR, DotPath) then
   begin
     if RunGraphviz(DotPath, 'png') then
     begin
       PngPath := ChangeFileExt(DotPath, '.png');
-      // opcional: mostrar un único mensaje final, o deja estos por cada reporte
-      // ShowMessage('Reporte de contactos generado: ' + PngPath);
     end
     else
       ShowMessage('Se creó el .dot de contactos, pero no pude ejecutar Graphviz (dot).');
   end
   else
     ShowMessage('No se pudo generar el .dot de contactos.');
-end;
 
+  if ExportDraftsAVL_DOT(BorradoresRoot, OUT_USER_DIR, DotPath) then
+  begin
+    if RunGraphviz(DotPath, 'png') then
+    begin
+      PngPath := ChangeFileExt(DotPath, '.png');
+      ShowMessage('Reporte de borradores (AVL) generado: ' + PngPath);
+    end
+    else
+      ShowMessage('Se creó el .dot de borradores, pero no pude ejecutar "dot" (Graphviz).');
+  end
+  else
+    ShowMessage('No se pudo generar el .dot de borradores.');
+
+   if ExportFavBTreeDOT(FavRoot, OUT_USER_DIR, DotPath) then
+  begin
+    if RunGraphviz(DotPath, 'png') then
+    begin
+      PngPath := ChangeFileExt(DotPath, '.png');
+      ShowMessage('Reporte de favoritos (Árbol B) generado: ' + PngPath);
+    end
+    else
+      ShowMessage('Se creó el .dot de favoritos, pero no pude ejecutar "dot" (Graphviz).');
+  end
+  else
+    ShowMessage('No se pudo generar el .dot de favoritos.');
+
+end;
 
 procedure TfrmUserN.btnContactosClick(Sender: TObject);
 begin
@@ -257,8 +296,7 @@ end;
 
 procedure TfrmUserN.FormCreate(Sender: TObject);
 begin
-
+  FavInit;
 end;
 
 end.
-

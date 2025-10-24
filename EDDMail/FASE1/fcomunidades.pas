@@ -6,7 +6,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, StdCtrls, Dialogs,
-  UComunidades, UComunidadesAdapters, uUsers, fMaiin;
+  UComunidades, UComunidadesAdapters, uUsers, fMaiin,
+  UComunidadesBST, UDataComunidadesBST;
 
 type
   // Esta es la clase del formulario de Comunidades (yo manejo aquí los eventos de crear comunidad y agregar usuario)
@@ -83,25 +84,24 @@ begin
     Exit;
   end;
 
-  // BuscarComunidad devuelve un puntero a la comunidad si existe (tipo PComunidad)
-  // Comparo contra nil para saber si existe o no.
-  if BuscarComunidad(nom) <> nil then
-    Msg('La comunidad ya existe.')
-  else
+   if BST_Find(ComunidadesRoot, nom) <> nil then
   begin
-    // Si no existe, la creo. CrearComunidad internamente maneja memoria punteros (lista simple de comunidades).
-    CrearComunidad(nom);
-    Msg('Comunidad "' + nom + '" creada/lista.');
-    edComunidad.Text := nom; // Me copio el nombre a la caja de "Comunidad" para agregar usuarios de una vez
+    Msg('La comunidad "'+nom+'" ya existe.');
+    Exit;
   end;
+
+  BST_Insert(ComunidadesRoot, nom);
+  Msg('Comunidad "' + nom + '" creada en el Árbol.');
+  edComunidad.Text := nom;
+
 end;
 
 procedure TfrmComunidades.btnAgregarClick(Sender: TObject);
 var
   com, email, nombre: String;
-  U: PUser; // Este es puntero al usuario recuperado desde uUsers.
+  U: PUser;
+  C: PComNode;
 begin
-  // Leo los campos
   com   := Trim(edComunidad.Text);
   email := Trim(edCorreo.Text);
 
@@ -111,27 +111,25 @@ begin
     Exit;
   end;
 
-  // Verifico que el correo exista en mi lista de usuarios cargada
+  // Verifico que el correo exista en la lista de usuarios cargada
   U := FindUserByEmailOrUsername(email);
   if U = nil then
   begin
     Msg('El correo no existe en la lista de usuarios: ' + email);
     Exit;
   end;
-
-  // APUNTADOR Como U es puntero válido, accedo al campo con U^.Name
   nombre := U^.Name;
 
-  // UComunidades Si la comunidad no existe, la creo (CrearComunidad devuelve/gestiona un PComunidad internamente)
-  if BuscarComunidad(com) = nil then
-    CrearComunidad(com);
+  // Aseguro la comunidad en el BST
+  C := BST_Find(ComunidadesRoot, com);
+  if C = nil then
+    C := BST_Insert(ComunidadesRoot, com);
 
-  // UComunidadesAdapters Aquí agrego al usuario a la comunidad usando su correo como id (neutro String)
-  // EDIT Si en el futuro quiero usar otro id (por ejemplo el username), aquí es donde lo cambiaría.
-  if AddUserToCommunity_StrId(com, email, nombre) then
+  // Intento agregar miembro (evita duplicados por Id/email)
+  if BST_AddMember(C, email, nombre) then
     Msg('Usuario agregado a "' + com + '".')
   else
-    Msg('No se pudo agregar');
+    Msg('Ese usuario ya pertenece a la comunidad "' + com + '".');
 end;
 
 procedure TfrmComunidades.btnSalirClick(Sender: TObject);

@@ -27,6 +27,7 @@ function ExportContactsDOTForUser(const L: TContactList;
 
 
 
+
 type
   // APUNTADOR PUser es un PUNTERO a TUserNode. Siempre valido contra nil antes de usar U^.
   PUser = ^TUserNode;
@@ -66,6 +67,8 @@ function  ExistsEmailOrUsername(const Key: AnsiString): Boolean;
 
 //  Valido por email O username + password. Devuelvo si es root por parámetro de salida.
 function  ValidateUser(const Key, APass: AnsiString; out OutIsRoot: Boolean): Boolean;
+
+function FindUserByEmail(const AEmail: AnsiString): PUser;
 
 implementation
 
@@ -462,6 +465,18 @@ begin
       Result := False;
     end;
   end;
+end;
+
+function FindUserByEmail(const AEmail: AnsiString): PUser;
+var U: PUser;
+begin
+  U := UsersHead;               // recorre tu lista simple
+  while U <> nil do
+  begin
+    if SameText(U^.Email, AEmail) then Exit(U);
+    U := U^.Next;
+  end;
+  Result := nil;
 end;
 
 end.

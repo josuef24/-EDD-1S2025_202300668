@@ -1,0 +1,46 @@
+object frmDelContact: TfrmDelContact
+  Left = 1254
+  Height = 240
+  Top = 618
+  Width = 501
+  Caption = 'frmDelContact'
+  ClientHeight = 240
+  ClientWidth = 501
+  LCLVersion = '4.2.0.0'
+  OnCreate = FormCreate
+  object lblCorreo: TLabel
+    Left = 32
+    Height = 28
+    Top = 56
+    Width = 90
+    Caption = 'Correo:'
+    Font.Height = -27
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object edEmail: TEdit
+    Left = 152
+    Height = 22
+    Top = 56
+    Width = 274
+    TabOrder = 0
+  end
+  object btnEliminar: TButton
+    Left = 216
+    Height = 38
+    Top = 96
+    Width = 131
+    Caption = 'Eliminar'
+    TabOrder = 1
+    OnClick = btnEliminarClick
+  end
+  object btnCerrar: TButton
+    Left = 360
+    Height = 38
+    Top = 96
+    Width = 131
+    Caption = 'Cerrar'
+    TabOrder = 2
+    OnClick = btnCerrarClick
+  end
+end

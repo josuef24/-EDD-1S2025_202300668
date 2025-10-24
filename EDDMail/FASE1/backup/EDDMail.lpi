@@ -219,6 +219,80 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="fSendMail"/>
       </Unit>
+      <Unit>
+        <Filename Value="ubtree_favoritos.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="UBTree_Favoritos"/>
+      </Unit>
+      <Unit>
+        <Filename Value="udatabt_fav.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="UDataBT_Fav"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ffavoritos.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormFavoritos"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="FFavoritos"/>
+      </Unit>
+      <Unit>
+        <Filename Value="udatamail.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="UDataMail"/>
+      </Unit>
+      <Unit>
+        <Filename Value="umailloader_json.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="UMailLoader_JSON"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ucorreostore.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="UCorreoStore"/>
+      </Unit>
+      <Unit>
+        <Filename Value="udraftsreport_avl.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uDraftsReport_AVL"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ufavreport_btree.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uFavReport_BTree"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ucomunidadesbst.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="UComunidadesBST"/>
+      </Unit>
+      <Unit>
+        <Filename Value="udatacomunidadesbst.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="UDataComunidadesBST"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fmensajecomunidad.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmMensajeComunidad"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fMensajeComunidad"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ucomreport_bst.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="UComReport_BST"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fdelcontact.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmDelContact"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fDelContact"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

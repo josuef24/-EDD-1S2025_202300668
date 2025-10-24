@@ -14,8 +14,6 @@ type
     Asunto      : AnsiString;
     Mensaje     : AnsiString;
 
-    function AVL_Count(Root: PAVLNode): LongInt;
-
 
   end;
 
@@ -40,6 +38,8 @@ function  AVL_Delete(var Root: PAVLNode; ID: LongInt): boolean;
 procedure AVL_InOrder(Root: PAVLNode; Visit: TVisitDraftProc);
 procedure AVL_PreOrder(Root: PAVLNode; Visit: TVisitDraftProc);
 procedure AVL_PostOrder(Root: PAVLNode; Visit: TVisitDraftProc);
+
+function AVL_Count(Root: PAVLNode): LongInt;
 
 
 implementation

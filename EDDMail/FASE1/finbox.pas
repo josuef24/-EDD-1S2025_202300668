@@ -12,12 +12,14 @@ type
   { TfrmInbox }
 
   TfrmInbox = class(TForm)
+    btnFavoritos: TButton;
     lstMails: TListBox;      // lista (Estado | Asunto | Remitente)
     lblUnread: TLabel;       // “No leídos: N”
     btnOrdenarAZ: TButton;   // ordena por Asunto A–Z
     btnEliminar: TButton;    // elimina de la bandeja
     btnRegresar: TButton;    // vuelve al menú de usuario
 
+    procedure btnFavoritosClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure lblUnreadClick(Sender: TObject);
@@ -38,7 +40,7 @@ var
 implementation
 
 uses
-  uInbox, frmUser, Uusers, fViewmail, uTrash;  // Inbox global y regreso a menú de usuario
+  uInbox, frmUser, Uusers, fViewmail, uTrash, FFavoritos;  // Inbox global y regreso a menú de usuario
 
 {$R *.lfm}
 
@@ -55,6 +57,12 @@ end;
 procedure TfrmInbox.FormCreate(Sender: TObject);
 begin
   RefrescarLista();
+end;
+
+procedure TfrmInbox.btnFavoritosClick(Sender: TObject);
+begin
+  FormFavoritos.Show;
+  frmInbox.Hide;
 end;
 
 procedure TfrmInbox.RefrescarLista;

@@ -1,7 +1,7 @@
 object frmInbox: TfrmInbox
-  Left = 1263
+  Left = 1262
   Height = 613
-  Top = 326
+  Top = 273
   Width = 636
   Caption = 'frmInbox'
   ClientHeight = 613
@@ -56,5 +56,14 @@ object frmInbox: TfrmInbox
     TopIndex = -1
     OnClick = lstMailsClick
     OnDblClick = lstMailsDblClick
+  end
+  object btnFavoritos: TButton
+    Left = 524
+    Height = 40
+    Top = 56
+    Width = 112
+    Caption = 'Favoritos'
+    TabOrder = 4
+    OnClick = btnFavoritosClick
   end
 end

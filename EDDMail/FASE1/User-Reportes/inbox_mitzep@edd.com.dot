@@ -1,0 +1,17 @@
+digraph "Reporte de Correos Recibidos" {
+  rankdir=LR;
+  labelloc="t";
+  label="Reporte de Correos Recibidos";
+  node [shape=box, style="rounded,filled", fillcolor="#fff7cc"];
+  subgraph cluster_inbox {
+    label="Lista Doblemente Enlazada";
+    color="#bbbbbb";
+    n1 [label=<<b>ID:</b> 1<br/><b>Remitente:</b> lgarcia@edd.com<br/><b>Estado:</b> L<br/><b>Programado:</b> No<br/><b>Asunto:</b> Reunión de proyecto<br/><b>Fecha:</b> <br/><b>Mensaje:</b> Confirmar asistencia a la reunión de equipo del lunes.>, width=3];
+    n1 -> n2 [dir=both, arrowsize=0.6];
+    n2 [label=<<b>ID:</b> 2<br/><b>Remitente:</b> lgarcia@edd.com<br/><b>Estado:</b> LEÍDO<br/><b>Programado:</b> No<br/><b>Asunto:</b> Reporte semanal<br/><b>Fecha:</b> <br/><b>Mensaje:</b> Adjunto el reporte semanal de actividades del área de desarrollo.>, width=3];
+    n2 -> n14 [dir=both, arrowsize=0.6];
+    n14 [label=<<b>ID:</b> 14<br/><b>Remitente:</b> smejia@edd.com<br/><b>Estado:</b> L<br/><b>Programado:</b> No<br/><b>Asunto:</b> Re: Entrega de informe<br/><b>Fecha:</b> <br/><b>Mensaje:</b> Recibido, muchas gracias. Lo revisaré hoy mismo.>, width=3];
+    n14 -> n21 [dir=both, arrowsize=0.6];
+    n21 [label=<<b>ID:</b> 21<br/><b>Remitente:</b> jcorbet@edd.com<br/><b>Estado:</b> LEÍDO<br/><b>Programado:</b> No<br/><b>Asunto:</b> Artículo técnico<br/><b>Fecha:</b> <br/><b>Mensaje:</b> He publicado un artículo sobre el nuevo scheduler, te puede interesar.>, width=3];
+  }
+}

@@ -161,14 +161,26 @@ begin
   D.Mensaje      := memMensaje.Lines.Text;
 
   if AVL_Insert(BorradoresRoot, D) then
-    ShowMessage('Borrador guardado (ID=' + IntToStr(D.ID) + ').')
-  else
-    ShowMessage('No se guardó (ID duplicado).');
+  begin
+       ShowMessage('Borrador guardado (ID=' + IntToStr(D.ID) + ').');
+       // clave: el próximo guardado será NUEVO, no actualización
+       BorradorIDEnEdicion := 0;
+       // (opcional) refrescar la ventana de borradores si está abierta
+       {$IFDEF FPC}
+       {$PUSH} {$HINTS OFF} {$WARNINGS OFF}
+       {$POP}
+       {$ENDIF}
+       // si tienes método público RefrescarLista:
+       // if Assigned(FormBorradores) then FormBorradores.RefrescarLista;
+end
+else
+  ShowMessage('No se guardó (ID duplicado).');
+
 
   ShowMessage('Guardado. Total borradores = ' + IntToStr(AVL_Count(BorradoresRoot)));
 
   if Assigned(FormBorradores) then
-  FBorradores.LlenarGrid;
+  FormBorradores.btnRefrescarClick(FormBorradores);
 
 
 end;

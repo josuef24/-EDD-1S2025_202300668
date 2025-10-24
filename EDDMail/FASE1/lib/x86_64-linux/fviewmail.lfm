@@ -1,12 +1,13 @@
 object frmViewMail: TfrmViewMail
   Left = 1264
   Height = 544
-  Top = 328
+  Top = 333
   Width = 624
   Caption = 'frmViewMail'
   ClientHeight = 544
   ClientWidth = 624
   LCLVersion = '4.2.0.0'
+  OnCreate = FormCreate
   object lblAsunto: TLabel
     Left = 24
     Height = 28
@@ -67,5 +68,14 @@ object frmViewMail: TfrmViewMail
     Caption = 'Cerar'
     TabOrder = 1
     OnClick = btnCerrarClick
+  end
+  object mnFavoritos: TButton
+    Left = 16
+    Height = 40
+    Top = 496
+    Width = 136
+    Caption = 'Agregar a Favoritos'
+    TabOrder = 2
+    OnClick = mnFavoritosClick
   end
 end

@@ -1,18 +1,18 @@
 object frmRoot: TfrmRoot
   Left = 1264
-  Height = 398
-  Top = 240
+  Height = 427
+  Top = 244
   Width = 331
   AutoSize = True
   Caption = 'frmRoot'
-  ClientHeight = 398
+  ClientHeight = 427
   ClientWidth = 331
   LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
   object btnSalir: TButton
     Left = 120
     Height = 25
-    Top = 336
+    Top = 384
     Width = 96
     Caption = 'Salir'
     TabOrder = 0
@@ -40,7 +40,7 @@ object frmRoot: TfrmRoot
   object btnExportRel: TButton
     Left = 96
     Height = 41
-    Top = 176
+    Top = 224
     Width = 144
     Caption = 'Exportar Relaciones'
     TabOrder = 2
@@ -49,7 +49,7 @@ object frmRoot: TfrmRoot
   object btnExportUsers: TButton
     Left = 96
     Height = 41
-    Top = 224
+    Top = 272
     Width = 144
     Caption = 'Exportar usuarios'
     TabOrder = 3
@@ -58,7 +58,7 @@ object frmRoot: TfrmRoot
   object btnComunidades: TButton
     Left = 96
     Height = 41
-    Top = 128
+    Top = 176
     Width = 144
     Caption = 'Crear comunidades'
     TabOrder = 4
@@ -67,10 +67,19 @@ object frmRoot: TfrmRoot
   object btnExportComunidades: TButton
     Left = 96
     Height = 41
-    Top = 272
+    Top = 320
     Width = 144
     Caption = 'Exportar Comunidades'
     TabOrder = 5
     OnClick = btnExportComunidadesClick
+  end
+  object btnCargaCorreos: TButton
+    Left = 96
+    Height = 40
+    Top = 128
+    Width = 144
+    Caption = 'Cargar correos'
+    TabOrder = 6
+    OnClick = btnCargaCorreosClick
   end
 end

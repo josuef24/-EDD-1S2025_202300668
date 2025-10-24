@@ -1,0 +1,24 @@
+digraph "Reporte de Borradores de correos (Árbol AVL)" {
+  rankdir=TB;
+  graph [fontsize=12, labelloc="t"];
+  node  [shape=box, style="rounded,filled", fillcolor="#fff7cc", color="#666666", fontname="Helvetica", fontsize=10];
+  edge  [color="#666666", arrowsize=0.7];
+  label="Reporte de Borradores de correos (Árbol AVL)";
+  subgraph cluster_borradores {
+    label="Árbol AVL - Correos"; color="#aaaaaa"; style="rounded";
+    n140708991179232 [label=<<b>ID: </b>2<br/><b>Remitente:</b> mitzep@edd.com<br/><b>Estado:</b> &mdash;<br/><b>Asunto:</b> borrador1<br/><b>Fecha:</b> &mdash;<br/><b>Mensaje:</b> memMensaje
+>, width=3];
+    n140708991184704 [label=<<b>ID: </b>3<br/><b>Remitente:</b> mitzep@edd.com<br/><b>Estado:</b> &mdash;<br/><b>Asunto:</b> borrador2<br/><b>Fecha:</b> &mdash;<br/><b>Mensaje:</b> memMensaje
+>, width=3];
+    n140708991184704 -> n140708991179232;
+    n140708991184704 -> n140708991179136;
+    n140708991179136 [label=<<b>ID: </b>4<br/><b>Remitente:</b> mitzep@edd.com<br/><b>Estado:</b> &mdash;<br/><b>Asunto:</b> borrador3<br/><b>Fecha:</b> &mdash;<br/><b>Mensaje:</b> memMensaje
+>, width=3];
+    n140708991179040 [label=<<b>ID: </b>5<br/><b>Remitente:</b> mitzep@edd.com<br/><b>Estado:</b> &mdash;<br/><b>Asunto:</b> borrador4<br/><b>Fecha:</b> &mdash;<br/><b>Mensaje:</b> memMensaje
+>, width=3];
+    n140708991179040 -> n140708991184704;
+    n140708991179040 -> n140708991178944;
+    n140708991178944 [label=<<b>ID: </b>6<br/><b>Remitente:</b> mitzep@edd.com<br/><b>Estado:</b> &mdash;<br/><b>Asunto:</b> borrador5<br/><b>Fecha:</b> &mdash;<br/><b>Mensaje:</b> memMensaje
+>, width=3];
+  }
+}

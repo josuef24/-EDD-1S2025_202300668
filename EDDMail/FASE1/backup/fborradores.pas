@@ -6,16 +6,22 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Dialogs, Grids, StdCtrls,
-  UAVL_Borradores, UDataAVL, frmUserN;
+  UAVL_Borradores, UDataAVL, frmUser;
 
 type
   { TFormBorradores }
   TFormBorradores = class(TForm)
+    btnInOrden: TButton;
+    btnPostOrden: TButton;
     btnRefrescar: TButton;
     btnAbrir: TButton;
     btnEliminar: TButton;
+    btnPreOrden: TButton;
     btnRegresar: TButton;
     sgBorradores: TStringGrid;
+    procedure btnInOrdenClick(Sender: TObject);
+    procedure btnPostOrdenClick(Sender: TObject);
+    procedure btnPreOrdenClick(Sender: TObject);
     procedure btnRegresarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnRefrescarClick(Sender: TObject);
@@ -25,6 +31,9 @@ type
 
   private
     procedure LlenarGrid;
+    procedure LlenarInOrder;
+    procedure LlenarPreOrder;
+    procedure LlenarPostOrder;
     function  IDSeleccionado(out AID: LongInt): boolean;
     procedure VisitAddToGrid(const D: TMailDraft);
     var FFila: Integer;
@@ -55,6 +64,21 @@ procedure TFormBorradores.btnRegresarClick(Sender: TObject);
 begin
   FormBorradores.Hide;
   frmUserN.Show;
+end;
+
+procedure TFormBorradores.btnPreOrdenClick(Sender: TObject);
+begin
+  LlenarPreOrder;
+end;
+
+procedure TFormBorradores.btnInOrdenClick(Sender: TObject);
+begin
+  LlenarInOrder;
+end;
+
+procedure TFormBorradores.btnPostOrdenClick(Sender: TObject);
+begin
+  LlenarPostOrder;
 end;
 
 procedure TFormBorradores.LlenarGrid;
@@ -88,13 +112,16 @@ begin
 end;
 
 function TFormBorradores.IDSeleccionado(out AID: LongInt): boolean;
-var r: Integer;
+var r: Integer; s: string;
 begin
-  Result := false;
+  Result := False;
   r := sgBorradores.Row;
-  if r<=0 then exit;
-  Result := TryStrToInt(sgBorradores.Cells[0,r], AID);
+  if r <= 0 then Exit;             // fila de encabezado
+  s := Trim(sgBorradores.Cells[0, r]);
+  if s = '' then Exit;
+  Result := TryStrToInt(s, AID);
 end;
+
 
 procedure TFormBorradores.btnAbrirClick(Sender: TObject);
 var id: LongInt; d: TMailDraft;
@@ -113,13 +140,39 @@ end;
 procedure TFormBorradores.btnEliminarClick(Sender: TObject);
 var id: LongInt;
 begin
-  if not IDSeleccionado(id) then begin ShowMessage('Selecciona un borrador.'); exit; end;
-  if AVL_Delete(BorradoresRoot, id) then begin
-    ShowMessage('Borrador eliminado.');
-    LlenarGrid;
+  if not IDSeleccionado(id) then
+  begin
+    ShowMessage('Selecciona un borrador (no el encabezado).');
+    Exit;
+  end;
+
+  if AVL_Delete(BorradoresRoot, id) then
+  begin
+    ShowMessage('Borrador eliminado: ' + IntToStr(id));
+    LlenarGrid;  // refrescar listado
   end
   else
-    ShowMessage('No se pudo eliminar.');
+    ShowMessage('No se encontró el ID ' + IntToStr(id));
+end;
+
+//--------------------RECORRIDOS DE ORDEN-------------------------
+
+procedure TFormBorradores.LlenarInOrder;
+begin
+  FFila := 1; sgBorradores.RowCount := 1;
+  AVL_InOrder(BorradoresRoot, @VisitAddToGrid);
+end;
+
+procedure TFormBorradores.LlenarPreOrder;
+begin
+  FFila := 1; sgBorradores.RowCount := 1;
+  AVL_PreOrder(BorradoresRoot, @VisitAddToGrid);
+end;
+
+procedure TFormBorradores.LlenarPostOrder;
+begin
+  FFila := 1; sgBorradores.RowCount := 1;
+  AVL_PostOrder(BorradoresRoot, @VisitAddToGrid);
 end;
 
 end.

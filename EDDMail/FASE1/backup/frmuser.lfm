@@ -1,10 +1,10 @@
 object frmUserN: TfrmUserN
-  Left = 1265
-  Height = 708
-  Top = 215
+  Left = 1263
+  Height = 487
+  Top = 211
   Width = 612
   Caption = 'frmUserN'
-  ClientHeight = 708
+  ClientHeight = 487
   ClientWidth = 612
   LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
@@ -116,5 +116,23 @@ object frmUserN: TfrmUserN
     Caption = 'Borradores'
     TabOrder = 10
     OnClick = btnBorradoresClick
+  end
+  object btnMensajeComunidad: TButton
+    Left = 48
+    Height = 40
+    Top = 416
+    Width = 200
+    Caption = 'Mensaje Comunidad'
+    TabOrder = 11
+    OnClick = btnMensajeComunidadClick
+  end
+  object btnEliminarContacto: TButton
+    Left = 296
+    Height = 40
+    Top = 416
+    Width = 200
+    Caption = 'Eliminar contacto'
+    TabOrder = 12
+    OnClick = btnEliminarContactoClick
   end
 end

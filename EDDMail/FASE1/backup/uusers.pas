@@ -254,7 +254,7 @@ begin
   begin
     //  Uso AnsiCompareText para comparar sin sensibilidad a may/min
     if (AnsiCompareText(Curr^.Email, Key) = 0)  or
-        (AnsiCompareText(Curr^.User, Key) = 0)then
+        (AnsiCompareText(Curr^.Username, Key) = 0)then
       Exit(Curr);          //  devuelvo el puntero al nodo encontrado
     Curr := Curr^.Next;    //  avanzo al siguiente
   end;

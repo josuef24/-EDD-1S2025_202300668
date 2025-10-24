@@ -32,6 +32,8 @@ function AddMail(var B: TInbox; const ARem, AAsunto, AFecha, AMensaje: AnsiStrin
                  const AProg: Boolean): PMail;
 function CountUnread(const B: TInbox): Integer;
 function GetMailByIndex(const B: TInbox; Index: Integer): PMail;
+function InboxContainsID(const B: TInbox; const AId: Integer): Boolean;
+
 procedure MarkRead(M: PMail);
 procedure DetachMail(var B: TInbox; M: PMail);
 procedure SortBySubject(var B: TInbox);
@@ -39,6 +41,9 @@ procedure SortBySubject(var B: TInbox);
 function ExtractMailAt(var I: TInbox; Index: Integer): PMail;
 function ExportInboxDOTForUser(const UserEmail: string; const B: TInbox;
                                const BaseDir: string; out DotPath: string): Boolean;
+
+function InboxAppendFromJSON(var B: TInbox; const AId: Integer;
+  const ARem, ADest, AEstado, AAsunto, AFecha, AMensaje: AnsiString): PMail;
 
 
 implementation
@@ -276,6 +281,44 @@ begin
       Result := False;
     end;
   end;
+end;
+
+function InboxContainsID(const B: TInbox; const AId: Integer): Boolean;
+var P: PMail;
+begin
+  P := B.Head; Result := False;
+  while P <> nil do begin
+    if P^.Id = AId then Exit(True);
+    P := P^.Next;
+  end;
+end;
+
+function InboxAppendFromJSON(var B: TInbox; const AId: Integer;
+  const ARem, ADest, AEstado, AAsunto, AFecha, AMensaje: AnsiString): PMail;
+var N: PMail;
+begin
+  if InboxContainsID(B, AId) then Exit(nil);
+
+  New(N);
+  N^.Id         := AId;
+  N^.Remitente  := ARem;
+  N^.Estado     := AEstado;
+  N^.Programado := False;
+  N^.Asunto     := AAsunto;
+  N^.Fecha      := AFecha;
+  N^.Mensaje    := AMensaje;
+
+  N^.Prev := B.Tail;
+  N^.Next := nil;
+
+  if B.Head = nil then B.Head := N else B.Tail^.Next := N;
+  B.Tail := N;
+  Inc(B.Count);
+
+  if AId >= NextMailId then
+    NextMailId := AId + 1;
+
+  Result := N;
 end;
 
 end.

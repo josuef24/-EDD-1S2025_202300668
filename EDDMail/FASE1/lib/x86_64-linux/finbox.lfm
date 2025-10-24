@@ -57,4 +57,13 @@ object frmInbox: TfrmInbox
     OnClick = lstMailsClick
     OnDblClick = lstMailsDblClick
   end
+  object btnFavoritos: TButton
+    Left = 524
+    Height = 40
+    Top = 56
+    Width = 112
+    Caption = 'Favoritos'
+    TabOrder = 4
+    OnClick = btnFavoritosClick
+  end
 end

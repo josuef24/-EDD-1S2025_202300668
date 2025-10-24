@@ -1,7 +1,7 @@
 object frmPerfil: TfrmPerfil
-  Left = 1259
+  Left = 1255
   Height = 260
-  Top = 584
+  Top = 587
   Width = 499
   ActiveControl = edtUsuario
   Caption = 'frmPerfil'

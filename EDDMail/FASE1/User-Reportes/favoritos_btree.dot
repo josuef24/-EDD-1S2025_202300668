@@ -1,0 +1,19 @@
+digraph "Correos Favoritos (Árbol B)" {
+  rankdir=TB;
+  graph [fontsize=12, labelloc="t"];
+  node  [fontname="Helvetica", fontsize=10];
+  edge  [color="#3a7f3a", arrowsize=0.7];
+  label="Correos Favoritos (Árbol B)";
+  subgraph cluster_fav {
+    label="Árbol B (Orden 5) - Correos Favoritos"; color="#8ccc8c"; style="rounded";
+    n140709025677632 [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#b6f2b6">
+        <TR>
+          <TD ALIGN="LEFT" CELLPADDING="6"><B>ID:</B> 4<BR/><B>Remitente:</B> jcorbet@edd.com<BR/><B>Asunto:</B> Artículo técnico<BR/><B>Fecha:</B> <BR/><B>Mensaje:</B> He publicado un artículo sobre el nuevo scheduler, te puede interesar.</TD>
+          <TD ALIGN="LEFT" CELLPADDING="6"><B>ID:</B> 3<BR/><B>Remitente:</B> smejia@edd.com<BR/><B>Asunto:</B> Re: Entrega de informe<BR/><B>Fecha:</B> <BR/><B>Mensaje:</B> Recibido, muchas gracias. Lo revisaré hoy mismo.</TD>
+          <TD ALIGN="LEFT" CELLPADDING="6"><B>ID:</B> 2<BR/><B>Remitente:</B> lgarcia@edd.com<BR/><B>Asunto:</B> Reporte semanal<BR/><B>Fecha:</B> <BR/><B>Mensaje:</B> Adjunto el reporte semanal de actividades del área de desarrollo.</TD>
+        </TR>
+      </TABLE>
+    >, shape=box, style="rounded,filled", fillcolor="#b6f2b6", color="#3a7f3a"];
+  }
+}
