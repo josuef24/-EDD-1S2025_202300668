@@ -1,0 +1,50 @@
+object frmProgramados: TfrmProgramados
+  Left = 1260
+  Height = 389
+  Top = 457
+  Width = 615
+  Caption = 'frmProgramados'
+  ClientHeight = 389
+  ClientWidth = 615
+  LCLVersion = '4.2.0.0'
+  OnCreate = FormCreate
+  OnShow = FormShow
+  object lblTitulo: TLabel
+    Left = 128
+    Height = 36
+    Top = 8
+    Width = 340
+    Caption = 'Correos Programados'
+    Font.Height = -35
+    Font.Name = 'Sans'
+    ParentFont = False
+  end
+  object lstQueue: TListBox
+    Left = 16
+    Height = 312
+    Top = 56
+    Width = 416
+    ItemHeight = 0
+    TabOrder = 0
+    TopIndex = -1
+    OnClick = lstQueueClick
+  end
+  object btnProcesar: TButton
+    Left = 456
+    Height = 38
+    Top = 280
+    Width = 131
+    Caption = 'Procesar'
+    TabOrder = 1
+    OnClick = btnProcesarClick
+  end
+  object btnProcesar1: TButton
+    Left = 456
+    Height = 38
+    Top = 330
+    Width = 131
+    Caption = 'Regresar'
+    TabOrder = 2
+    OnClick = btnRegresarClick
+  end
+end

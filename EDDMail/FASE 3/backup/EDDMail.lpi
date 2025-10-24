@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="12"/>
+    <General>
+      <SessionStorage Value="InProjectDir"/>
+      <Title Value="EDDMail"/>
+      <Scaled Value="True"/>
+      <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
+      <XPManifest>
+        <DpiAware Value="True"/>
+      </XPManifest>
+      <Icon Value="0"/>
+    </General>
+    <MacroValues Count="1">
+      <Macro1 Name="LCLWidgetType" Value="gtk2"/>
+    </MacroValues>
+    <BuildModes>
+      <Item Name="Default" Default="True"/>
+      <SharedMatrixOptions Count="1">
+        <Item1 ID="303483752482" Modes="Default" Type="IDEMacro" MacroName="LCLWidgetType" Value="gtk2"/>
+      </SharedMatrixOptions>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+    <RunParams>
+      <FormatVersion Value="2"/>
+    </RunParams>
+    <RequiredPackages>
+      <Item>
+        <PackageName Value="LCL"/>
+      </Item>
+    </RequiredPackages>
+    <Units>
+      <Unit>
+        <Filename Value="EDDMail.lpr"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fmaiin.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmRoot"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fMaiin"/>
+      </Unit>
+      <Unit>
+        <Filename Value="flogin.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmLogin"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fLogin"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fcreateuser.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmCreateUser"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fCreateUser"/>
+      </Unit>
+      <Unit>
+        <Filename Value="frmuser.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmUserN"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frmUser"/>
+      </Unit>
+      <Unit>
+        <Filename Value="uusers.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uUsers"/>
+      </Unit>
+      <Unit>
+        <Filename Value="uinbox.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uInbox"/>
+      </Unit>
+      <Unit>
+        <Filename Value="finbox.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmInbox"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fInbox"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fviewmail.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmViewMail"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fViewMail"/>
+      </Unit>
+      <Unit>
+        <Filename Value="utrash.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uTrash"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ftrash.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmTrash"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fTrash"/>
+      </Unit>
+      <Unit>
+        <Filename Value="uqueue.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uQueue"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fprogramarmail.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmProgramarMail"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fProgramarMail"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fprogramados.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmProgramados"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fProgramados"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ucontacts.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uContacts"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fcontacts.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmContacts"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fContacts"/>
+      </Unit>
+      <Unit>
+        <Filename Value="faddcontact.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmAddContact"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fAddContact"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fperfil.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmPerfil"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fPerfil"/>
+      </Unit>
+      <Unit>
+        <Filename Value="umatrix.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uMatrix"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ureportuserinbox.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uReportUserInbox"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ureportusertrash.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="uReportUserTrash"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ucomunidades.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="UComunidades"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ucomunidadesadapters.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="UComunidadesAdapters"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fcomunidades.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmComunidades"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fComunidades"/>
+      </Unit>
+      <Unit>
+        <Filename Value="uavl_borradores.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="UAVL_Borradores"/>
+      </Unit>
+      <Unit>
+        <Filename Value="udataavl.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="UDataAVL"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fborradores.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormBorradores"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="FBorradores"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fsendmail.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmSendMail"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="fSendMail"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ubtree_favoritos.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="UBTree_Favoritos"/>
+      </Unit>
+      <Unit>
+        <Filename Value="udatabt_fav.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="UDataBT_Fav"/>
+      </Unit>
+      <Unit>
+        <Filename Value="ffavoritos.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormFavoritos"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="FFavoritos"/>
+      </Unit>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <Target>
+      <Filename Value="EDDMail"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
+    </SearchPaths>
+    <Linking>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf3"/>
+      </Debugging>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
+    </Linking>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions>
+      <Item>
+        <Name Value="EAbort"/>
+      </Item>
+      <Item>
+        <Name Value="ECodetoolError"/>
+      </Item>
+      <Item>
+        <Name Value="EFOpenError"/>
+      </Item>
+    </Exceptions>
+  </Debugging>
+</CONFIG>
